@@ -1,0 +1,40 @@
+---
+title: "Max Sands"
+image: https://media-exp1.licdn.com/dms/image/C4D03AQF_x8SmkOi1xQ/profile-displayphoto-shrink_400_400/0/1650212094989?e=1674691200&v=beta&t=7dhrZLhTJ_kepdA76K4yv6O_LnFXEaAY5MCRnZugmiA
+about:
+  id: about-section
+  template: trestles
+  links:
+    - icon: instagram
+      text: Instagram
+      href: https://www.instagram.com/max_sands_7/
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/max-sands-1798b41a4/
+---
+
+## Welcome
+
+*Hi All - I'm Max and Welcome to my Site. I'm a Business Analyst with a passion for Data Science, Investment Research, and the intersection of these two fields. On here, you can find Research Articles covering these topics; feel free to reach out at via LinkedIn if they pique your interest, you would like to collaborate, or if you have questions. Cheers :)*
+
+::: {#about-section}
+## Education
+
+McGill University \| *Finance* \| 2019 - 2022
+
+## Experience
+
+Choate Investment Advisors \| *Business Analyst* \| 2022 - Present
+
+McGill University \| *T.A. - Adv. Bus. Stats* \| 2021 - 2022
+
+IronHold Capital \| *Investment Analyst* \| 2020 - 2021
+:::
+
+## Current Projects
+
+[Replicating Ray Dalio's Work]{.underline}: Ray Dalio is personal idol of mine because he is simultaneously an economist, data scientist, and narrator, but, above all else, he exemplifies the power of 'first-principles' thinking. He is able to synthesize centuries of history and data into logical, measurable, cause-and-effect relationships. I am currently attempting to build a system that forecasts major countries' "Big" and "Debt" Cycles using Machine Learning (see Ray Dalio's *Principles for Dealing with With the Changing World Order* and *Principles for Navigating Big Debt Crises*).
+
+[Predicting the Spread between the Russell 1000, 2000 Growth & Value]{.underline}: Using data from the Bloomberg, the FRED, Google, and other sources in conjunction with Machine Learning to predict weekly returns spreads for these 4 ETFs.
+
+*If you are interested about these projects, would like to collaborate, or would like to request data I've gathered, please reach out via LinkedIn - thank you.*

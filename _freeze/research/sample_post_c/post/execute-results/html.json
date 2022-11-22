@@ -1,0 +1,16 @@
+{
+  "hash": "dd23b91beb3350c9e9259391f91e8abd",
+  "result": {
+    "markdown": "---\ntitle: \"Sample Blog C\"\ntitle-block-banner-color: \"white\"\nauthor: \"Max Sands\"\ndate: \"2022-11-21\"\ncategories: []\nimage: image.jpeg\ntoc: true\ndf-print: kable\neditor_options: \n  chunk_output_type: console\n---\n\n\n# Hello World\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmpg %>% \n    head()\n```\n\n::: {.cell-output-display}\n<div class=\"kable-table\">\n\n|manufacturer |model | displ| year| cyl|trans      |drv | cty| hwy|fl |class   |\n|:------------|:-----|-----:|----:|---:|:----------|:---|---:|---:|:--|:-------|\n|audi         |a4    |   1.8| 1999|   4|auto(l5)   |f   |  18|  29|p  |compact |\n|audi         |a4    |   1.8| 1999|   4|manual(m5) |f   |  21|  29|p  |compact |\n|audi         |a4    |   2.0| 2008|   4|manual(m6) |f   |  20|  31|p  |compact |\n|audi         |a4    |   2.0| 2008|   4|auto(av)   |f   |  21|  30|p  |compact |\n|audi         |a4    |   2.8| 1999|   6|auto(l5)   |f   |  16|  26|p  |compact |\n|audi         |a4    |   2.8| 1999|   6|manual(m5) |f   |  18|  26|p  |compact |\n\n</div>\n:::\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nmpg %>% \n    count(manufacturer, sort = T) %>% \n    ggplot(aes(manufacturer, n, fill = manufacturer)) +\n    coord_flip() +\n    geom_col() +\n    theme_bw()\n```\n\n::: {.cell-output-display}\n![](post_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "post_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

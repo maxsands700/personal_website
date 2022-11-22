@@ -1,0 +1,25 @@
+project:
+  type: website
+
+website:
+  title: ""
+  navbar:
+    left: 
+      - href: index.qmd
+        text: Home
+      - href: research.qmd
+        text: Research
+      - href: instructional_articles.qmd
+        text: Instructional Articles
+    right:
+      - icon: instagram
+        href: https://www.instagram.com/max_sands_7/
+      - icon: linkedin
+        href: https://www.linkedin.com/in/max-sands-1798b41a4/
+format:
+  html:
+    theme: lux
+    css: styles.css
+
+editor: visual
+

@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "My Research",
+    "section": "",
+    "text": "No matching items"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "Code\n1 + 1\n\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "Since this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "posts/sample_post_c/post.html",
+    "href": "posts/sample_post_c/post.html",
+    "title": "Sample Blog C",
+    "section": "",
+    "text": "Code\nmpg %>% \n    head()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmanufacturer\nmodel\ndispl\nyear\ncyl\ntrans\ndrv\ncty\nhwy\nfl\nclass\n\n\n\n\naudi\na4\n1.8\n1999\n4\nauto(l5)\nf\n18\n29\np\ncompact\n\n\naudi\na4\n1.8\n1999\n4\nmanual(m5)\nf\n21\n29\np\ncompact\n\n\naudi\na4\n2.0\n2008\n4\nmanual(m6)\nf\n20\n31\np\ncompact\n\n\naudi\na4\n2.0\n2008\n4\nauto(av)\nf\n21\n30\np\ncompact\n\n\naudi\na4\n2.8\n1999\n6\nauto(l5)\nf\n16\n26\np\ncompact\n\n\naudi\na4\n2.8\n1999\n6\nmanual(m5)\nf\n18\n26\np\ncompact\n\n\n\n\n\n\n\n\nCode\nmpg %>% \n    count(manufacturer, sort = T) %>% \n    ggplot(aes(manufacturer, n, fill = manufacturer)) +\n    coord_flip() +\n    geom_col() +\n    theme_bw()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Max Sands",
+    "section": "",
+    "text": "Hi All - I’m Max and Welcome to my Site. I’m a Business Analyst with a passion for Data Science, Investment Research, and the intersection of these two fields. On here, you can find Research Articles covering these topics; feel free to reach out at via LinkedIn if they pique your interest, you would like to collaborate, or if you have questions. Cheers :)"
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Max Sands",
+    "section": "Education",
+    "text": "Education\nMcGill University | Finance | 2019 - 2022"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Max Sands",
+    "section": "Experience",
+    "text": "Experience\nChoate Investment Advisors | Business Analyst | 2022 - Present\nMcGill University | T.A. - Adv. Bus. Stats | 2021 - 2022\nIronHold Capital | Investment Analyst | 2020 - 2021"
+  },
+  {
+    "objectID": "index.html#current-projects",
+    "href": "index.html#current-projects",
+    "title": "Max Sands",
+    "section": "Current Projects",
+    "text": "Current Projects\nReplicating Ray Dalio’s Work: Ray Dalio is personal idol of mine because he is simultaneously an economist, data scientist, and narrator, but, above all else, he exemplifies the power of ‘first-principles’ thinking. He is able to synthesize centuries of history and data into logical, measurable, cause-and-effect relationships. I am currently attempting to build a system that forecasts major countries’ “Big” and “Debt” Cycles using Machine Learning (see Ray Dalio’s Principles for Dealing with With the Changing World Order and Principles for Navigating Big Debt Crises).\nPredicting the Spread between the Russell 1000, 2000 Growth & Value: Using data from the Bloomberg, the FRED, Google, and other sources in conjunction with Machine Learning to predict weekly returns spreads for these 4 ETFs.\nIf you are interested about these projects, would like to collaborate, or would like to request data I’ve gathered, please reach out via LinkedIn - thank you."
+  },
+  {
+    "objectID": "instructional_articles/post-with-code/index.html",
+    "href": "instructional_articles/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "Code\n1 + 1\n\n\n[1] 2"
+  },
+  {
+    "objectID": "instructional_articles/welcome/index.html",
+    "href": "instructional_articles/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "Since this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "instructional_articles/sample_post_c/post.html",
+    "href": "instructional_articles/sample_post_c/post.html",
+    "title": "Sample Blog C",
+    "section": "",
+    "text": "Code\nmpg %>% \n    head()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmanufacturer\nmodel\ndispl\nyear\ncyl\ntrans\ndrv\ncty\nhwy\nfl\nclass\n\n\n\n\naudi\na4\n1.8\n1999\n4\nauto(l5)\nf\n18\n29\np\ncompact\n\n\naudi\na4\n1.8\n1999\n4\nmanual(m5)\nf\n21\n29\np\ncompact\n\n\naudi\na4\n2.0\n2008\n4\nmanual(m6)\nf\n20\n31\np\ncompact\n\n\naudi\na4\n2.0\n2008\n4\nauto(av)\nf\n21\n30\np\ncompact\n\n\naudi\na4\n2.8\n1999\n6\nauto(l5)\nf\n16\n26\np\ncompact\n\n\naudi\na4\n2.8\n1999\n6\nmanual(m5)\nf\n18\n26\np\ncompact\n\n\n\n\n\n\n\n\nCode\nmpg %>% \n    count(manufacturer, sort = T) %>% \n    ggplot(aes(manufacturer, n, fill = manufacturer)) +\n    coord_flip() +\n    geom_col() +\n    theme_bw()"
+  },
+  {
+    "objectID": "instructional_articles.html",
+    "href": "instructional_articles.html",
+    "title": "Instructional Articles",
+    "section": "",
+    "text": "No matching items"
+  },
+  {
+    "objectID": "research/sample_post_c/post.html",
+    "href": "research/sample_post_c/post.html",
+    "title": "Sample Blog C",
+    "section": "",
+    "text": "Code\nmpg %>% \n    head()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmanufacturer\nmodel\ndispl\nyear\ncyl\ntrans\ndrv\ncty\nhwy\nfl\nclass\n\n\n\n\naudi\na4\n1.8\n1999\n4\nauto(l5)\nf\n18\n29\np\ncompact\n\n\naudi\na4\n1.8\n1999\n4\nmanual(m5)\nf\n21\n29\np\ncompact\n\n\naudi\na4\n2.0\n2008\n4\nmanual(m6)\nf\n20\n31\np\ncompact\n\n\naudi\na4\n2.0\n2008\n4\nauto(av)\nf\n21\n30\np\ncompact\n\n\naudi\na4\n2.8\n1999\n6\nauto(l5)\nf\n16\n26\np\ncompact\n\n\naudi\na4\n2.8\n1999\n6\nmanual(m5)\nf\n18\n26\np\ncompact\n\n\n\n\n\n\n\n\nCode\nmpg %>% \n    count(manufacturer, sort = T) %>% \n    ggplot(aes(manufacturer, n, fill = manufacturer)) +\n    coord_flip() +\n    geom_col() +\n    theme_bw()"
+  }
+]

@@ -1,0 +1,12 @@
+---
+title: "Instructional Articles"
+listing:
+  contents: instructional_articles
+  sort: "date desc"
+  type: grid
+  categories: true
+  sort-ui: true
+  filter-ui: true
+page-layout: full
+title-block-banner: true
+---
