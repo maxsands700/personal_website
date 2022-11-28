@@ -1,0 +1,567 @@
+---
+title: "R in 5 Minutes"
+author: "Max Sands"
+date: "2022-11-23"
+image: image.png
+editor_options: 
+  chunk_output_type: console
+message: false
+warning: false
+---
+
+# Intro
+
+The purpose of this article is 3-fold:
+
+1.  to demonstrate the basics of R as concisely as possible so that you can get up and running on your own projects, even if you've had no exposure to coding.
+
+2.  to act as a basic guide for the non-technical readers interested in following my Research Articles at a more granular level.
+
+3.  to familiarize myself with the process of writing and explaining topics before I publish my research (and to make sure that my website is working...)
+
+##### Quick Note
+
+I would quickly like to explain my background and why I think it is important to have a basic knowledge of 'coding':
+
+I am a Business & Investment Analyst, and 9 months ago I had absolutely no knowledge of 'coding'; my technical ability was comparable to that of your average dog. I can now tell you 9 months in that understanding the basics of 'coding' goes a *very* long way.
+
+Firstly, as long as you do a task correctly the first time in code, you can then automate away that task (and its different variations). Whether its performing the same calculations in an Excel file that your boss sends you every morning, or publishing your company's quarterly financial statements, the same principle applies.
+
+Secondly, we are living in a world where data is everywhere, and the ability to code allows one to dig into the data and draw valuable insights from it. For anyone in an analytical position (whether Financial Analyst, Medical Researcher, or CEO), this is extremely important and allows you to stand on the shoulders of giants.
+
+Thirdly, you can leverage tools that others have built. There is so much free code on the web and someone else may have already built a tool or completed a task that you are trying to do. This is extremely helpful.
+
+Lastly, a word of caution: *coding is not everything*. You can be the world's greatest coder, but if you lack the ability to build a logical, easily-explainable narrative from data, then your value is limited to the tools that you can build for others. In other words, true value comes from the ability to not only work with data, but also derive meaning from it and think originally.
+
+Ok, that's all; let's get into it!
+
+# Learning R
+
+Before you can use R, you need to install it along with RStudio on your computer. Next, run `install.packages("tidyverse")`. The tidyverse is an R package that someone created which makes working with data easy.
+
+Next, we need to load this package by running `library(tidyverse)`.
+
+```{r, include=TRUE}
+library(tidyverse)
+```
+
+You are all set - now we can begin.
+
+## The Basics of Data
+
+Data is simply a spreadsheet of values, and we would like our data to be in a 'tidy' format.
+
+### Tidy Data
+
+Data is considered tidy when each column represents a variable and each row consists of an observation. Consider the following dataset (and feel free to inspect the code and guess what each line means):
+
+```{r}
+diamonds %>% 
+    head()
+```
+
+Notice how this data is tidy; each column represents a variable (price, color, etc.) and each row is an observed diamond. Your goal should be to have your data in this format because it is easy to manipulate.
+
+## Gathering Data
+
+Data is typically gathered from an API, a database, or simply an Excel/csv spreadsheet that you may have. For now, we will use a built-in R dataset called `diamonds`.
+
+## Manipulating Data
+
+As long as data is in a tidy format, there are only a few actions that we need to do when manipulating data:
+
+|             |                                               |
+|-------------|-----------------------------------------------|
+| `filter`    | filter data according to certain conditions   |
+| `summarize` | summarize the data (e.g. finding the average) |
+| `group`     | group similar observations                    |
+| `pivot`     | 'pivoting' the data in different ways         |
+| `select`    | select relevant information                   |
+| `mutate`    | changing the data in some fashion             |
+
+### Filtering
+
+Let's pretend that we only want to consider diamonds with a carat greater than .7 and a depth greater than 63: (click on the "Code" section)
+
+```{r}
+diamonds %>% 
+    filter(carat > .7 & depth > 63) %>% 
+    head()
+```
+
+Let's continue to filter down and consider only the subset with a cut of "Very Good":
+
+```{r}
+diamonds %>% 
+    filter(carat > .7 & depth > 63) %>% 
+    filter(cut == "Very Good") %>% 
+    head()
+```
+
+You will now see that we have from our original 53,940 diamonds, we have filtered down to 1,550 that adhere to our conditions.
+
+At this point you may have two questions:
+
+1.  What is the `%>%`?
+
+This is called a pipe and you can translate it to "and then". It allows us to perform several operations consecutively. So if we look at the code, we first start with the diamonds dataset by typing `diamonds`, *and then* we `filter` according to carat and depth, *and then* we `filter` according to cut. The pipe is extremely useful and it is native to R.
+
+2.  What does the `head()` function do?
+
+It prints only the first 6 observations, that way you don't have a table with 50,000 rows on your screen.
+
+3.  What if I want to filter down to several different cuts, not just "Very Good"
+
+Great question, here's what you would do:
+
+```{r}
+diamonds %>% 
+    filter(cut %in% c("Ideal", "Premium")) %>% 
+    head()
+```
+
+We tell R to filter down to the observations where cut matches one of the strings in the vector `c("Ideal", "Premium")`. The `c()` function creates a vector.
+
+### Summarizing
+
+Let's say we want to summarize the data and find the average diamond price, along with its standard deviation:
+
+```{r}
+diamonds %>% 
+    summarize(avg_price = mean(price),
+              st_dev    = sd(price))
+```
+
+Notice that we can take our 50,000+ diamonds and summarize the data down to an average price...
+
+You will notice that in the `summarize` function I start by naming the column I want (avg_price) and then I tell R what to do (find the `mean` of the price variable/column. The `mean()` & `sd()` functions calculate mean and standard deviation respectively). I could just as easily call the columns "thing1" & "thing2":
+
+```{r}
+diamonds %>% 
+    summarize(thing1 = mean(price),
+              thing2    = sd(price))
+```
+
+### Grouping
+
+Summarizing the entire data is important, but let's say we want to find the average diamond price within each color group...
+
+```{r}
+diamonds %>% 
+    group_by(color) %>% 
+    summarize(avg_price = mean(price)) %>% 
+    ungroup()
+```
+
+We can take things a step further and group by color *and* cut...
+
+```{r}
+diamonds %>% 
+    group_by(color, cut) %>% 
+    summarize(avg_price = mean(price)) %>% 
+    ungroup() %>% 
+    slice(1:10)
+```
+
+You will notice that we now have average price for each color and cut. I also only showed the first 10 rows of output by using the `slice()` function.
+
+### Pivoting
+
+Pivoting is probably the most complicated of the broad actions I am showing you, but the previous segment allows for a great transition. I decided to show only the first 10 rows of output rather than inundate you with 35 rows, but there must be a better way of showing the output, right? I mean we have letters repeating in the color column. This would make more sense:
+
+```{r}
+diamonds %>% 
+    group_by(color, cut) %>% 
+    summarize(avg_price = mean(price)) %>% 
+    ungroup() %>% 
+    pivot_wider(
+        names_from  = cut,
+        values_from = avg_price
+    )
+```
+
+We tell R to take our 35 row table, and pivot it so that we have a color column followed by columns with the different cuts, wherein each value is the average price.
+
+The `names_from` argument asks us what variable to we want to pivot on (we said 'cut' and therefore R took all of the cut values and made them columns). The `values_from` argument asks us which variable we would like to R to occupy the new columns with (we said 'avg_price' and therefore R occupied all of the 'cells' in our pivot table with the corresponding values from the avg_price column).
+
+*Quick Tip*: hitting the *tab* key when your cursor is inside of a function's parentheses will show all of the function's available arguments (2 of which are `names_from` and `values_from` for the `pivot_longer()` function.)
+
+*Important Note*: You will notice that now we have violated the premise of tidy data. The columns `Fair:Ideal` are *not* variables. They are types of "cut" (cut is the variable). For the purposes of coding, and data manipulation, we want our data to be in a tidy format. However, for the purposes of presentation, we typically want our data to be in a 'wide' format (hence `pivot_wider`).
+
+We can do the opposite and revert our table back into a 'long' format with `pivot_longer()` :
+
+```{r}
+diamonds %>% 
+    group_by(color, cut) %>% 
+    summarize(avg_price = mean(price)) %>% 
+    ungroup() %>% 
+    pivot_wider(
+        names_from  = cut,
+        values_from = avg_price
+    ) %>% 
+    pivot_longer(
+        cols = Fair:Ideal
+    ) %>% 
+    slice(1:10)
+```
+
+We can also rename the columns back to their original names within the `pivot_longer()` function:
+
+```{r}
+diamonds %>% 
+    group_by(color, cut) %>% 
+    summarize(avg_price = mean(price)) %>% 
+    ungroup() %>% 
+    pivot_wider(
+        names_from  = cut,
+        values_from = avg_price
+    ) %>% 
+    pivot_longer(
+        cols      = Fair:Ideal,
+        names_to  = "cut",
+        values_to = "avg_price"
+    ) %>% 
+    slice(1:10)
+```
+
+That's on pivoting...
+
+### Selecting
+
+Selecting is straightforward. Here are the first 6 rows of our original dataset:
+
+```{r}
+diamonds %>% 
+    head()
+```
+
+Let's say we are about to investigate something but we only real need price, carat, and cut... then it is best practice to select those variables/columns first (imagine we have thousands of variables/columns...):
+
+```{r}
+diamonds %>% 
+    select(price, carat, cut) %>% 
+    head()
+```
+
+We can also select by omission:
+
+```{r}
+diamonds %>% 
+    select(-x, -y, -z) %>% 
+    head()
+```
+
+We can select variables carat *through* clarity:
+
+```{r}
+diamonds %>% 
+    select(carat:clarity) %>% 
+    head()
+```
+
+And again by omission:
+
+```{r}
+diamonds %>% 
+    select(-carat:-clarity) %>% 
+    head()
+```
+
+Very simple.
+
+### Mutating
+
+What if we want to perform some sort of calculation or change the data in some way? This is the purpose of mutating...
+
+In our dataset, we have the variables `x, y, z` which represent the length, width, and height of the diamond. If we pretend all the diamonds are cubes, we can calculate the cubic volume of each diamond by multiplying the dimensions of each diamond. Let's do this:
+
+```{r}
+diamonds %>% 
+    select(x:z) %>% 
+    mutate(volume = x * y * z) %>% 
+    head()
+```
+
+Notice how `mutate()` is similar in structure to `summarize()`; first we tell R what we would like name our new variable/column ("volume"), and then we tell R how to calculate it.
+
+Mutate can also change a current column:
+
+```{r}
+diamonds %>% 
+    mutate(carat = "Hello World") %>% 
+    head()
+```
+
+Now, all observations of carat are "Hello World".
+
+## Basic Modeling
+
+We will build a linear model to explain diamond prices. In R, the function to create a linear model is `lm()`:
+
+```{r}
+diamonds %>% 
+    lm(formula = price ~ carat) %>% 
+    summary()
+```
+
+We just built a linear model that regressed carat on diamond price. As you can see, we can use a diamond's caratage to explain 85% of price variation. Our model also tells us that for every 1 unit increase in caratage, diamond prices increases by \$7,756 on average.
+
+However, I'm sure you will agree that the output is not visually pleasing. Moreover, it is not easy to manipulate since it is not in a tabular format.
+
+Let's, once again, stand on the shoulders of giants and utilize a tool that someone else has built to clean up the output. Just like you installed `tidyverse`, install the `broom` package by running `install.packages("broom")`. Then, load the package by running `library(broom)`.
+
+```{r}
+library(broom)
+```
+
+This time let's regress price on all other variables and use the `tidy()` function from the broom package to tidy the output:
+
+```{r}
+diamonds %>% 
+    lm(formula = price ~ .) %>% 
+    summary() %>% 
+    tidy()
+```
+
+You will notice that I used '.' to tell R 'all other variables' rather than type each of them out. More importantly, the output is much cleaner and easier to manipulate.
+
+However, we cannot see the model's accuracy. For this, we need to use the `glance()` function from broom:
+
+```{r}
+diamonds %>% 
+    lm(formula = price ~ .) %>% 
+    summary() %>% 
+    glance()
+```
+
+Now we have accuracy metrics in a nice format.
+
+Lastly, if we would like to see the model's fit for each observation, we can use the `augment()` function from broom (scroll to the right):
+
+```{r}
+diamonds %>% 
+    lm(formula = price ~ .) %>% 
+    augment() %>% 
+    head()
+```
+
+*The broom package is so useful because it cleans up model output, but more importantly, it can be used with many other (more complex) models.*
+
+## Visualizing Data
+
+Being able to visualize data is *essential* for understanding it; the famous saying "a picture is worth a thousands words" is doubly true in today's age.
+
+Let's start out by plotting diamond price against caratage.
+
+### Creating a Canvas
+
+First we need to create a canvas with the `ggplot()` function:
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price))
+```
+
+Notice that we start with the `diamonds` dataset *and then* we create a canvas with the `ggplot()` function. The `aes()` function stands for aesthetic and allows us to pick which variables/columns we want to use in our plot. In this case we tell R that we want to plot `carat` on the x-axis and `price` on the y-axis.
+
+### Adding Geoms
+
+In our plot we would like to add dots that represent each data point. In R adding these elements are called *geometries* (i.e. geoms):
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price)) +
+    geom_point()
+```
+
+Notice how when creating plots with ggplot, we can no longer use the pipe (`%>%`). Instead, we use a `+` sign to add layers to the plot.
+
+From our plot we can tell that there is a clear positive relationship between price and caratage.
+
+### Modifying Geoms
+
+Our plot contains so many points and it is overwhelming; let's modify the plot so that the points are more transparent with the `alpha` argument of `geom_point()`.
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price)) +
+    geom_point(alpha = .15, color = "midnightblue") +
+    geom_smooth()
+```
+
+You will notice that the points are more transparent and that we also modified their color. We also included a smoother line with `geom_smooth()`.
+
+### Adding Aesthetics
+
+Up to now our plot has had only 2 aesthetics (x and y). But, all of the arguments that can be passed to geoms (`alpha`, `color`, etc.) are actually aesthetics that can be passed in the main `aes()` function. This probably sounds confusing but the following code will make much more sense:
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price, color = cut)) +
+    geom_point(alpha = .15) +
+    geom_smooth()
+```
+
+You will notice that instead of locally changing the `color` argument in the `geom_point()` function, we have put in the main `aes()` function wherein we set it equal to `cut`. By doing this, we are telling R that the color of each geometry should be defined by the cut variable/column.
+
+### Faceting
+
+Our plot is overwhelming with all the different colors on one canvas so lets create a faceted canvas... Rather than explain in words, the following code should be self evident:
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price, color = cut)) +
+    geom_point(alpha = .15) +
+    geom_smooth() +
+    facet_wrap(~cut)
+```
+
+This is called a faceted plot because we have created facets according to the cut variable/column. You will note that we need to put a `~` before the specified variable; this is just how the facet_wrap function works.
+
+We can also decide to facet according to some other variables, like so:
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price, color = cut)) +
+    geom_point(alpha = .15) +
+    geom_smooth() +
+    facet_wrap(~clarity, scales = "free")
+```
+
+You will notice that I also supplied the `scales` argument within the `facet_wrap()` function which allows each faceted plot to have different x and y scales that fit accordingly. Compare the x and y axes of the 'VS1' plot with those of the 'VVS2'. They have different scales.
+
+### Adding Labels
+
+Let's add labels to our plot...
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price, color = cut)) +
+    geom_point(alpha = .15) +
+    geom_smooth() +
+    facet_wrap(~cut) +
+    labs(
+        title = "Price vs. Carat",
+        subtitle = "ggplot makes plotting so easy...",
+        y = "Price (in $)",
+        x = "Carat",
+        caption = "This is a great-looking plot"
+    )
+```
+
+### Changing Theme
+
+R has some preset plotting themes...
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price, color = cut)) +
+    geom_point(alpha = .15) +
+    geom_smooth() +
+    facet_wrap(~cut) +
+    labs(
+        title = "Price vs. Carat",
+        subtitle = "ggplot makes plotting so easy...",
+        y = "Price (in $)",
+        x = "Carat",
+        caption = "This is a great-looking plot"
+    ) +
+    theme_bw()
+```
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price, color = cut)) +
+    geom_point(alpha = .15) +
+    geom_smooth() +
+    facet_wrap(~cut) +
+    labs(
+        title = "Price vs. Carat",
+        subtitle = "ggplot makes plotting so easy...",
+        y = "Price (in $)",
+        x = "Carat",
+        caption = "This is a great-looking plot"
+    ) +
+    theme_linedraw()
+```
+
+...there are several others.
+
+### Modifying Scales
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = carat, y = price, color = cut)) +
+    geom_point(alpha = .15) +
+    geom_smooth() +
+    facet_wrap(~cut) +
+    labs(
+        title = "Price vs. Carat",
+        subtitle = "ggplot makes plotting so easy...",
+        y = "Price (in $)",
+        x = "Carat",
+        caption = "This is a great-looking plot"
+    ) +
+    theme_bw() +
+    scale_y_continuous(labels = scales::dollar_format())
+```
+
+With these basic tools, you now have the ability to create so many different types of plots to gain insights from your data.
+
+Here are a few more plots with code to give you a flavor...
+
+```{r}
+diamonds %>% 
+    ggplot(aes(price, fill = cut)) +
+    geom_histogram() +
+    theme_bw()
+```
+
+```{r}
+diamonds %>% 
+    ggplot(aes(price, fill = cut)) +
+    geom_histogram(position = "dodge") +
+    theme_bw() +
+    scale_fill_brewer()
+```
+
+```{r}
+diamonds %>% 
+    ggplot(aes(price, fill = cut)) +
+    geom_density() +
+    theme_bw() +
+    scale_fill_brewer() +
+    facet_wrap(~cut)
+```
+
+There are other packages that help with creating nice plots... install and load `ggridges`.
+
+```{r}
+library(ggridges)
+diamonds %>% 
+    ggplot(aes(x = price, y = cut, fill = stat(x))) +
+    geom_density_ridges_gradient(scale = 2) +
+    scale_fill_viridis_c(name = "Price (in $)", option = "C") +
+    theme_minimal() +
+    scale_x_continuous(labels = scales::dollar_format())
+```
+
+```{r}
+diamonds %>% 
+    ggplot(aes(x = price, y = cut, fill = factor(stat(quantile)))) +
+    stat_density_ridges(
+        geom = "density_ridges_gradient", calc_ecdf = TRUE,
+        quantiles = 4, quantile_lines = TRUE
+    ) +
+    scale_fill_brewer() +
+    theme_linedraw() +
+    scale_x_continuous(labels = scales::dollar_format())
+```
+
+This is just a taste of the plots that can be generated...
+
+# Closing Remarks
+
+The above is by no means a comprehensive introduction to R, but it does cover the basics and will allow you to get started on your own projects.
+
+Cheers.

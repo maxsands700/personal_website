@@ -5,6 +5,8 @@
   },
   {
     "listing": "/instructional_articles.html",
-    "items": []
+    "items": [
+      "/instructional_articles/00_r_basics/index.html"
+    ]
   }
 ]

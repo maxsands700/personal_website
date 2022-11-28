@@ -1,0 +1,14 @@
+{
+  "hash": "52043d1590a87cfec59fdbc5d5c51feb",
+  "result": {
+    "markdown": "---\ntitle: \"Sample Blog A\"\nauthor: \"Max Sands\"\ndate: 2022-10-20\nimage: image.jpeg\n---\n\n\nHello World\n\nHere is some code:\n\n::: {.cell}\n\n```{.r .cell-code}\n1+1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

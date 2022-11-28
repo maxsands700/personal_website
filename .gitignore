@@ -40,3 +40,4 @@ vignettes/*.pdf
 
 # My Raw Data Folder with csvs
 raw_data
+/.quarto/

@@ -15,14 +15,14 @@ about:
 
 ## Welcome
 
-*Hi All - I'm Max and Welcome to my Site. I'm a Business Analyst with a passion for Data Science, Investment Research, and the intersection of these two fields. On here, you can find Research Articles covering these topics; feel free to reach out at via LinkedIn if they pique your interest, you would like to collaborate, or if you have questions. Cheers :)*
+*Hi All - I'm Max and Welcome to my Site. I'm a Business Analyst with a passion for Data Science and Investment Research. On here, you can find Research Articles covering these topics; feel free to reach out via LinkedIn if they pique your interest, you would like to collaborate, or if you have questions. Cheers :)*
 
 ::: {#about-section}
-## Education
+### Education
 
 McGill University \| *Finance* \| 2019 - 2022
 
-## Experience
+### Experience
 
 Choate Investment Advisors \| *Business Analyst* \| 2022 - Present
 
