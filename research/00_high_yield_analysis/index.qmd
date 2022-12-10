@@ -2,7 +2,7 @@
 title: "An Analysis of High Yield Debt vs. Equities"
 author: "Max Sands"
 description: "Read Time: 15 mins"
-categories: ["High Yield Debt"]
+categories: [High Yield Debt]
 image: preview_image.jpeg
 editor_options: 
   chunk_output_type: console
