@@ -2,6 +2,7 @@
 title: "R in 5 Minutes"
 author: "Max Sands"
 date: "2022-11-23"
+description: "Application-based Learning"
 image: image.png
 editor_options: 
   chunk_output_type: console
@@ -235,7 +236,7 @@ diamonds %>%
     head()
 ```
 
-Let's say we are about to investigate something but we only real need price, carat, and cut... then it is best practice to select those variables/columns first (imagine we have thousands of variables/columns...):
+Let's say we are about to investigate something but we only need price, carat, and cut... then it is best practice to select those variables/columns first (imagine we have thousands of variables/columns...):
 
 ```{r}
 diamonds %>% 
@@ -488,7 +489,6 @@ diamonds %>%
 ...there are several others.
 
 ### Modifying Scales
-
 ```{r}
 diamonds %>% 
     ggplot(aes(x = carat, y = price, color = cut)) +
@@ -505,7 +505,9 @@ diamonds %>%
     theme_bw() +
     scale_y_continuous(labels = scales::dollar_format())
 ```
+Notice we converted the axis/scale on the plot to a dollar format...
 
+### Example of More Plots
 With these basic tools, you now have the ability to create so many different types of plots to gain insights from your data.
 
 Here are a few more plots with code to give you a flavor...
@@ -556,6 +558,20 @@ diamonds %>%
     scale_fill_brewer() +
     theme_linedraw() +
     scale_x_continuous(labels = scales::dollar_format())
+```
+
+### Creating Interactive Plots
+We also have the ability to create interactive plots with the help of a package called `plotly`. This is another example of the power of open-source coding, which gives us the ability to leverage code that others have built (that we may not have the expertise to create ourselves...). Like we did with the `tidyverse`, run `install.packages("plotly")` and then load it into your environment with `library(plotly)`. All we have to do to make a plot interactive, is to save it into our environment using the assignment operator - `<-`. I am going to save my plot as `g` and then we have to run `ggplotly(g)`.
+
+Look at the code below:
+```{r}
+library(plotly)
+g <- diamonds %>% 
+    ggplot(aes(price, fill = cut)) +
+    geom_histogram() +
+    theme_bw()
+
+ggplotly(g)
 ```
 
 This is just a taste of the plots that can be generated...

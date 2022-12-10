@@ -1,0 +1,438 @@
+---
+title: "An Analysis of High Yield Debt vs. Equities"
+author: "Max Sands"
+description: "Read Time: 20 mins"
+image: preview_image.jpeg
+editor_options: 
+  chunk_output_type: console
+message: false
+warning: false
+---
+
+# Intro
+
+In this article we will investigate:
+
+1.  The time periods where High Yield Debt outperformed Equities
+
+2.  Why these time periods occurred
+
+3.  Where both of these asset classes may be heading over the next few years
+
+Let's load the data:
+
+```{r, include=FALSE, echo=FALSE}
+library(tidyverse)
+library(tidyquant)
+library(lubridate)
+library(plotly)
+library(here)
+library(timetk)
+library(cowplot)
+
+high_yield_data <- read_rds(here("raw_data", "High Yield Analysis", "high_yield_data.rds"))
+
+source(here::here("research", "00_high_yield_analysis", "scripts", "helpful_functions.R"))
+
+min_date <- ymd("1997-01-01")
+
+high_yield_data_filled <- high_yield_data %>% 
+    filter(date >= min_date) %>% 
+    group_by(symbol) %>% 
+    pad_by_time(.date_var = date, .by = "day") %>% 
+    mutate(value = forecast::na.interp(x = value)) %>% 
+    fill(name, .direction = "down") %>% 
+    ungroup() %>% 
+    select(-symbol) %>% 
+    pivot_wider(names_from = name, values_from = value) %>% 
+    pivot_longer(-date, names_to = "name", values_to = "value")
+```
+
+::: panel-tabset
+### Plot
+
+```{r}
+#| column: page
+#| fig-dpi: 300
+#| fig-width: 11
+#| fig-height: 11
+#| fig-cap: Shaded regions indicate a time period when High Yield spreads exceeded 10%
+high_yield_data %>% 
+    filter(date >= min_date) %>% 
+    plot_time_series(10) +
+    theme(text = element_text(size = 16))
+```
+
+### Data
+
+```{r}
+high_yield_data_filled %>% 
+    pivot_wider(names_from = name, values_from = value) %>% 
+    mutate(across(.cols = c(2,3,7,5), .fns = ~scales::percent(.x, accuracy = .01, scale = 1))) %>% 
+    mutate(across(.cols = c(4,6), .fns = ~scales::number(.x, accuracy = 1))) %>% 
+    head()
+```
+
+### Variable Definitions
+
+|                    |                                                                                                                                                                                                                                     |
+|-------------------------|-----------------------------------------------|
+| SP500 Index        | A stock market index composed of 500 large companies traded on U.S. stock exchanges. Each constituent's weight in the index is proportional to its market capitalization.                                                           |
+| High Yield Index   | A bond index composed of high yield debt - corporate bonds with an investment grade of BB and below.                                                                                                                                |
+| High Yield Spread  | The yield difference between High Yield Debt and U.S. Treasuries (U.S. Government Debt). For specific information on this series and how it is calculated please visit the [FRED](https://fred.stlouisfed.org/series/BAMLH0A0HYM2). |
+| Federal Funds Rate | The rate at which major U.S. banks lend their 'federal funds'/reserve balances to each other overnight. This is generally the rate referred to when people mention 'the interest rate'.                                             |
+| Coupon Rate        | The annual rate of income received by an investor for holding a bond. A bond with a 5% coupon rate and face value of \$100 will result in annual income receipts of \$5.                                                            |
+| Yield to Worst     | The lowest possible yield that can be earned by a bond that fully adheres to its contracted terms (perhaps a bond has a callable provision etc.). *This measure does not include default risk*.                                     |
+:::
+
+# Performance Comparison
+
+Let's visualize how Equities have performed relative to High Yield Debt:
+
+::: panel-tabset
+### Aggregate
+
+```{r}
+#| column: page
+g <- high_yield_data %>% 
+    filter(date >= ymd("1984-01-01")) %>% 
+    filter(symbol %in% c("hyi", "spy")) %>% 
+    group_by(symbol) %>% 
+    arrange(date) %>% 
+    mutate(value = value / first(value)) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, value, color = name)) +
+    geom_line() +
+    theme_bw() +
+    labs(
+        color = "",
+        y = "Wealth Index ($1)",
+        x = ""
+    )
+
+ggplotly(g)
+```
+
+We can see that, since 1984, the performance of Equities relative to High Yield Debt has been roughly comparable, with Equities slightly outperforming. Equities returned approximately 24x and High Yield Debt returned 20x. However, let's see if we can identify the time periods where High Yield Debt outperformed Equities, and why.
+
+### Yearly
+
+```{r}
+#| column: page
+#| fig-dpi: 300
+#| fig-align: center
+#| fig-width: 11
+#| fig-height: 6
+#| fig-cap: Shaded regions indicate years where High Yield Debt ourperformed Equities
+
+yearly_performance_tbl <- high_yield_data %>% 
+    filter(symbol %in% c("hyi", "spy")) %>% 
+    filter(date >= ymd("1984-01-01")) %>% 
+    mutate(year = year(date)) %>% 
+    group_by(name) %>% 
+    arrange(date) %>% 
+    ungroup() %>% 
+    group_by(name, year) %>% 
+    summarize(pct_ret = (last(value) / first(value)) - 1) %>% 
+    ungroup()
+
+dates_vec <- yearly_performance_tbl %>% 
+    pivot_wider(names_from = name, values_from = pct_ret) %>% 
+    mutate(difference = `High Yield Index` - `SP500 Index`) %>% 
+    filter(difference > 0) %>% 
+    pull(year)
+
+yearly_performance_tbl %>% 
+    ggplot() +
+    geom_col(data = yearly_performance_tbl,
+             mapping = aes(year, pct_ret, fill = name),
+             position = "dodge", color = "black") +
+    geom_rect(
+        data = tibble(start_date = c(dates_vec - .5),
+                      end_date = c(dates_vec + .5)),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf),
+        alpha = .3, fill = "grey") +
+    theme_bw() +
+    scale_fill_brewer(direction = 1) +
+    labs(x = "",
+         y = "Return (%)",
+         fill = "") +
+    scale_y_continuous(labels = scales::percent_format()) +
+    scale_x_continuous(guide = guide_axis(angle = 45), n.breaks = 12) +
+    theme(legend.position = "top", text = element_text(face = "bold", size = 16))
+
+```
+
+From the above, we can see there seems to be cyclicality in the performance of High Yield Debt relative to Equities, with alternating 2-4 year periods of outperformance followed by 1-3 year periods of underperformance.
+:::
+
+# Key Takeaways
+
+In order to better understand the logical cause-and-effect relationships at play between our variables, let's re-visualize our yearly performance comparison, but this time we will add our other relevant variables into the mix and attempt to find helpful trends:
+
+::: panel-tabset
+### Smooth
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 6
+#| fig-cap: Regions shaded in purple indicate *positive* outperformance
+
+dates_positive_vec <- yearly_performance_tbl %>% 
+    pivot_wider(names_from = name, values_from = pct_ret) %>% 
+    mutate(difference = `High Yield Index` - `SP500 Index`) %>% 
+    filter(`High Yield Index` > 0 & difference > 0) %>% 
+    pull(year)
+
+high_yield_data %>% 
+    ggplot() +
+    geom_rect(
+        data = tibble(start_date = dates_vec, end_date = dates_vec) %>%
+            mutate(start_date = as.Date(paste(start_date, 1, 1, sep = "-"))) %>%
+            mutate(end_date = as.Date(paste(start_date, 1, 1, sep = "-"))) %>%
+            mutate(end_date = end_date %>% ceiling_date(unit = "years") - days(1)),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf),
+        alpha = .6, fill = "grey"
+    ) +
+    geom_rect(
+        data = tibble(start_date = dates_positive_vec, end_date = dates_positive_vec) %>% 
+            mutate(start_date = as.Date(paste(start_date, 1, 1, sep = "-"))) %>% 
+            mutate(end_date = as.Date(paste(start_date, 1, 1, sep = "-"))) %>% 
+            mutate(end_date = end_date %>% ceiling_date(unit = "years") - days(1)),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf),
+        alpha = .1, fill = "purple"
+    ) +
+    geom_smooth(
+        data = high_yield_data %>%
+            filter(date >= ymd("1984-01-01")) %>%
+            filter(!(symbol %in% c("hyi", "spy"))) %>%
+            filter(value != 0) %>% 
+            mutate(value = value/100),
+        mapping = aes(date, value, color = name), se = F
+        ) +
+    theme_bw() +
+    labs(
+        x = "",
+        y = "",
+        color = ""
+    ) +
+    scale_y_continuous(labels = scales::percent_format()) +
+    scale_x_date(date_breaks = "3 years", guide = guide_axis(angle = 45), labels = year) +
+    theme(legend.position = "top", text = element_text(face = "bold", size = 16))
+```
+
+### Actual
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 6
+#| fig-cap: Regions shaded in purple indicate *positive* outperformance
+
+g3 <- high_yield_data %>% 
+    ggplot() +
+    geom_rect(
+        data = tibble(start_date = dates_vec, end_date = dates_vec) %>% 
+            mutate(start_date = as.Date(paste(start_date, 1, 1, sep = "-"))) %>% 
+            mutate(end_date = as.Date(paste(start_date, 1, 1, sep = "-"))) %>% 
+            mutate(end_date = end_date %>% ceiling_date(unit = "years") - days(1)),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf),
+        alpha = .6, fill = "grey"
+    ) +
+    geom_rect(
+        data = tibble(start_date = dates_positive_vec, end_date = dates_positive_vec) %>% 
+            mutate(start_date = as.Date(paste(start_date, 1, 1, sep = "-"))) %>% 
+            mutate(end_date = as.Date(paste(start_date, 1, 1, sep = "-"))) %>% 
+            mutate(end_date = end_date %>% ceiling_date(unit = "years") - days(1)),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf),
+        alpha = .1, fill = "purple"
+    ) +
+    geom_line(
+        data = high_yield_data %>%
+            filter(date >= ymd("1984-01-01")) %>%
+            filter(!(symbol %in% c("hyi", "spy"))) %>%
+            filter(value != 0) %>% 
+            mutate(value = value/100),
+        mapping = aes(date, value, color = name),
+        size = .75,
+        ) +
+    theme_bw() +
+    labs(
+        x = "",
+        y = "",
+        color = ""
+    ) +
+    scale_y_continuous(labels = scales::percent_format()) +
+    scale_x_date(date_breaks = "3 years", guide = guide_axis(angle = 45), labels = year) +
+    theme(legend.position = "top", text = element_text(face = "bold", size = 16))
+
+g3
+```
+:::
+
+Here are some primary takeaways from the visuals:
+
+-   Outperformance *generally* occurs when:
+
+    -   'Interest Rates' are falling
+
+    -   Yield Spreads and the YTW are elevated
+
+        -   Especially in relation to the 2-5 years prior
+
+    -   Preceeding periods are associated with economic bubbles
+
+        -   1990 Oil Shock / Recession
+
+        -   2001 Dot Com Bubble
+
+        -   2008 Great Financial Crisis
+
+        -   2022 Covid/Tech Bubble
+
+-   *Positive* outperformance occurs later in the period
+
+# Building a Simple Narrative
+
+Obviously, these broad points are interrelated; let's try to build an *extremely simple* narrative that captures these relationships:
+
+::: column-margin
+This narrative is by no means detailed, nor complete. In, fact it can be superbly incorrect, but that is for the reader to judge.
+:::
+
+*During prolonged periods of strong stock market upswings, especially those wherein current growth exceeds productive growth, market participants bet on good times continuing - typically levering up in the process. This makes complete sense; why finance growth with equity if it is performing so well? Better to issue debt instead... investors and banks are happy to accept the debt, these companies are performing well (too well). But, just like it's not a good idea to push yourself past physical capacity for extended periods of time, it is not good for a company to grow faster than its economic potential for extended periods of time; eventually something breaks. During this initial period of hurt, both equity holders and debt holders get whacked, valuations drop and the first bankruptcies occur. However, since debt holders get paid first, they get hurt slightly less than equity holders. Now, we are at a critical point in time... investors start to panic and make some back of the napkin calculations... and conclude that at current rates, debt is no longer a profitable investment, so they demand higher yields. Notice that YTW and High Yield Spreads briefly shoot up during these periods (1990, 2001, 2008...). However, the market seems to systematically underestimate two important things: 1) the Federal Reserve's willingness to supply the proverbial medicine by lowering interest rates and 2) the associated aid from lower interest rates. We can notice from our graph that, after the tough first year where both asset classes perform badly, the Fed steps in and stimulates the economy by lowering the cost of borrowing (... we also notice that yields will quickly follow suit). Naturally, companies are now able to negotiate better deals on borrowing money, so they take on more debt at a lower rate and use it to service their older, more expensive debt. Obviously, these companies are kicking the can down the road, and we can see that problems will occur when the Fed can no longer lower interest rates, but for now, this narrative sort of makes sense. Notice the prolonged periods of High Yield's outperformance occur approximately a year after the initial crash (1990, 2001, 2008) for 2-4 years because investors were able to invest when yields were at their peak, and the Fed stimulated the economy shortly thereafter. Now, we flip back to the origin of the story... High Yield Debt is starting to see a prolonged period of strong performance... things seem less risky and therefore yields decline and the pendulum starts to swing in favor of equities again...*
+
+# Applying the Key Takeaways and Narrative
+
+Let's attempt to codify our narrative and key takeaways, so that we can isolate periods of strong High Yield Debt returns (and hopefully identify future ones as well). I will tell the computer to go through the data and highlight a region *if*:
+
+-   the current YTW is 30% greater than its 3 Year Moving Average w/ a 2-year lag
+
+-   the current Yield Spread is 75% greater than its 3 Year Moving Average w/ a 2-year lag
+
+-   the current Federal Funds Rate is 33% lower than its 3 Year Moving Average w/ a 2-year lag
+
+Here is the resulting plot:
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+#| fig-cap: Plot 2 is the same as Plot 1, but Fed Funds Rate is removed. Plot 3 is being re-provided for ease of comparison.
+
+ytw_signal_dates_vec <- high_yield_data %>%
+    filter(symbol == "ytw") %>%
+    arrange(date) %>%
+    filter(value != 0) %>%
+    mutate(roll_mean_3yr_lag2 = slidify_vec(
+        .x = lag(value, n = 8),
+        .f = mean,
+        na.rm = T,
+        .period = 12,
+        .align = c("right")
+    )) %>% 
+    drop_na() %>% 
+    filter(value > 1.3 * roll_mean_3yr_lag2) %>% 
+    pull(date)
+
+hys_signal_dates_vec <- high_yield_data %>%
+    filter(symbol == "hys") %>%
+    arrange(date) %>%
+    filter(value != 0) %>%
+    mutate(roll_mean_3yr_lag2 = slidify_vec(
+        .x = lag(value, n = 365 * 2),
+        .f = mean,
+        na.rm = T,
+        .period = 365 * 3,
+        .align = c("right")
+    )) %>% 
+    drop_na() %>% 
+    filter(value > 1.75 * roll_mean_3yr_lag2) %>% 
+    pull(date)
+
+ffr_signal_dates_vec <- high_yield_data %>%
+    filter(symbol == "ffr") %>%
+    arrange(date) %>%
+    filter(value != 0) %>%
+    filter(date >= ymd("1984-01-01")) %>% 
+    mutate(roll_mean_3yr_lag2 = slidify_vec(
+        .x = lag(value, n = 12*2),
+        .f = mean,
+        na.rm = T,
+        .period = 12*3,
+        .align = c("right")
+    )) %>% 
+    drop_na() %>% 
+    filter(value < .67 * roll_mean_3yr_lag2) %>% 
+    pull(date)
+
+g1 <- tibble(
+    start_date = ytw_signal_dates_vec,
+    end_date = ceiling_date(ytw_signal_dates_vec, unit = "months") + months(3) - days(1),
+    type = "Yield to Worst"
+) %>% 
+    bind_rows(
+        tibble(
+            start_date = hys_signal_dates_vec,
+            end_date = hys_signal_dates_vec + days(1),
+            type = "High Yield Spread"
+        )
+    ) %>% 
+    bind_rows(
+        tibble(
+            start_date = ffr_signal_dates_vec,
+            end_date = ffr_signal_dates_vec + months(1),
+            type = "Fed Funds Rate"
+        )
+    ) %>% 
+    ggplot(aes(xmin = start_date, xmax = end_date, ymin = -1, ymax = 1, fill = type)) +
+    geom_rect(alpha = .9) +
+    theme_bw() +
+    theme(legend.position = "top", text = element_text(face = "bold", size = 16)) +
+    labs(
+        fill = ""
+    ) +
+    scale_y_continuous(breaks = NULL) +
+    scale_x_date(date_breaks = "3 years", labels = year, guide = guide_axis(angle = 45)) +
+    scale_fill_brewer() +
+    coord_cartesian(xlim = c(ymd("1988-01-01", ymd("2023-01-01"))))
+
+g2 <- tibble(
+    start_date = ytw_signal_dates_vec,
+    end_date = ceiling_date(ytw_signal_dates_vec, unit = "months") + months(3) - days(1),
+    type = "Yield to Worst"
+) %>% 
+    bind_rows(
+        tibble(
+            start_date = hys_signal_dates_vec,
+            end_date = hys_signal_dates_vec + days(1),
+            type = "High Yield Spread"
+        )
+    ) %>% 
+    ggplot(aes(xmin = start_date, xmax = end_date, ymin = -1, ymax = 1, fill = type)) +
+    geom_rect(alpha = .9) +
+    theme_bw() +
+    theme(legend.position = "top", text = element_text(face = "bold", size = 16)) +
+    labs(
+        fill = ""
+    ) +
+    scale_y_continuous(breaks = NULL) +
+    scale_x_date(date_breaks = "3 years", labels = year, guide = guide_axis(angle = 45)) +
+    coord_cartesian(xlim = c(ymd("1988-01-01", ymd("2023-01-01"))))
+
+g3 <- g3 +
+    coord_cartesian(xlim = c(ymd("1988-01-01", ymd("2023-01-01"))))
+
+cowplot::plot_grid(g1, g2, g3, ncol = 1, align = "hv")
+```
+
+As we can see, these 3 simple metrics, especially the YTW metric, provide a decent signal for periods of strong High Yield Debt returns. And while these metrics have been created with a knowledge of the past, they certainly corroborate the simple narrative we created above. Possible next steps include applying these signals to other developed markets while being mindful of their current position in their interest rate cycle, improving these signals, and assessing hypothetical performance, etc... I leave these as exercises to the reader...
+
+# The Future: Where are we heading?
+
+In our above research, one of our key takeaways involved the Federal Funds Rate (i.e. the 'interest' rate). This should be self-evident as interest rates measure the cost of borrowing money and are therefore the primary drivers of the economy and financial markets. We noted that during periods of economic hurt (typically after some sort of 'bubble') the Fed would lower rates and kick the can down the road. However, we have now reached that special point in time wherein interest rates can no longer be lowered. Instead, the Fed has been forced to aggressively raise rates, subsequently popping the Tech bubble. This makes for an interesting investment environment going forward. We have noted that High Yield Debt performs better during these reactionary declining interest rate environments, and equities during the post-recovery 'rising' rate environment. However, in spite of all this, my outlook for equities is still slightly more pessimistic. Instead, I think that High Yield Debt is likely to outperform over the next 2 years, followed by Equities picking back up...
+
+# Final Remarks
+
+*The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice. Feel free to reach out at maxsands700\@gmail.com with questions and comments... Cheers :)*

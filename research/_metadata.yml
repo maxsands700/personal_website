@@ -9,3 +9,5 @@ title-block-banner: true
 
 code-fold: true
 df-print: kable
+toc: true
+toc-depth: 4

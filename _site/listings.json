@@ -1,7 +1,9 @@
 [
   {
     "listing": "/research.html",
-    "items": []
+    "items": [
+      "/research/00_high_yield_analysis/index.html"
+    ]
   },
   {
     "listing": "/instructional_articles.html",

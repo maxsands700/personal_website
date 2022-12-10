@@ -11,6 +11,8 @@ website:
         text: Research
       - href: instructional_articles.qmd
         text: Instructional Articles
+      - href: resume.qmd
+        text: Resume
     right:
       - icon: instagram
         href: https://www.instagram.com/max_sands_7/
