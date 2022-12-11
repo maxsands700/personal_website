@@ -65,9 +65,9 @@ ul.task-list{list-style: none;}
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -173,6 +173,12 @@ ul.task-list{list-style: none;}
          <option value="listing-title" data-direction="asc">
           Title
         </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
          <option value="listing-author" data-direction="asc">
           Author
         </option>
@@ -184,7 +190,7 @@ ul.task-list{list-style: none;}
     </div>
 </div>
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="High Yield Debt" data-listing-file-modified-sort="1670708576566" data-listing-reading-time-sort="22.11">
+<div class="g-col-1" data-index="0" data-categories="High Yield Debt" data-listing-date-sort="1670562000000" data-listing-file-modified-sort="1670719151734" data-listing-reading-time-sort="22.11">
 <a href="./research/00_high_yield_analysis/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -202,9 +208,12 @@ High Yield Debt
 <div class="card-text listing-description">
 Read Time: 15 mins
 </div>
-<div class="card-attribution card-text-small start">
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Max Sands
+</div>
+<div class="listing-date">
+Dec 9, 2022
 </div>
 </div>
 </div>
