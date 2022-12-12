@@ -33,17 +33,17 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 
 *Business & Investment Analyst* \| *2022 - Present* \| *Boston, MA*
 
--   Providing general investment research and assessing manager performance for both the Equities and Fixed Income teams
+-   XXXXX
 
--   Developing unique solutions and models for the Investment and Operations divisions:
+-   XXXXX
 
-    -   Built in-house Monte Carlo Simulation tool for Retirement Analysis
+    -   XXXXX
 
-        -   Includes Sensitivity Analysis across several key inputs
+        -   XXXXX
 
-        -   Includes report generation - both static PDFs and interactive HTML
+        -   XXXXX
 
-    -   Automating report and presentation deck generation
+    -   XXXXX
 
 ## McGill University
 
