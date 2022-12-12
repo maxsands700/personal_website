@@ -31,6 +31,7 @@ library(plotly)
 library(here)
 library(timetk)
 library(cowplot)
+library(gt)
 
 high_yield_data <- read_rds(here("raw_data", "High Yield Analysis", "high_yield_data.rds"))
 
@@ -72,7 +73,9 @@ high_yield_data_filled %>%
     pivot_wider(names_from = name, values_from = value) %>% 
     mutate(across(.cols = c(2,3,7,5), .fns = ~scales::percent(.x, accuracy = .01, scale = 1))) %>% 
     mutate(across(.cols = c(4,6), .fns = ~scales::number(.x, accuracy = 1))) %>% 
-    head()
+    head() %>% 
+    rename(Date = date) %>% 
+    gt()
 ```
 
 ### Variable Definitions
