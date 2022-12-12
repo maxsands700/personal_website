@@ -2,7 +2,7 @@
 title: "Management Trading"
 author: "Max Sands"
 date: "2022-12-11"
-description: "Read Time: 10 mins"
+description: "Read Time: 5-10 mins"
 categories: [Equities]
 image: preview_image.jpeg
 editor_options: 
@@ -54,7 +54,7 @@ mgmt_data %>%
 ### Variable Definitions
 
 | Variable         | Definition                                                                                                                                                                                                                             |
-|-------------|-----------------------------------------------------------|
+|----------------|--------------------------------------------------------|
 | screen_date      | The date where the computer went back in time and filtered all the companies that had management buy volume account for .01% (or more) of all trading volume in the week prior. You will notice that screen_date is always a Saturday. |
 | date             | The date associated with the company's stock price (all other variables are constant).                                                                                                                                                 |
 | symbol           | The company's stock ticker                                                                                                                                                                                                             |
