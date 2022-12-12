@@ -1,5 +1,5 @@
 ---
-title: "An Analysis of High Yield Debt vs. Equities"
+title: "High Yield Debt vs. Equities"
 author: "Max Sands"
 date: "2022-12-09"
 description: "Read Time: 15 mins"

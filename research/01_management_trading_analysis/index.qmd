@@ -1,0 +1,290 @@
+---
+title: "Management Trading"
+author: "Max Sands"
+date: "2022-12-10"
+description: "Read Time: 10 mins"
+categories: [Equities]
+image: preview_image.jpeg
+editor_options: 
+  chunk_output_type: console
+message: false
+warning: false
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(tidyquant)
+library(lubridate)
+library(gt)
+library(plotly)
+library(here)
+
+mgmt_data <- read_rds(here("raw_data", "Management Trading", "management_buy.rds")) %>% 
+    select(-price_d_1, -market_cap_1) %>% 
+    rename(price = PX_LAST, mgmt_buy_volume = mgmt_buys_volume_1_week_w_1) %>% 
+    select(screen_date, date, symbol, short_name, mgmt_buy_volume, market_cap, p_e, total_return_ytd, price) %>% 
+    mutate(total_return_ytd = total_return_ytd / 100) %>% 
+    mutate(symbol = symbol %>% str_remove_all(pattern = " US Equity"))
+```
+
+# Intro
+
+In this article we will investigate if following management trading can provide superior investment returns. To do this, I've gathered a list of all the U.S. companies wherein management accounted for .01% (or more) of all volume traded for that company's stock in the week prior. Other constraints, like a minimum company market capitalization, were also applied. I then retrieved each company's stock prices for the following 3 months. Here is the resulting data since 2000:
+
+::: panel-tabset
+### Data
+
+```{r}
+#| column: body-outset
+mgmt_data %>% 
+    head() %>% 
+    gt() %>% 
+    gt::fmt_currency(
+        columns = c(market_cap, price),
+        suffixing = T
+    ) %>% 
+    gt::fmt_number(
+        columns = c(p_e), decimals = 0
+    ) %>% 
+    gt::fmt_percent(
+        columns = c(mgmt_buy_volume, total_return_ytd)
+    )
+```
+
+### Variable Definitions
+
+| Variable         | Definition                                                                                                                                                                                                                             |
+|-------------|-----------------------------------------------------------|
+| screen_date      | The date where the computer went back in time and filtered all the companies that had management buy volume account for .01% (or more) of all trading volume in the week prior. You will notice that screen_date is always a Saturday. |
+| date             | The date associated with the company's stock price (all other variables are constant).                                                                                                                                                 |
+| symbol           | The company's stock ticker                                                                                                                                                                                                             |
+| short_name       | The company's name                                                                                                                                                                                                                     |
+| mgmt_buy_volume  | Management's proportion of trade volume                                                                                                                                                                                                |
+| market_cap       | The company's current market value (number of shares \* share price)                                                                                                                                                                   |
+| p_e              | The company's Price-to-Earnings ratio (the amount of money paid for \$1 of the company's earnings)                                                                                                                                     |
+| total_return_ytd | The Year-to-Date return on the company's stock                                                                                                                                                                                         |
+| price            | The company's closing stock price                                                                                                                                                                                                      |
+:::
+
+# Examining the Data
+
+Let's dig into the data and get a feel for what we are looking at. As usual, we will use visuals to help us.
+
+```{r}
+#| column: body-outset
+#| fig-width: 10
+#| fig-height: 5
+
+mgmt_data %>% 
+    group_by(screen_date) %>% 
+    distinct(symbol) %>% 
+    ungroup() %>% 
+    count(screen_date) %>% 
+    ggplot(aes(screen_date, n)) +
+    geom_col() +
+    theme_bw() +
+    labs(
+        x = "",
+        y = "",
+        title = "Count of Companies that Adhere to our Conditions",
+        subtitle = "Each Bar represents a Week"
+    ) +
+    theme(text = element_text(size = 15))
+```
+
+As we can see from our plot, the weekly number of companies that adhere to our conditions gradually increase over time and rapidly increase after 2020. There are a few logical reasons for this:
+
+1.  I filtered for companies with market caps greater than \$200M, but \$200M in 2001 is worth much more than \$200M in 2022. It would have been better to filter while adjusting for inflation, but I forgot to do this...
+
+2.  The overall number of companies in the U.S. has greatly increased since 2001
+
+3.  Over the past several years, we have had very low interest rates. With the cost of borrowing money so low, people have been spending money, creating companies, and driving valuations up.
+
+Since we don't have many companies during 2000-2004, let's make the executive decision to only use data from 2005 and on. Here is the same plot as before but lets group by year this time:
+
+```{r}
+#| column: body-outset
+#| fig-width: 10
+#| fig-height: 5
+mgmt_data <- mgmt_data %>% 
+    filter(screen_date >= ymd("2005-01-01"))
+
+mgmt_data %>% 
+    group_by(screen_date) %>% 
+    distinct(symbol) %>% 
+    ungroup() %>% 
+    mutate(year = year(screen_date)) %>% 
+    count(year) %>% 
+    ggplot(aes(year, n)) +
+    geom_col() +
+    theme_bw() +
+    labs(
+        x = "",
+        y = "",
+        title = "Count of Companies that Adhere to our Conditions",
+        subtitle = "Each Bar represents a Year"
+    ) +
+    theme(text = element_text(size = 15))
+```
+
+While we would still like to see more companies is the earlier years, this will have to do. Let's continue forward and assess the performance of our filtered stocks relative to traditional index funds.
+
+# Performance Comparison
+
+Let's use the Russell 2000 Index and the SP500 Index as our benchmarks. However, rather than use the indices themselves, let's use ETFs instead as these are a better representation of actual investment performance since individuals cannot actually invest in the indices. Here is the code to obtain that data and the following graph representing their performance since 2005:
+
+```{r}
+#| column: body-outset
+#| fig-width: 10
+#| fig-height: 5
+
+price_data <- tq_get(c("IWM", "SPY"), from = "2005-01-01") %>% 
+    select(symbol, date, adjusted) %>% 
+    mutate(name = ifelse(symbol == "IWM", "Russell 2000 ETF", "SP500 ETF"))
+
+price_data %>% 
+    group_by(symbol) %>% 
+    mutate(adjusted = adjusted / first(adjusted)) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, adjusted, color = name)) +
+    geom_line() +
+    theme_bw() +
+    scale_color_grey() +
+    scale_y_continuous(labels = scales::dollar_format()) +
+    labs(y = "Portfolio Wealth ($1)",
+         x = "",
+         color = "") +
+    theme(legend.position = "top", text = element_text(size = 15))
+    
+```
+
+Now that we have this data, let's compare the performance of the ETFs to that of our companies. In order to do this, we need to establish an investment horizon that makes sense for our companies. In other words, should we pretend that we invest in our companies for a day? 3 days? A week? A Year? etc. Let's investigate this:
+
+```{r}
+#| column: body-outset
+#| fig-width: 10
+#| fig-height: 5
+
+mgmt_data %>% 
+    group_by(screen_date, symbol) %>% 
+    mutate(days_after_screen = row_number() - 1,
+           price_index = price / first(price)) %>% 
+    ungroup() %>% 
+    filter(days_after_screen <= 60) %>% 
+    group_by(days_after_screen) %>% 
+    summarize(average_return = mean(price_index, na.rm = T) - 1) %>% 
+    ggplot(aes(days_after_screen, average_return)) +
+    geom_col() +
+    theme_bw() +
+    labs(
+        title = "Average Return vs. Investment Horizon",
+        y = "Average Return",
+        x = "Investment Horizon (in Days)"
+    ) +
+    scale_y_continuous(labels = scales::percent_format(), n.breaks = 6) +
+    scale_x_continuous(n.breaks = 7) +
+    theme(text = element_text(size = 15))
+    
+```
+
+We can already tell from the data that management clearly has some inside information that the markets are oblivious to; the average return for each of these companies after just 5 days is approximately 0.5%. This may not sound like much at first, but if you stop to do some simple calculations, you will realize that if you invest \$1 at this rate, and compound your investment at a weekly (5 day) frequency over 52 weeks, then you will have approximately \$1.3 at the end of the year. This equates to a 30% yearly return while the SP500 averages 10%.
+
+Moving forward, lets continue with a hypothetical investment horizon of a week (5 days) as this will deliver the most 'bang for our buck'. While the 60 day average return is approximately 2.5%, we will lose out on the benefits from a shorter compounding frequency. Moreover, a week is a clean frequency to work with, and it matches nicely with the fact that our screens are run at a weekly frequency.
+
+Now that we have established our 'investment horizon,' let's pretend that we invest equally in these companies each week and compare our performance to that of the SP500 and the Russell 2000:
+
+::: panel-tabset
+### Aggregate
+
+```{r}
+#| column: body-outset
+#| fig-width: 10
+#| fig-height: 5
+mgmt_data %>% 
+    group_by(screen_date, symbol) %>% 
+    mutate(days_after_screen = row_number() - 1,
+           price_index = price / first(price)) %>% 
+    ungroup() %>% 
+    filter(days_after_screen == 5) %>% 
+    group_by(screen_date) %>% 
+    summarize(portfolio_index = mean(price_index, na.rm = T)) %>% 
+    left_join(
+        price_data %>% 
+    mutate(date = floor_date(date, unit = "weeks") - days(2)) %>% 
+    group_by(name, date) %>% 
+    summarize(return = adjusted/first(adjusted)) %>% 
+    slice_tail() %>% 
+    ungroup() %>% 
+    pivot_wider(names_from = name, values_from = return) %>% 
+    janitor::clean_names(),
+        by = c("screen_date" = "date")
+    ) %>% 
+    mutate(across(-screen_date, .fns = cumprod)) %>% 
+    pivot_longer(-screen_date) %>% 
+    
+    ggplot(aes(screen_date, value, color = name)) +
+    geom_line() +
+    theme_bw() +
+    scale_color_grey() +
+    scale_y_continuous(labels = scales::dollar_format()) +
+    labs(
+        y = "Portfolio Wealth Index ($1)",
+        color = "",
+        x = ""
+    ) +
+    theme(legend.position = "top", text = element_text(size = 15))
+```
+
+### Yearly
+
+```{r}
+#| column: body-outset
+#| fig-width: 10
+#| fig-height: 5
+
+mgmt_data %>% 
+    group_by(screen_date, symbol) %>% 
+    mutate(days_after_screen = row_number() - 1,
+           price_index = price / first(price)) %>% 
+    ungroup() %>% 
+    filter(days_after_screen == 5) %>% 
+    group_by(screen_date) %>% 
+    summarize(portfolio_index = mean(price_index, na.rm = T)) %>% 
+    left_join(
+        price_data %>% 
+    mutate(date = floor_date(date, unit = "weeks") - days(2)) %>% 
+    group_by(name, date) %>% 
+    summarize(return = adjusted/first(adjusted)) %>% 
+    slice_tail() %>% 
+    ungroup() %>% 
+    pivot_wider(names_from = name, values_from = return) %>% 
+    janitor::clean_names(),
+        by = c("screen_date" = "date")
+    ) %>% 
+    mutate(year = year(screen_date)) %>% 
+    group_by(year) %>% 
+    mutate(across(-screen_date, .fns = cumprod)) %>% 
+    slice_tail() %>% 
+    ungroup() %>% 
+    select(-screen_date, -russell_2000_etf) %>%
+    pivot_longer(-year) %>% 
+    mutate(value = value - 1) %>% 
+    ggplot(aes(year, value, fill = name)) +
+    geom_col(position = "dodge") +
+    theme_bw() +
+    scale_fill_grey() +
+    scale_y_continuous(labels = scales::percent_format()) +
+    labs(
+        y = "Return (%)",
+        x = "",
+        fill = ""
+    ) +
+    theme(legend.position = "top", text = element_text(size = 15))
+```
+:::
+
+It is obviously apparent, from the above, that following management trading can provide superior investment returns...
+
+# Final Remarks
+
+*The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice. Feel free to reach out at maxsands700\@gmail.com with questions and comments... Cheers :)*
