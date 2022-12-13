@@ -28,12 +28,27 @@ library(tidyverse)
 library(tidyquant)
 library(lubridate)
 library(plotly)
+library(readxl)
 library(here)
 library(timetk)
 library(cowplot)
+library(patchwork)
 library(gt)
 
 high_yield_data <- read_rds(here("raw_data", "High Yield Analysis", "high_yield_data.rds"))
+
+damadoran_data <- read_excel(here("raw_data", "High Yield Analysis", "damadoran_return_data.xlsx")) %>% 
+    pivot_longer(-year) %>% 
+    mutate(date = ymd(paste(year, 12, 31, sep = "-"))) %>% 
+    select(date, name, value)
+
+high_yield_data <- high_yield_data %>% 
+    bind_rows(
+        damadoran_data %>% 
+            filter(name == "Inflation") %>% 
+            mutate(symbol = "cpi") %>% 
+            mutate(value = value * 100)
+    )
 
 source(here::here("research", "00_high_yield_analysis", "scripts", "helpful_functions.R"))
 
@@ -88,6 +103,7 @@ high_yield_data_filled %>%
 | Federal Funds Rate | The rate at which major U.S. banks lend their 'federal funds'/reserve balances to each other overnight. This is generally the rate referred to when people mention 'the interest rate'.                                             |
 | Coupon Rate        | The annual rate of income received by an investor for holding a bond. A bond with a 5% coupon rate and face value of \$100 will result in annual income receipts of \$5.                                                            |
 | Yield to Worst     | The lowest possible yield that can be earned by a bond that fully adheres to its contracted terms (perhaps a bond has a callable provision etc.). *This measure does not include default risk*.                                     |
+| Inflation          | The yearly rate of increase in prices.                                                                                                                                                                                              |
 :::
 
 # Performance Comparison
@@ -317,6 +333,77 @@ When tasked with the following - *"Identify time periods where High Yield Debt o
 > The reason why High Yield Debt outperforms Equities during periods of high inflation and economic downturns is because it offers a higher yield than Equities, which can help to offset the effects of inflation and provide a more stable return in a volatile market. Additionally, High Yield Debt is generally less volatile than Equities, making it a more attractive investment during periods of economic uncertainty. Finally, High Yield Debt is typically less sensitive to changes in interest rates, which can be beneficial during periods of rising inflation."
 >
 > *- OpenAI*
+
+# Going Back Even Further
+
+While we don't have data on a High Yield Bond Index, its Yield Spread, YTW, and Coupon Rate, before 1984, Aswath Damadoran, a professor at NYU known for gathering and sharing financial data, published the following helpful dataset:
+
+```{r}
+read_excel(here("raw_data", "High Yield Analysis", "damadoran_return_data.xlsx")) %>% 
+    select(-Inflation) %>% 
+    head() %>% 
+    gt() %>% 
+    gt::tab_header(title = "Yearly Real Returns") %>% 
+    gt::fmt_percent(-year) %>% 
+    gt::tab_footnote(footnote = "All returns are stated in real terms (i.e. adjusted for inflation)")
+```
+
+Let's treat Baa Corporate Bonds as a proxy for 'High Yield' Debt and visualize its performance relative to the SP500 since 1928.
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 6
+
+dates_vec <- damadoran_data %>% 
+    filter(name %in% c("Baa Corporate Bonds", "SP500")) %>% 
+    filter(date %>% between(ymd("1928-01-01"), ymd("1984-01-01"))) %>% 
+    pivot_wider(names_from = name, values_from = value) %>% 
+    mutate(difference = `Baa Corporate Bonds` - SP500) %>% 
+    filter(difference >= 0) %>% 
+    pull(date)
+
+dates_positive_vec <- damadoran_data %>% 
+    filter(name %in% c("Baa Corporate Bonds", "SP500")) %>% 
+    filter(date %>% between(ymd("1928-01-01"), ymd("1984-01-01"))) %>% 
+    pivot_wider(names_from = name, values_from = value) %>% 
+    mutate(difference = `Baa Corporate Bonds` - SP500) %>% 
+    filter(difference >= 0) %>% 
+    filter(`Baa Corporate Bonds` > 0) %>% 
+    pull(date)
+
+damadoran_data %>% 
+    filter(name %in% c("Baa Corporate Bonds", "SP500")) %>% 
+    filter(date %>% between(ymd("1928-01-01"), ymd("1984-01-01"))) %>% 
+    ggplot() +
+    geom_rect(
+        data = tibble(start_date = dates_vec, end_date = dates_vec) %>% 
+            mutate(end_date = end_date + years(1)),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf),
+        fill = "grey", alpha = .6
+    ) +
+    geom_rect(
+        data = tibble(start_date = dates_positive_vec, end_date = dates_positive_vec) %>% 
+            mutate(end_date = end_date + years(1)),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf),
+        fill = "purple", alpha = .15
+    ) +
+    geom_col(aes(date, value, fill = name), position = "dodge") +
+    theme_bw() +
+    theme(legend.position = "top", text = element_text(size = 16)) +
+    labs(y="",x="",fill="") +
+    scale_y_continuous(labels = scales::percent_format(), n.breaks = 12) +
+    scale_x_date(date_breaks = "3 years", guide = guide_axis(angle = 45), labels = year)
+
+```
+
+The above chart, while limited in its usefulness, provides us with some possible amendments to our key takeaways:
+
+1.  Our observation that *positive* outperformance occurs later in the outperformance period does not seem to hold well during the 1929-1934 & 1940-1943 time-frames.
+
+2.  There appears to be marginally less cyclicality in outperformance.
+
+3.  Most importantly, the above solidifies our claim that High Yield Outperforms during periods associated with financial bubbles (1929, 1940, etc.).
 
 # Applying the Key Takeaways and Narrative
 
