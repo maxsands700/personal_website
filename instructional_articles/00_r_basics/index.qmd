@@ -102,7 +102,7 @@ diamonds %>%
 
 You will now see that we have from our original 53,940 diamonds, we have filtered down to 1,550 that adhere to our conditions.
 
-At this point you may have two questions:
+At this point you may have three questions:
 
 1.  What is the `%>%`?
 
