@@ -2,7 +2,7 @@
 title: "Weather & the Stock Market"
 author: "Max Sands"
 date: "2022-12-22"
-description: "Read Time: 15-25 mins"
+description: "Read Time: 5-10 mins"
 categories: [Equities]
 image: preview_image.webp
 editor_options: 
