@@ -1,0 +1,333 @@
+---
+title: "Weather & the Stock Market"
+author: "Max Sands"
+date: "2022-12-22"
+description: "Read Time: 15-25 mins"
+categories: [Equities]
+image: preview_image.webp
+editor_options: 
+  chunk_output_type: console
+message: false
+warning: false
+---
+
+# Intro
+
+In recent years, behavioral finance - the field of study that combines psychology and economics to better understand financial decision making - has grown in popularity. There have been many studies that prove the irrationality of human decision-making processes due to psychological and emotional biases factors.
+
+With this in mind, we will investigate if weather conditions in New York have any noticeable impact on daily stock market returns and, if so, attempt to build a predictive model.
+
+Let's load the data...
+
+```{r, include=FALSE, echo=FALSE}
+library(tidyverse)
+library(tidyquant)
+library(lubridate)
+library(timetk)
+library(tidymodels)
+library(modeltime)
+library(here)
+library(gt)
+library(patchwork)
+library(plotly)
+library(glue)
+library(knitr)
+library(DT)
+```
+
+::: panel-tabset
+### Weather Data
+
+```{r}
+weather_data <- read_rds(here("raw_data", "Weather and Markets", "new_york_weather_data_clean.rds"))
+
+weather_data %>%
+    # head() %>%
+    set_names(names(.) %>% str_replace_all(., "_", " ") %>% str_to_title()) %>%
+    mutate(across(.cols = where(~is.numeric(.x)), .fns = round)) %>%
+    datatable()
+
+```
+
+### Stock Market Data
+
+We will consider the SP500 Index as a proxy for the stock market:
+
+```{r}
+stock_data <- tq_get("^GSPC", from = "1978-12-29")
+
+stock_data <- stock_data %>% 
+    mutate(pct_ret = (adjusted / lag(adjusted)) - 1) %>% 
+    slice(-1) %>% 
+    select(date, pct_ret)
+
+stock_data %>% 
+    head() %>% 
+    set_names(c("Date", "Return (%)")) %>% 
+    gt() %>% 
+    gt::fmt_percent(columns = 2)
+
+```
+
+### Variable Definitions
+
+| Variable              | Definition                                                                                                                                                                         |
+|-------------------------|-----------------------------------------------|
+| `Tod`                 | The time of day (Morning, Midday, Afternoon).                                                                                                                                      |
+| `Temp`                | The temperature in degrees Fahrenheit.                                                                                                                                             |
+| `Visibility`          | The maximum distance at which an object can clearly be discerned.                                                                                                                  |
+| `Dew Point`           | The minimum threshold temperature that results in a relative humidity level of 100%.                                                                                               |
+| `Feels Like`          | A measure of how hot/cold it feels like outside when accounting for other variables like wind chill, humidity, etc.                                                                |
+| `Temp Min`            | The minimum temperature during the associated time stamp.                                                                                                                          |
+| `Temp Max`            | The maximum temperature during the associated time stamp.                                                                                                                          |
+| `Pressure`            | The weight of the air. High air pressure (heavy air) is associated with calm weather conditions whereas low air pressure (light air) is associated with active weather conditions. |
+| `Humidity`            | The amount of water vapor in the air.                                                                                                                                              |
+| `Wind Speed`          | The speed of the wind in miles per hour.                                                                                                                                           |
+| `Wind Deg`            | The direction of the wind in circular degrees.                                                                                                                                     |
+| `Clouds All`          | Cloudiness of the sky in percent.                                                                                                                                                  |
+| `Weather Id`          | The ID code associated with the weather.                                                                                                                                           |
+| `Weather Main`        | The Primary Weather Category.                                                                                                                                                      |
+| `Weather Description` | The Secondary Weather Category.                                                                                                                                                    |
+| `Weather Icon`        | The ID code of the icon being displayed on weather apps.                                                                                                                           |
+:::
+
+# Exploring the Data
+
+Let's start by taking a look at the daily SP500 returns below:
+
+## SP500 Returns
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+avg_ret <- stock_data %>% 
+    summarize(avg_ret = mean(pct_ret)) %>% 
+    pull(avg_ret)
+
+stock_data %>% 
+    ggplot(aes(date, pct_ret)) +
+    geom_point(alpha = .5) +
+    geom_hline(yintercept = avg_ret, color = "red") +
+    theme_bw() +
+    labs(
+        y = "", x = "",
+        title = "SP500 Daily Return (%)",
+        subtitle = str_glue("Average: {scales::percent(avg_ret, accuracy = .0001)}")
+    ) +
+    scale_y_continuous(labels = scales::percent_format()) +
+    theme(text = element_text(size=15))
+```
+
+As we can see from the data, there are several days with extreme returns; on October 19, 1987 ('Black Monday') the market declined by approximately 22%, and in March of 2020, the stock market dipped when news of the Covid-19 pandemic arose. While these events are extremely important from a historical perspective, it is unlikely that the weather had much to do with these days of extreme returns. Therefore, we will consider days like these to be outliers, and we will remove them from our data. Here is a cleaned version of the data:
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+
+stock_summary <- stock_data %>% 
+    summarize(
+        mean = mean(pct_ret, na.rm = T),
+        st_dev = sd(pct_ret, na.rm = T)
+    )
+
+stock_data %>% 
+    mutate(is_outlier = case_when(
+        pct_ret > stock_summary$mean + 2*stock_summary$st_dev ~ "Outlier",
+        pct_ret < stock_summary$mean - 2*stock_summary$st_dev ~ "Outlier",
+        T ~ "Not Outlier"
+    )) %>% 
+    ggplot(aes(date, pct_ret, color = is_outlier)) +
+    geom_point() +
+    theme_bw() +
+    labs(
+        y = "", x = "",
+        title = "SP500 Daily Return (%)",
+        color = ""
+    ) +
+    scale_color_hue(direction = -1) +
+    scale_y_continuous(labels = scales::percent_format()) +
+    theme(text = element_text(size=15), legend.position = "top")
+
+stock_data <- stock_data %>% 
+    mutate(is_outlier = case_when(
+        pct_ret > stock_summary$mean + 2*stock_summary$st_dev ~ "Outlier",
+        pct_ret < stock_summary$mean - 2*stock_summary$st_dev ~ "Outlier",
+        T ~ "Not Outlier"
+    )) %>% 
+    filter(is_outlier == "Not Outlier") %>% 
+    select(-is_outlier)
+```
+
+Going forward, we will solely use the blue data points...
+
+```{r, include=FALSE}
+data <- weather_data %>% 
+    left_join(stock_data) %>% 
+    mutate(month = month(date, label = T)) %>% 
+    select(date, month, tod, pct_ret, everything())
+```
+
+## The Impact of the Weather
+
+Let's examine the returns on days with different morning weather conditions for each month:
+
+::: panel-tabset
+```{r}
+#| results: asis
+#| fig-width: 8
+#| fig-height: 5
+#| fig-cap: Black lines represent the average of the group whereas the red line represents the average across all groups
+
+library(ggridges)
+
+months <- data %>% 
+    distinct(month) %>% 
+    mutate(month = as.character(month)) %>% 
+    pull()
+
+plots <- list()
+for (i in seq_along(months)){
+    
+    avg_ret <- data %>% 
+        filter(month == months[i]) %>% 
+        filter(tod == "Morning") %>% 
+        summarize(avg_ret = mean(pct_ret, na.rm = T)) %>% 
+        pull()
+    
+    g <- data %>% 
+        filter(month == months[i]) %>% 
+        filter(tod == "Morning") %>% 
+        filter(weather_main %in% c(
+            "Snow", "Rain", "Clouds", "Clear"
+        )) %>% 
+        ggplot(aes(pct_ret, y = weather_main, fill = weather_main)) +
+        geom_density_ridges(
+            quantile_lines = T,
+            quantile_fun = function(x, ...)mean(x),
+            vline_color = "black",
+            scale = 1
+        ) +
+        geom_vline(xintercept = avg_ret, color = "red") +
+        scale_fill_brewer() +
+        theme_bw() +
+        theme(legend.position = "none", text = element_text(size = 15)) +
+        scale_x_continuous(labels = scales::percent_format(), n.breaks = 8) +
+        labs(
+            y = "Morning Conditions", x = "",
+            title = "Distribution of Daily Returns (%)"
+        ) +
+        coord_cartesian(xlim = c(-.035, .035))
+    
+    plots[[months[i]]] <- g
+    
+}
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+
+```
+:::
+
+As we can see from the above plots, each of the distributions are relatively similar for different morning weather conditions. Therefore, morning weather seems to have little effect on the distribution of daily stock market returns.
+
+Let's investigate if temperature differences have any impact on market returns...
+
+## The Impact of Temperature Differences
+
+Let's hypothesize that on days where it is colder than usual, returns are worse than days where it is warmer than usual. To quantify this hypothesis, let's see if the difference of `Feels Like` from that month's average `Feels Like` yields any interesting results on stock market returns:
+
+::: panel-tabset
+```{r}
+#| results: asis
+#| fig-width: 8
+#| fig-height: 5
+
+feels_like_summary <- data %>% 
+    group_by(month, tod) %>% 
+    summarize(avg_feels_like = mean(feels_like, na.rm = T)) %>% 
+    ungroup()
+
+plots <- list()
+for (i in seq_along(months)){
+   g <-  data %>% 
+        select(date:pct_ret, weather_main, feels_like) %>% 
+        left_join(feels_like_summary) %>% 
+        filter(month == months[i]) %>% 
+        filter(tod == "Morning") %>% 
+        filter(weather_main %in% c("Snow", "Rain", "Clouds", "Clear", "Mist", "Fog")) %>% 
+        mutate(difference = feels_like - avg_feels_like) %>% 
+        ggplot(aes(difference, pct_ret, color = weather_main)) +
+        geom_point(alpha = .7) +
+        facet_wrap(~weather_main) +
+        theme_bw() +
+        scale_fill_brewer() +
+        theme(legend.position = "none", text = element_text(size = 15)) +
+        scale_x_continuous(labels = scales::number_format(suffix = "°F")) +
+        scale_y_continuous(labels = scales::percent_format()) +
+        labs(
+            y = "Daily Return (%)", x = "Feels Like - Avg. Feels Like"
+        )
+   
+   plots[[months[i]]] <- g
+}
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+
+```
+:::
+
+Likewise, there is no evidence that variations in temperature can help explain daily stock returns.
+
+## Simple Modelling - Linear Regression
+
+From our brief analysis above, it seems unlikely that we will be able to use weather data to model stock market returns accurately, but let's run through a quick linear regression and examine the results.
+
+```{r}
+data_prep <- data %>% 
+    left_join(feels_like_summary) %>% 
+    mutate(feels_like_difference = feels_like - avg_feels_like) %>% 
+    select(-avg_feels_like) %>% 
+    filter(tod == "Morning") %>% 
+    filter(!is.na(pct_ret)) %>% 
+    mutate(wday = wday(date, label = T)) %>% 
+    select(date, month, wday, everything(), -tod, -weather_id, -weather_icon)
+
+lm_output <- data_prep %>% 
+    select(pct_ret, month, weather_main, feels_like, feels_like_difference) %>% 
+    lm(formula = pct_ret ~ . - 1) %>% 
+    summary()
+
+lm_output %>% 
+    broom::glance() %>% 
+    set_names(names(.) %>% str_replace_all(., "_", " ") %>% str_to_title()) %>%
+    mutate(across(.cols = where(~is.numeric(.x)), .fns = ~round(.x, digits = 4))) %>% 
+    gt()
+```
+
+```{r}
+lm_output %>% 
+    broom::tidy() %>% 
+    arrange(p.value) %>% 
+    set_names(names(.) %>% str_replace_all(., "_", " ") %>% str_to_title()) %>%
+    mutate(across(.cols = where(~is.numeric(.x)), .fns = ~round(.x, digits = 3))) %>%
+    DT::datatable()
+```
+
+Once again, we confirm that the weather cannot help explain variation in daily stock returns (with our model only explaining .7%). In fact, the month of the year seems to be more significant than the weather when explaining daily stock return variation.
+
+# Final Remarks
+
+*The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice.*

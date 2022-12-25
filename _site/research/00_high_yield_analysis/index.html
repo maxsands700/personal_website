@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,14 +10,19 @@
 <meta name="dcterms.date" content="2022-12-09">
 <meta name="description" content="Read Time: 15-25 mins">
 
-<title>- High Yield Debt vs.&nbsp;Equities</title>
+<title>High Yield Debt vs.&nbsp;Equities</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -56,7 +61,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -69,7 +74,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -136,28 +141,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">Home</a>
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../research.html">Research</a>
+    <a class="nav-link" href="../../research.html">
+ <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../instructional_articles.html">Instructional Articles</a>
+    <a class="nav-link" href="../../instructional_articles.html">
+ <span class="menu-text">Instructional Articles</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../resume.html">Resume</a>
+    <a class="nav-link" href="../../resume.html">
+ <span class="menu-text">Resume</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://www.instagram.com/max_sands_7/"><i class="bi bi-instagram" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/in/max-sands-1798b41a4/"><i class="bi bi-linkedin" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -197,6 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <p class="date">December 9, 2022</p>
       </div>
     </div>
+    
       
     </div>
     
@@ -205,7 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -213,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#performance-comparison" id="toc-performance-comparison" class="nav-link" data-scroll-target="#performance-comparison">Performance Comparison</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
   <li><a href="#building-a-simple-narrative" id="toc-building-a-simple-narrative" class="nav-link" data-scroll-target="#building-a-simple-narrative">Building a Simple Narrative</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#a-note-from-openai" id="toc-a-note-from-openai" class="nav-link" data-scroll-target="#a-note-from-openai">A Note from OpenAI</a></li>
   </ul></li>
   <li><a href="#going-back-even-further" id="toc-going-back-even-further" class="nav-link" data-scroll-target="#going-back-even-further">Going Back Even Further</a></li>
@@ -260,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#csfhbvlcvr .gt_table {
+:where(#csfhbvlcvr) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -285,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_heading {
+:where(#csfhbvlcvr) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -297,7 +307,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_title {
+:where(#csfhbvlcvr) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -309,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#csfhbvlcvr .gt_subtitle {
+:where(#csfhbvlcvr) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -321,13 +331,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#csfhbvlcvr .gt_bottom_border {
+:where(#csfhbvlcvr) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_col_headings {
+:where(#csfhbvlcvr) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -342,7 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_col_heading {
+:where(#csfhbvlcvr) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -362,7 +372,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#csfhbvlcvr .gt_column_spanner_outer {
+:where(#csfhbvlcvr) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -374,15 +384,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#csfhbvlcvr .gt_column_spanner_outer:first-child {
+:where(#csfhbvlcvr) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#csfhbvlcvr .gt_column_spanner_outer:last-child {
+:where(#csfhbvlcvr) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#csfhbvlcvr .gt_column_spanner {
+:where(#csfhbvlcvr) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -394,7 +404,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#csfhbvlcvr .gt_group_heading {
+:where(#csfhbvlcvr) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -419,7 +429,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#csfhbvlcvr .gt_empty_group_heading {
+:where(#csfhbvlcvr) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -434,15 +444,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#csfhbvlcvr .gt_from_md > :first-child {
+:where(#csfhbvlcvr) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#csfhbvlcvr .gt_from_md > :last-child {
+:where(#csfhbvlcvr) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#csfhbvlcvr .gt_row {
+:where(#csfhbvlcvr) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -461,7 +471,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#csfhbvlcvr .gt_stub {
+:where(#csfhbvlcvr) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -474,7 +484,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#csfhbvlcvr .gt_stub_row_group {
+:where(#csfhbvlcvr) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -488,11 +498,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#csfhbvlcvr .gt_row_group_first td {
+:where(#csfhbvlcvr) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#csfhbvlcvr .gt_summary_row {
+:where(#csfhbvlcvr) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -502,16 +512,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#csfhbvlcvr .gt_first_summary_row {
+:where(#csfhbvlcvr) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_first_summary_row.thick {
+:where(#csfhbvlcvr) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#csfhbvlcvr .gt_last_summary_row {
+:where(#csfhbvlcvr) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -521,7 +531,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_grand_summary_row {
+:where(#csfhbvlcvr) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -531,7 +541,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#csfhbvlcvr .gt_first_grand_summary_row {
+:where(#csfhbvlcvr) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -541,11 +551,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_striped {
+:where(#csfhbvlcvr) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#csfhbvlcvr .gt_table_body {
+:where(#csfhbvlcvr) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -554,7 +564,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_footnotes {
+:where(#csfhbvlcvr) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -568,7 +578,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_footnote {
+:where(#csfhbvlcvr) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -577,7 +587,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#csfhbvlcvr .gt_sourcenotes {
+:where(#csfhbvlcvr) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -591,7 +601,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#csfhbvlcvr .gt_sourcenote {
+:where(#csfhbvlcvr) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -599,36 +609,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#csfhbvlcvr .gt_left {
+:where(#csfhbvlcvr) .gt_left {
   text-align: left;
 }
 
-#csfhbvlcvr .gt_center {
+:where(#csfhbvlcvr) .gt_center {
   text-align: center;
 }
 
-#csfhbvlcvr .gt_right {
+:where(#csfhbvlcvr) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#csfhbvlcvr .gt_font_normal {
+:where(#csfhbvlcvr) .gt_font_normal {
   font-weight: normal;
 }
 
-#csfhbvlcvr .gt_font_bold {
+:where(#csfhbvlcvr) .gt_font_bold {
   font-weight: bold;
 }
 
-#csfhbvlcvr .gt_font_italic {
+:where(#csfhbvlcvr) .gt_font_italic {
   font-style: italic;
 }
 
-#csfhbvlcvr .gt_super {
+:where(#csfhbvlcvr) .gt_super {
   font-size: 65%;
 }
 
-#csfhbvlcvr .gt_two_val_uncert {
+:where(#csfhbvlcvr) .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -637,31 +647,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin-left: 0.1em;
 }
 
-#csfhbvlcvr .gt_footnote_marks {
+:where(#csfhbvlcvr) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#csfhbvlcvr .gt_asterisk {
+:where(#csfhbvlcvr) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#csfhbvlcvr .gt_slash_mark {
+:where(#csfhbvlcvr) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#csfhbvlcvr .gt_fraction_numerator {
+:where(#csfhbvlcvr) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#csfhbvlcvr .gt_fraction_denominator {
+:where(#csfhbvlcvr) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1060,7 +1070,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#afkwrddjrt .gt_table {
+:where(#afkwrddjrt) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1085,7 +1095,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_heading {
+:where(#afkwrddjrt) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1097,7 +1107,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_title {
+:where(#afkwrddjrt) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1109,7 +1119,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#afkwrddjrt .gt_subtitle {
+:where(#afkwrddjrt) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1121,13 +1131,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#afkwrddjrt .gt_bottom_border {
+:where(#afkwrddjrt) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_col_headings {
+:where(#afkwrddjrt) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1142,7 +1152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_col_heading {
+:where(#afkwrddjrt) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1162,7 +1172,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#afkwrddjrt .gt_column_spanner_outer {
+:where(#afkwrddjrt) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1174,15 +1184,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#afkwrddjrt .gt_column_spanner_outer:first-child {
+:where(#afkwrddjrt) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#afkwrddjrt .gt_column_spanner_outer:last-child {
+:where(#afkwrddjrt) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#afkwrddjrt .gt_column_spanner {
+:where(#afkwrddjrt) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1194,7 +1204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#afkwrddjrt .gt_group_heading {
+:where(#afkwrddjrt) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1219,7 +1229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#afkwrddjrt .gt_empty_group_heading {
+:where(#afkwrddjrt) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1234,15 +1244,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#afkwrddjrt .gt_from_md > :first-child {
+:where(#afkwrddjrt) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#afkwrddjrt .gt_from_md > :last-child {
+:where(#afkwrddjrt) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#afkwrddjrt .gt_row {
+:where(#afkwrddjrt) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1261,7 +1271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#afkwrddjrt .gt_stub {
+:where(#afkwrddjrt) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1274,7 +1284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#afkwrddjrt .gt_stub_row_group {
+:where(#afkwrddjrt) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1288,11 +1298,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#afkwrddjrt .gt_row_group_first td {
+:where(#afkwrddjrt) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#afkwrddjrt .gt_summary_row {
+:where(#afkwrddjrt) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1302,16 +1312,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#afkwrddjrt .gt_first_summary_row {
+:where(#afkwrddjrt) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_first_summary_row.thick {
+:where(#afkwrddjrt) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#afkwrddjrt .gt_last_summary_row {
+:where(#afkwrddjrt) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1321,7 +1331,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_grand_summary_row {
+:where(#afkwrddjrt) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1331,7 +1341,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#afkwrddjrt .gt_first_grand_summary_row {
+:where(#afkwrddjrt) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1341,11 +1351,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_striped {
+:where(#afkwrddjrt) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#afkwrddjrt .gt_table_body {
+:where(#afkwrddjrt) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1354,7 +1364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_footnotes {
+:where(#afkwrddjrt) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1368,7 +1378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_footnote {
+:where(#afkwrddjrt) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1377,7 +1387,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#afkwrddjrt .gt_sourcenotes {
+:where(#afkwrddjrt) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1391,7 +1401,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#afkwrddjrt .gt_sourcenote {
+:where(#afkwrddjrt) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1399,36 +1409,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#afkwrddjrt .gt_left {
+:where(#afkwrddjrt) .gt_left {
   text-align: left;
 }
 
-#afkwrddjrt .gt_center {
+:where(#afkwrddjrt) .gt_center {
   text-align: center;
 }
 
-#afkwrddjrt .gt_right {
+:where(#afkwrddjrt) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#afkwrddjrt .gt_font_normal {
+:where(#afkwrddjrt) .gt_font_normal {
   font-weight: normal;
 }
 
-#afkwrddjrt .gt_font_bold {
+:where(#afkwrddjrt) .gt_font_bold {
   font-weight: bold;
 }
 
-#afkwrddjrt .gt_font_italic {
+:where(#afkwrddjrt) .gt_font_italic {
   font-style: italic;
 }
 
-#afkwrddjrt .gt_super {
+:where(#afkwrddjrt) .gt_super {
   font-size: 65%;
 }
 
-#afkwrddjrt .gt_two_val_uncert {
+:where(#afkwrddjrt) .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -1437,31 +1447,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin-left: 0.1em;
 }
 
-#afkwrddjrt .gt_footnote_marks {
+:where(#afkwrddjrt) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#afkwrddjrt .gt_asterisk {
+:where(#afkwrddjrt) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#afkwrddjrt .gt_slash_mark {
+:where(#afkwrddjrt) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#afkwrddjrt .gt_fraction_numerator {
+:where(#afkwrddjrt) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#afkwrddjrt .gt_fraction_denominator {
+:where(#afkwrddjrt) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1768,7 +1778,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1796,31 +1823,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
