@@ -13,9 +13,7 @@ warning: false
 
 # Intro
 
-In recent years, behavioral finance - the field of study that combines psychology and economics to better understand financial decision making - has grown in popularity. There have been many studies that prove the irrationality of human decision-making processes due to psychological and emotional biases factors.
-
-With this in mind, we will investigate if weather conditions in New York have any noticeable impact on daily stock market returns and, if so, attempt to build a predictive model.
+In recent years, behavioral finance - the field of study that combines psychology and economics to better understand financial decision making - has grown in popularity. There have been many studies that prove the irrationality of human decision-making processes due to psychological and emotional factors. With this in mind, we will investigate if weather conditions in New York have any noticeable impact on daily stock market returns.
 
 Let's load the data...
 
@@ -118,7 +116,7 @@ stock_data %>%
     theme(text = element_text(size=15))
 ```
 
-As we can see from the data, there are several days with extreme returns; on October 19, 1987 ('Black Monday') the market declined by approximately 22%, and in March of 2020, the stock market dipped when news of the Covid-19 pandemic arose. While these events are extremely important from a historical perspective, it is unlikely that the weather had much to do with these days of extreme returns. Therefore, we will consider days like these to be outliers, and we will remove them from our data. Here is a cleaned version of the data:
+As we can see from the data, there are several days with extreme returns; on October 19, 1987 ('Black Monday') the market declined by approximately 22%, and in March of 2020, the stock market dipped when news of the Covid-19 pandemic arose. While these events are extremely important from a historical perspective, it is unlikely that the weather contributed significantly to these extreme returns. Therefore, we will consider days like these to be outliers, and we will remove them from our data. Here is a cleaned version of the data:
 
 ```{r}
 #| fig-width: 8
@@ -329,5 +327,7 @@ lm_output %>%
 Once again, we confirm that the weather cannot help explain variation in daily stock returns (with our model only explaining .7%). In fact, the month of the year seems to be more significant than the weather when explaining daily stock return variation.
 
 # Final Remarks
+
+Evidently, there is no clear relationship between the weather and daily stock returns...
 
 *The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice.*
