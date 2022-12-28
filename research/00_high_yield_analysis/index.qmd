@@ -104,8 +104,6 @@ high_yield_data %>%
     plot_time_series(10) +
     theme(text = element_text(size = 16))
 ```
-
-                               |
 :::
 
 # Performance Comparison
