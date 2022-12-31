@@ -15,7 +15,7 @@ about:
 
 ## Welcome
 
-*Hi All - I'm Max and Welcome to my Site. I'm a Business Analyst with a passion for Data Science and Investment Research. On here, you can find Research Articles covering these topics; feel free to reach out via LinkedIn if they pique your interest, you would like to collaborate, or if you have questions. Cheers :)*
+*Hi All - I'm Max and Welcome to my Site. I'm a Business Analyst with a passion for Data Science and Investment Research. On here, you can find mini Research Articles covering these topics; feel free to reach out via LinkedIn if they pique your interest, you would like to collaborate, or if you have questions. Cheers :)*
 
 ::: {#about-section}
 ### Education
