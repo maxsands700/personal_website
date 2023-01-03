@@ -332,7 +332,7 @@ This narrative is by no means detailed, nor complete. In, fact it can be superbl
 
 *Now, we flip back to the origin of the story... High Yield Debt is starting to see a prolonged period of strong performance... things seem less risky and therefore yields decline and the pendulum starts to swing in favor of equities again...*
 
-### A Note from OpenAI
+### A Note from OpenAI's ChatGPT
 
 When tasked with the following - *"Identify time periods where High Yield Debt outperformed Equities. Give a hypothesis for why it outperforms during periods of high inflation and economic downturns."* - OpenAI's model gave the following answer:
 
@@ -340,7 +340,7 @@ When tasked with the following - *"Identify time periods where High Yield Debt o
 >
 > The reason why High Yield Debt outperforms Equities during periods of high inflation and economic downturns is because it offers a higher yield than Equities, which can help to offset the effects of inflation and provide a more stable return in a volatile market. Additionally, High Yield Debt is generally less volatile than Equities, making it a more attractive investment during periods of economic uncertainty. Finally, High Yield Debt is typically less sensitive to changes in interest rates, which can be beneficial during periods of rising inflation."
 >
-> *- OpenAI*
+> *- ChatGPT*
 
 # Going Back Even Further
 
