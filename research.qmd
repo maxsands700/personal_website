@@ -1,5 +1,5 @@
 ---
-title: "My Research"
+title: "Research"
 listing:
   contents: research
   sort: "date desc"
