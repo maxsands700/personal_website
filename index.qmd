@@ -35,6 +35,6 @@ IronHold Capital \| *Investment Analyst* \| 2020 - 2021
 
 [Replicating Ray Dalio's Work]{.underline}: Ray Dalio is personal idol of mine because he is simultaneously an economist, data scientist, and narrator, but, above all else, he exemplifies the power of 'first-principles' thinking. He is able to synthesize centuries of history and data into logical, measurable, cause-and-effect relationships. I am currently attempting to build a system that forecasts major countries' "Big" and "Debt" Cycles using Machine Learning (see Ray Dalio's *Principles for Dealing with With the Changing World Order* and *Principles for Navigating Big Debt Crises*).
 
-[Predicting the Spread between the Russell 1000, 2000 Growth & Value]{.underline}: Using data from the Bloomberg, the FRED, Google, and other sources in conjunction with Machine Learning to predict weekly returns spreads for these 4 ETFs.
+[Insider Trading - Scraping SEC Form 4 Filings]{.underline}: Wrote code in R that scrapes the SEC Edgar site and all of its Form 4 filings. I am currently developing a trading strategy that incorporates this data.
 
 *If you are interested about these projects, would like to collaborate, or would like to request data I've gathered, please reach out via LinkedIn - thank you.*

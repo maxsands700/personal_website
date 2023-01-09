@@ -98,11 +98,11 @@
     "text": "Replicating Ray Dalio’s Work: Forecasting the ‘Big’ & ‘Debt’ Cycles\n2022 - Present\n\nBuilding a system that continuously retrieves data from various sources and uses Machine Learning to predict several countries’ current and future stages of their ‘Big’ and ‘Debt’ Cycles, with the eventual goal of predicting asset returns across classes, sectors, and geographies"
   },
   {
-    "objectID": "resume.html#predicting-the-spread-between-the-russell-1000-2000-growth-value",
-    "href": "resume.html#predicting-the-spread-between-the-russell-1000-2000-growth-value",
+    "objectID": "resume.html#insider-trading---scraping-sec-form-4-filings",
+    "href": "resume.html#insider-trading---scraping-sec-form-4-filings",
     "title": "",
-    "section": "Predicting the Spread between the Russell 1000, 2000 Growth & Value",
-    "text": "Predicting the Spread between the Russell 1000, 2000 Growth & Value\n2022 - Present\n\nUsing data from Bloomberg, the FRED, Google, and other sources in conjunctions with Machine Learning methods to predict the weekly return spreads across the Russell 1000, 2000, Growth & Value ETFs"
+    "section": "Insider Trading - Scraping SEC Form 4 Filings",
+    "text": "Insider Trading - Scraping SEC Form 4 Filings\n2022 - Present\n\nWrote code in R that scrapes the SEC Edgar site and all of its Form 4 filings. I am currently developing a trading strategy that incorporates this data."
   },
   {
     "objectID": "resume.html#coding-w-bloomberg-automating-equity-screens-rough-draft-dcfs",
@@ -130,7 +130,7 @@
     "href": "index.html#current-projects",
     "title": "Max Sands",
     "section": "Current Projects",
-    "text": "Current Projects\nReplicating Ray Dalio’s Work: Ray Dalio is personal idol of mine because he is simultaneously an economist, data scientist, and narrator, but, above all else, he exemplifies the power of ‘first-principles’ thinking. He is able to synthesize centuries of history and data into logical, measurable, cause-and-effect relationships. I am currently attempting to build a system that forecasts major countries’ “Big” and “Debt” Cycles using Machine Learning (see Ray Dalio’s Principles for Dealing with With the Changing World Order and Principles for Navigating Big Debt Crises).\nPredicting the Spread between the Russell 1000, 2000 Growth & Value: Using data from the Bloomberg, the FRED, Google, and other sources in conjunction with Machine Learning to predict weekly returns spreads for these 4 ETFs.\nIf you are interested about these projects, would like to collaborate, or would like to request data I’ve gathered, please reach out via LinkedIn - thank you."
+    "text": "Current Projects\nReplicating Ray Dalio’s Work: Ray Dalio is personal idol of mine because he is simultaneously an economist, data scientist, and narrator, but, above all else, he exemplifies the power of ‘first-principles’ thinking. He is able to synthesize centuries of history and data into logical, measurable, cause-and-effect relationships. I am currently attempting to build a system that forecasts major countries’ “Big” and “Debt” Cycles using Machine Learning (see Ray Dalio’s Principles for Dealing with With the Changing World Order and Principles for Navigating Big Debt Crises).\nInsider Trading - Scraping SEC Form 4 Filings: Wrote code in R that scrapes the SEC Edgar site and all of its Form 4 filings. I am currently developing a trading strategy that incorporates this data.\nIf you are interested about these projects, would like to collaborate, or would like to request data I’ve gathered, please reach out via LinkedIn - thank you."
   },
   {
     "objectID": "instructional_articles/00_r_basics/index.html",
