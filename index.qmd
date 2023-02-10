@@ -1,6 +1,6 @@
 ---
 title: "Max Sands"
-image: https://media-exp1.licdn.com/dms/image/C4D03AQF_x8SmkOi1xQ/profile-displayphoto-shrink_400_400/0/1650212094989?e=1674691200&v=beta&t=7dhrZLhTJ_kepdA76K4yv6O_LnFXEaAY5MCRnZugmiA
+image: headshot.jpeg
 about:
   id: about-section
   template: trestles
