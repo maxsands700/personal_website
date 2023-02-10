@@ -1,9 +1,9 @@
 ---
-title: "High Yield Debt vs. Equities"
+title: "★High Yield Debt vs. Equities"
 author: "Max Sands"
 date: "2022-12-09"
 description: "Read Time: 15-25 mins"
-categories: [Macro, High Yield Debt]
+categories: [Macro, High Yield Debt, ★]
 image: preview_image.jpeg
 editor_options: 
   chunk_output_type: console

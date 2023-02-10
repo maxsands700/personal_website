@@ -1,9 +1,10 @@
 ---
-title: "EPS Revision Breadth Analysis"
+title: "★EPS Revision Breadth Analysis"
 author: "Max Sands"
 date: "2023-02-05"
+image: preview_image.jpeg
 description: "Read Time: 10-15 mins"
-categories: [Equities]
+categories: [Equities, ★]
 editor_options: 
   chunk_output_type: console
 warning: false
