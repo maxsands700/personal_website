@@ -285,26 +285,26 @@ data_raw_bucketed %>%
     theme(legend.position = "top", text = element_text(size = 16))
 ```
 
-As we can see, our function should be bounded between 0 and 1 on the y-axis, and have a similar shape to our 'prototype' above. These are both characteristics of the 'sigmoid' function:
+As we can see, our function should be bounded between 0 and 1 on the y-axis, and have a similar shape to our 'prototype' above. These are both characteristics of the following function:
 
 $$
-f(x) = \frac{1}{1 + e^{-c_1(x - c_2)}}
+f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 $$
 
-If we test out a few constants, we see that the values of C1 = 20, and C2 = -7.5%, generates a function similar to our sample:
+If we test out a few constants, we see that the values of C1 = 20, C2 = -7.5%, and C3 = 0, generates a function similar to our sample:
 
 ```{r}
 #| fig-width: 10
 #| fig-height: 6
-sigmoid <- function(x, c1, c2){
-    y <- 1 / (1 + exp(-c1 * (x - c2)))
+sigmoid <- function(x, c1, c2, c3){
+    y <- ((1-c3) / (1 + exp(-c1 * (x - c2)))) + c3
     
     return(y)
 }
 
 tibble(
     eps_rb = seq(-1, 1 ,by=.01),
-    `Equity Allocation` = sigmoid(eps_rb, c1 = 20, c2 = -.075),
+    `Equity Allocation` = sigmoid(eps_rb, c1 = 20, c2 = -.075, c3 = 0),
     `Fixed Income Allocation` = 1-`Equity Allocation`
 ) %>% 
     pivot_longer(contains("Allocation")) %>% 
@@ -315,7 +315,7 @@ tibble(
     theme_tq() +
     scale_color_tq() +
     labs(
-        x = "EPS Revision Breadth", y = "Portfolio Weight", title = "Sigmoid Function", subtitle = "C1 = 20, C2 = -7.5%", color = ""
+        x = "EPS Revision Breadth", y = "Portfolio Weight", title = "Allocation Function", subtitle = "C1 = 20, C2 = -7.5%, C3 = 0", color = ""
     ) +
     theme(legend.position = "top", text = element_text(size = 16))
 ```
@@ -341,7 +341,7 @@ start_tbl <- price_data %>%
                   select(-sp500_price))
 
 returns_and_index <- start_tbl %>% 
-    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075),
+    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075, c3 = 0),
            port_fi_weight = 1 - port_equity_weight) %>%
     
     drop_na() %>% 
@@ -415,7 +415,7 @@ This occurs because our Active Portfolio is able to identify time periods when i
 
 ```{r}
 start_tbl %>% 
-    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075),
+    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075, c3 = 0),
            port_fi_weight = 1 - port_equity_weight) %>%
     summarize(across(.cols = contains("port"), .fns = ~mean(.x, na.rm = T))) %>% 
     set_names(c("Average Equity Allocation", "Average Fixed Income Allocation")) %>% 
@@ -433,7 +433,7 @@ We can plot our portfolio's allocation to equities over time:
 ggplot() +
     geom_line(
         data = start_tbl %>% 
-                    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = 0),
+                    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075, c3=0),
                     port_fi_weight = 1 - port_equity_weight),
         mapping = aes(date, port_equity_weight)
     ) +
@@ -464,7 +464,7 @@ Let's assume that we are savvy investors, and that in March of 2022 we increased
 #| fig-height: 6
 
 returns_and_index_mod <- start_tbl %>% 
-    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075)) %>% 
+    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075, c3 = 0)) %>% 
     mutate(port_equity_weight = ifelse(
         date %>% between(major_troughs_tbl$start_date[2], major_troughs_tbl$end_date[2]),
         .75, port_equity_weight)) %>% 
@@ -539,7 +539,7 @@ monthly_returns_mod %>%
 
 ```{r}
 start_tbl %>% 
-    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075)) %>% 
+    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075, c3 = 0)) %>% 
     mutate(port_equity_weight = ifelse(
         date %>% between(major_troughs_tbl$start_date[2], major_troughs_tbl$end_date[2]),
         .75, port_equity_weight)) %>% 
@@ -559,7 +559,7 @@ start_tbl %>%
 ggplot() +
     geom_line(
         data = start_tbl %>% 
-    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075)) %>% 
+    mutate(port_equity_weight = sigmoid(eps_revision_breadth, c1 = 20, c2 = -.075, c3 = 0)) %>% 
     mutate(port_equity_weight = ifelse(
         date %>% between(major_troughs_tbl$start_date[2], major_troughs_tbl$end_date[2]),
         .75, port_equity_weight)),
@@ -575,13 +575,13 @@ ggplot() +
 
 ### Modifying C1 & C2
 
-During the construction of our portfolio, we arbitrarily used *C1 = 20* and *C2 = -.075* as inputs for our sigmoid function because they replicated our rough, 'prototype' weighting scheme. In addition, these inputs seemed sensible for the average investor as they yielded, on average, a 75/25 weighting scheme. However, we can adjust these parameters depending on the risk appetite of the investor.
+During the construction of our portfolio, we arbitrarily used *C1 = 20* and *C2 = -.075* as inputs for our allocation function because they replicated our rough, 'prototype' weighting scheme. In addition, these inputs seemed sensible for the average investor as they yielded, on average, a 75/25 weighting scheme. However, we can adjust these parameters depending on the risk appetite of the investor.
 
 The following demonstrates graphically what occurs as you change C1:
 
 ![](sigmoid.png)
 
-As we can see, C1 represents our sensitivity to changes in EPS Revision Breadth, and C2 represents the EPS Revision Breadth value that corresponds to an equity allocation of 50%. Therefore, we can elect to modify our weighting scheme for different investment styles. The following could represent a sample weighting scheme for a more risk averse investor:
+As we can see, C1 represents our sensitivity to changes in EPS Revision Breadth, C2 represents the EPS Revision Breadth value that corresponds to an equity allocation of 50% (if and only if C3 = 0), and C3 represents a minimum equity allocation. Therefore, we can elect to modify our weighting scheme for different investment styles. The following could represent a sample weighting scheme for an investor that would like to be less sensitive to changes in EPS Revision Breadth with a minimum equity allocation of 40%:
 
 ```{r}
 #| fig-width: 10
@@ -589,7 +589,7 @@ As we can see, C1 represents our sensitivity to changes in EPS Revision Breadth,
 
 tibble(
     eps_rb = seq(-1, 1 ,by=.01),
-    `Equity Allocation` = sigmoid(eps_rb, c1 = 10, c2 = 0.1),
+    `Equity Allocation` = sigmoid(eps_rb, c1 = 10, c2 = -.075, c3 = .4),
     `Fixed Income Allocation` = 1-`Equity Allocation`
 ) %>% 
     pivot_longer(contains("Allocation")) %>% 
@@ -600,7 +600,7 @@ tibble(
     theme_tq() +
     scale_color_tq() +
     labs(
-        x = "EPS Revision Breadth", y = "Portfolio Weight", title = "Sigmoid Function", subtitle = "C1 = 10, C2 = 10%", color = ""
+        x = "EPS Revision Breadth", y = "Portfolio Weight", title = "Allocation Function", subtitle = "C1 = 10, C2 = -7.5%%, C3 = 40%", color = ""
     ) +
     theme(legend.position = "top", text = element_text(size = 16))
 ```
