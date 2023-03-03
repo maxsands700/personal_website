@@ -1,1 +1,28 @@
 /* css styles */
+
+h1, h2, h3, h4, h5, h6 {
+    text-transform: none;
+    letter-spacing: 1.5px;
+}
+
+h1.title {
+    color: #a6a6a6;
+}
+
+th {
+    text-transform: capitalize;
+    font-size: 1rem;
+}
+
+.table th,.table td {
+    padding: 0.3rem; 
+}
+
+.table-sm th,.table-sm td {
+    padding: .75rem
+}
+
+body {
+    letter-spacing: none;
+    padding: none;
+}

@@ -1,0 +1,1022 @@
+---
+title: "★Assessing Financial Bubbles"
+author: "Max Sands"
+date: "2023-02-16"
+image: preview_image.jpeg
+description: "Read Time: 10-15 mins"
+categories: [Equities, ★]
+editor_options: 
+  chunk_output_type: console
+warning: false
+message: false
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(tidyquant)
+library(lubridate)
+library(here)
+library(gt)
+library(patchwork)
+
+source(here("R scripts", "plot_formatting.R"))
+
+r3000_raw <- read_rds(here("raw_data", "Financial Bubbles", "r3000_data.rds")) %>% 
+    mutate(year = year - 1) %>% 
+    filter(!(classification_1 %in% c("NA", "Unclassifiable"))) %>% 
+    filter(!is.na(classification_1)) %>% 
+    mutate(date = ymd(paste0(year, "12-31"))) %>% 
+    select(date, everything()) %>% 
+    group_by(date, classification_1) %>% 
+    mutate(quantile = ntile(market_cap, n = 20)) %>%
+    filter(!is.na(quantile)) %>% 
+    mutate(bucket = case_when(
+        quantile %in% c(1:8) ~ "Small Cap",
+        quantile %in% c(9:16) ~ "Mid Cap",
+        quantile %in% c(17:19) ~ "Large Cap",
+        quantile %in% c(20) ~ "Ultra-Large Cap"
+    )) %>% 
+    ungroup() %>% 
+    select(date:name, bucket, everything())
+
+ipo_data <- read_rds(here("raw_data", "Financial Bubbles", "ipo_data.rds")) %>% 
+    set_names(c(
+        "announced_date", "effective_date", "country", "industry_sector",
+        "industry_group", "industry_subgroup", "ticker", "name",
+        "size", "stage", "type", "security_type"
+    ))
+    
+
+r3000_nested <- r3000_raw %>% 
+    nest(misc             = c(num_employees:inventory_turnover),
+         income_statement = c(revenue:net_income),
+         balance_sheet    = c(current_assets:total_equity),
+         cash_flow_statement = c(free_cash_flow, capex),
+         classification   = c(contains("classification")))
+```
+
+## A Framework for Identifying Bubbles
+
+Financial markets have experienced several notable financial bubbles in recent history. The Dot-Com bubble in 2001, the Great Financial Crisis in 2008, and the Tech bubble in 2022 are three examples. In each case, the period leading up to, during, and after the bubble's collapse brought varying degrees of market volatility and returns. Investors who exited before the crash were able to achieve impressive returns, while those who remained in the market experienced significant losses. As such, it is valuable for investors to be able to identify where financial bubbles are forming and their stage of development to avoid potential losses.
+
+In his book [*Principles for Navigating Big Debt Crises*](https://www.bridgewater.com/big-debt-crises/principles-for-navigating-big-debt-crises-by-ray-dalio.pdf), Ray Dalio posits that markets are cyclical and that financial bubbles form for the same underlying reasons; he outlines the following rough framework for identifying financial bubbles with the associated message:
+
+![](financial_framework.png){fig-align="center"}
+
+> *At this point I want to emphasize that it is a mistake to think that any one metric can serve as an indicator of an impending debt crisis. The ratio of debt to income for the economy as a whole, or even debt service payments to income for the economy as a whole, which is better, are useful but ultimately inadequate measures. To anticipate a debt crisis well, one has to look at the specific debt-service abilities of the individual entities, which are lost in these averages. More specifically, a high level of debt or debt service to income is less problematic if the average is well distributed across the economy than if it is concentrated --- especially if it is concentrated in key entities.*
+>
+> *- Ray Dalio*
+
+While the above framework is tailored for large-scale economic bubbles that drastically affected national economies, we will extend, adapt, and apply this framework to identify financial bubbles within various sectors of the U.S. economy and markets.
+
+## Methods for Quantifying the Framework
+
+The following table outlines certain figures that can help us measure each component of Dalio's Rubric:
+
++-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Framework Component                                       | Ways to Quantify                                                                                                                                                                                                                                                                                                                                                              |
++===========================================================+===============================================================================================================================================================================================================================================================================================================================================================================+
+| *Are prices high relative to traditional measures?*       | 1.  Price-to-Earnings (P/E) Ratio: The P/E ratio is a popular metric for valuing stocks that compares the stock price to the earnings per share. A high P/E ratio suggests that the stock is overvalued relative to its earnings.                                                                                                                                             |
+|                                                           |                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                           | 2.  Price-to-Book (P/B) Ratio: The P/B ratio compares a company's stock price to its book value (i.e., the value of its assets minus its liabilities). A high P/B ratio may suggest that the stock is overvalued relative to its book value.                                                                                                                                  |
+|                                                           |                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                           | 3.  Price-to-Sales (P/S) Ratio: The P/S ratio compares a company's stock price to its sales per share. A high P/S ratio may suggest that the stock is overvalued relative to its sales.                                                                                                                                                                                       |
++-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *Are prices discounting future rapid price appreciation?* | 1.  Options Market: The options market can provide clues as to whether investors are expecting rapid price appreciation in the future. For example, a high call option volume or a low put option volume may suggest that investors are optimistic about future price movements.                                                                                              |
++-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *Are purchases being financed by high leverage?*          | 1.  Debt-to-Equity Ratio: The debt-to-equity ratio is a common measure of a company's leverage, and it compares the amount of debt the company has to its equity. A high debt-to-equity ratio may suggest that the company is financing its purchases with a significant amount of debt.                                                                                      |
+|                                                           |                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                           | 2.  Debt-to-GDP: A measure of debt relative to the income of an entire economy.                                                                                                                                                                                                                                                                                               |
++-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *Are buyers/companies making forward purchases?*          | 1.  Inventory Levels: If a company's inventory levels are high, it may suggest that the company is making forward purchases to secure goods at current prices for future use or resale.                                                                                                                                                                                       |
+|                                                           |                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                           | 2.  Purchase Orders: Publicly traded companies are required to disclose purchase orders and contracts with suppliers in their financial statements. By analyzing these disclosures, investors can gain insight into the company's purchasing activities and determine if they are making forward purchases.                                                                   |
+|                                                           |                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                           | 3.  Capital Expenditures: Companies may make forward purchases as part of their capital expenditures, which are investments in long-term assets. For example, a manufacturing company may purchase machinery and equipment in advance to increase production capacity.                                                                                                        |
++-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *Have new participants entered the market?*               | 1.  IPO data from SEC Regulatory Filings: Publicly traded companies are required to file regulatory reports to the SEC when going public.                                                                                                                                                                                                                                     |
+|                                                           |                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                           | 2.  Composition of Indices: The composition of Indices like the Russell 3000 across different sectors can give clues as to whether new participants have entered a specific market segment.                                                                                                                                                                                   |
+|                                                           |                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                           | 3.  Number of Employees: Tracking the proportion of employees in a certain sector relative to the entire workforce may provide clues to whether new participants have entered a specific market.                                                                                                                                                                              |
++-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *Is there broad bullish sentiment?*                       | 1.  News Sentiment...                                                                                                                                                                                                                                                                                                                                                         |
+|                                                           | 2.  Interview Market Leaders...                                                                                                                                                                                                                                                                                                                                               |
++-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *Does tightening risk popping the bubble?*                | 1.  Interest Coverage Ratio: The interest coverage ratio measures a company's ability to pay its interest expenses on its debt. If a company's interest coverage ratio is low, it may suggest that the company is struggling to make its interest payments. Assessing hypothetical interest coverage ratios if interest rates increase will likely help answer this question. |
++-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Going forward, we will only consider the following framework components, as I believe they best encapsulate the entirety of the framework and are relatively easy to quantify:
+
+1.  Are prices high relative to traditional measures?
+
+2.  Are purchases being financed w/ high leverage?
+
+3.  Have new participants entered the market?
+
+4.  Does tightening risk popping the bubble?
+
+## The Data
+
+In order to do this, I have collected:
+
+-   Key figures from the Income Statements, Balance Sheets, and Cash Flow Statements of all the companies in the Russell 3000 Index since 1996, including the sector classification of each company
+
+-   Global IPO data since 1993
+
+-   Economic Data (GDP, Labor Force, Federal Funds Rate, etc.)
+
+Here is a glimpse of each data-set:
+
+::: panel-tabset
+### Russell 3000 Data
+
+::: panel-tabset
+#### Income Statement
+
+```{r}
+#| column: page
+r3000_nested %>% 
+    head(n=10) %>% 
+    select(year:name, income_statement) %>% 
+    unnest(income_statement) %>% 
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
+    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens"))) %>% 
+    gt() %>% 
+    gt::sub_missing()
+```
+
+#### Balance Sheet
+
+```{r}
+#| column: page
+r3000_nested %>% 
+    head(n=10) %>% 
+    select(year:name, balance_sheet) %>% 
+    unnest(balance_sheet) %>% 
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
+    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens"))) %>% 
+    gt() %>% 
+    gt::sub_missing()
+```
+
+#### Cash Flow Statement
+
+```{r}
+#| column: page
+r3000_nested %>% 
+    head(n=10) %>% 
+    select(year:name, cash_flow_statement) %>% 
+    unnest(cash_flow_statement) %>% 
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
+    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens"))) %>% 
+    gt() %>% 
+    gt::sub_missing()
+```
+
+#### Miscellaneous
+
+```{r}
+#| column: page
+r3000_nested %>% 
+    head(n=10) %>% 
+    select(year:name, misc) %>% 
+    unnest(misc) %>% 
+    mutate(across(.cols = c(market_cap), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens"))) %>% 
+    mutate(price = scales::dollar(price)) %>%
+    mutate(across(.cols = c(contains("num")), .fns = ~scales::number(.x, big.mark = ",", scale_cut = scales::cut_long_scale()))) %>% 
+    mutate(across(.cols = c(contains("price_to"), inventory_turnover), .fns = ~scales::number(round(.x, digits = 1), suffix = "x"))) %>% 
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
+    gt() %>% 
+    gt::sub_missing()
+```
+
+#### Classification
+
+```{r}
+#| column: page
+r3000_nested %>% 
+    head(n=10) %>% 
+    select(year:name, classification) %>% 
+    unnest(classification) %>% 
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
+    gt() %>% 
+    gt::sub_missing()
+```
+:::
+
+### IPO Data
+
+```{r}
+#| column: page
+ipo_data %>% 
+    head(n=10) %>% 
+    mutate(size = scales::dollar(size, suffix = "M")) %>% 
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
+    gt() %>% 
+    gt::sub_missing()
+```
+:::
+
+## Quantifying the Framework
+
+In the following, we will inspect each element of the framework with the data available to us:
+
+<hr>
+
+### 1) Prices are High Relative to Traditional Measures
+
+Let's take a look at the historical P/S, P/B, and P/E ratios of each sector. To do this, we will plot the median value of these ratios since 1995 for different sectors while also aggregating by company size according to the following schema:
+
++-----------------+---------------------------------------------------------+
+| Small Cap       | Market Cap between 0th-40th Percentile for its Sector   |
++-----------------+---------------------------------------------------------+
+| Mid Cap         | Market Cap between 40th-80th Percentile for its Sector  |
++-----------------+---------------------------------------------------------+
+| Large Cap       | Market Cap between 80th-95th Percentile for its Sector  |
++-----------------+---------------------------------------------------------+
+| Ultra-Large Cap | Market Cap between 95th-100th Percentile for its Sector |
++-----------------+---------------------------------------------------------+
+
+::: panel-tabset
+#### Price-to-Sales
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+#| fig-cap: Dashed line represents median of medians for *Large Cap* bucket
+r3000_nested %>% 
+    select(date:bucket, misc, classification) %>% 
+    unnest(c(misc, classification)) %>%
+    group_by(date, classification_1, bucket) %>% 
+    summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, price_to_sales, color = bucket)) +
+    geom_line() +
+    geom_hline(
+        data = . %>%
+            group_by(classification_1, bucket) %>%
+            summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>%
+            ungroup() %>%
+            filter(bucket %in% c("Large Cap")),
+        mapping = aes(yintercept = price_to_sales),
+        color = palette_light()[1],
+        lty = 2
+    ) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    scale_y_continuous(labels = scales::label_number(suffix = "x")) +
+    scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
+    labs(x = "", y = "Median Price-to-Sales", color = "") +
+    theme(legend.position = "top")
+```
+
+#### Price-to-Book
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+#| fig-cap: Dashed line represents median of medians for *Large Cap* bucket
+r3000_nested %>% 
+    select(date:bucket, misc, classification) %>% 
+    unnest(c(misc, classification)) %>%
+    group_by(date, classification_1, bucket) %>% 
+    summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, price_to_book, color = bucket)) +
+    geom_line() +
+    geom_hline(
+        data = . %>%
+            group_by(classification_1, bucket) %>%
+            summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>%
+            ungroup() %>%
+            filter(bucket %in% c("Large Cap")),
+        mapping = aes(yintercept = price_to_book),
+        color = palette_light()[1],
+        lty = 2
+    ) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    scale_y_continuous(labels = scales::label_number(suffix = "x")) +
+    scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
+    labs(x = "", y = "Median Price-to-Book", color = "") +
+    theme(legend.position = "top")
+```
+
+#### Price-to-Earnings
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+#| fig-cap: Dashed line represents median of medians for *Large Cap* bucket
+r3000_nested %>% 
+    select(date:bucket, misc, classification) %>% 
+    unnest(c(misc, classification)) %>%
+    group_by(date, classification_1, bucket) %>% 
+    summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, price_to_earnings, color = bucket)) +
+    geom_line() +
+    geom_hline(
+        data = . %>%
+            group_by(classification_1, bucket) %>%
+            summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>%
+            ungroup() %>%
+            filter(bucket %in% c("Large Cap")),
+        mapping = aes(yintercept = price_to_earnings),
+        color = palette_light()[1],
+        lty = 2
+    ) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    scale_y_continuous(labels = scales::label_number(suffix = "x")) +
+    scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
+    labs(x = "", y = "Median Price-to-Earnings", color = "") +
+    theme(legend.position = "top")
+```
+:::
+
+The above is overwhelming, but it does paint the general picture that financial bubbles have formed when prices are high relative to traditional measures. For instance, the Dot-Com Bubble of '00/'01 is seen most uniformly in the above with high price ratios across the board.
+
+However, let's try to represent the data in a more concise and standardized fashion by:
+
+1.  Calculating the distance of each of these ratios from a median line
+2.  Dividing this distance by the average absolute distance from the median line
+3.  Averaging the standardized distances for the P/S, P/B, & P/E ratios together to a create a single `Price Metric`
+
+By doing this we will have a rough estimation of how elevated prices are for each of these sectors and market cap buckets.
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+r3000_nested %>% 
+    select(date:bucket, misc, classification) %>% 
+    unnest(c(misc, classification)) %>%
+    select(date, ticker, name, bucket, classification_1, contains("price_to")) %>% 
+    group_by(date, classification_1, bucket) %>% 
+    summarize(across(contains("price_to"), ~median(.x, na.rm = T))) %>% 
+    ungroup() %>% 
+    pivot_longer(contains("price_to")) %>% 
+    group_by(classification_1, bucket, name) %>% 
+    mutate(med_value = median(value)) %>% 
+    mutate(distance = value - med_value) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>%
+    group_by(date, classification_1, bucket) %>% 
+    summarize(price_metric = mean(standardized_distance, na.rm = T)) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, price_metric, color = bucket)) +
+    geom_line() +
+    geom_hline(yintercept = 0, color = "black", lty = 2) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    scale_y_continuous(labels = scales::label_number()) +
+    scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
+    labs(x = "", y = "Price Metric", color = "") +
+    theme(legend.position = "top")
+```
+
+##### Takeaways:
+
+From eye-balling the above charts we can conclude that the following sectors were highly priced relative to traditional measures:
+
++------------------------+-----------------------------------+
+| Sector                 | Time Period(s)                    |
++========================+===================================+
+| Communications         | '99 - '01, '20 - '22              |
++------------------------+-----------------------------------+
+| Consumer Discretionary | '20 - '22                         |
++------------------------+-----------------------------------+
+| Consumer Staples       | '97 - '02, '22                    |
++------------------------+-----------------------------------+
+| Energy                 | '00, '17 - '18                    |
++------------------------+-----------------------------------+
+| Financials             | '98 - '02, '18                    |
++------------------------+-----------------------------------+
+| Health Care            | '98-'02, '20 - '22                |
++------------------------+-----------------------------------+
+| Industrials            | '20 - '22                         |
++------------------------+-----------------------------------+
+| Materials              | '20 - '22                         |
++------------------------+-----------------------------------+
+| Real Estate            | '19 - '22                         |
++------------------------+-----------------------------------+
+| Technology             | '99 - '02, '20 - '23              |
++------------------------+-----------------------------------+
+| Utilities              | '01, '07, '18 - '23               |
++------------------------+-----------------------------------+
+
+As we continue through our framework, we will see if the same time periods resurface.
+
+#### Digging Deeper
+
+Now that we have time periods in which certain broad sectors were highly priced, we can repeat the above at a more granular level. In the following, we consider only *Large Cap* and *Ultra-Large Cap* as there are fewer companies in each bucket when aggregating at a more granular sector level:
+
+::: panel-tabset
+```{r}
+#| results: asis
+#| fig-width: 12
+#| fig-height: 15
+
+classification_1_vec <- r3000_raw %>% distinct(classification_1) %>% pull()
+
+start_tbl <- r3000_nested %>% 
+    select(date, misc, classification) %>% 
+    unnest(c(misc, classification)) %>% 
+    select(date, market_cap, contains("price_to"), classification_1, classification_3) %>% 
+    filter(!is.na(market_cap)) %>% 
+    group_by(date, classification_3) %>% 
+    mutate(quantile = ntile(market_cap, n = 10)) %>% 
+    ungroup() %>% 
+    filter(quantile %in% 9:10)
+           
+plots <- list()
+for (i in seq_along(classification_1_vec)){
+    
+    g <- start_tbl %>% 
+    filter(classification_1 == classification_1_vec[i]) %>% 
+    group_by(date, classification_3) %>% 
+    summarize(across(contains("price_to"), ~median(.x, na.rm = T))) %>% 
+    ungroup() %>% 
+    pivot_longer(contains("price_to")) %>% 
+    group_by(classification_3, name) %>% 
+    mutate(med_value = median(value, na.rm = T)) %>% 
+    mutate(distance = value - med_value) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>% 
+    group_by(date, classification_3) %>% 
+    summarize(price_metric = mean(standardized_distance, na.rm = T)) %>% 
+    ggplot(aes(date, price_metric)) +
+    geom_line() +
+    geom_hline(yintercept = 0, color = "black", lty = 2) +
+    theme_tq(base_size = 24) +
+    scale_color_tq() +
+    facet_wrap(~classification_3, scales = "free", ncol = 2) +
+    labs(x="", y = "Price Metric", color = "") +
+    scale_y_continuous(labels = scales::label_number()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top")
+    
+    plots[[classification_1_vec[i]]] <- g
+    
+}
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+```
+:::
+
+### 2) Purchases are Being Financed w/ High Leverage
+
+Let's take a look at the historical debt levels of each sector since 1995. Once again, we will aggregate by company size and plot the median value for different sectors. In this section we will consider two metrics to assess debt levels:
+
+$$
+Metric_1 =  \frac{D_t}{E_t} = \frac{LT\ Debt_t + ST\ Debt_t}{Equity_t}
+$$
+
+$$
+Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t}}{No.\ of\ Companies_t})}{GDP_t}
+$$
+
+The first metric aims to represent leverage at the company level, whereas the second metric aims to represent the significance of that debt in relation to the size of the general economy.
+
+In the second metric, we consider the *average* debt level as a ratio to GDP because the number of companies within each sector of the Russell 3000 varies each year. Therefore, simply calculating the sum for each year could overstate debt levels for years in which there are more companies than usual. Instead, we hope to measure this in isolation in the section *`5) New entrants are entering the market`*.
+
+::: panel-tabset
+#### Metric 1
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+r3000_nested %>% 
+    select(date:bucket, -year, balance_sheet, classification) %>% 
+    unnest(c(balance_sheet, classification)) %>% 
+    mutate(d_e = (st_debt + lt_debt) / total_equity) %>% 
+    select(date:bucket, classification_1, d_e) %>% 
+    group_by(date, classification_1, bucket) %>% 
+    summarize(d_e = median(d_e, na.rm = T)) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, d_e, color = bucket)) +
+    geom_line() +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    labs(x="", y = "Median Debt-to-Equity", color = "") +
+    scale_y_continuous(labels = scales::label_number(suffix = "x")) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top")
+```
+
+#### Metric 2
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+gdp <- read_rds(here("raw_data", "Financial Bubbles", "gdp.rds")) %>% 
+    mutate(gdp = gdp * 1e9)
+
+r3000_nested %>%
+    select(date:bucket, -year, balance_sheet, classification) %>%
+    unnest(c(balance_sheet, classification)) %>%
+    select(date:bucket, classification_1, total_debt) %>%
+    filter(!is.na(total_debt)) %>%
+    group_by(date, classification_1, bucket) %>%
+    summarize(
+        sum_debt = sum(total_debt, na.rm = T),
+        count = n()
+    ) %>%
+    ungroup() %>%
+    left_join(gdp) %>%
+    mutate(avg_debt_to_gdp = ((sum_debt / count) / gdp)) %>%
+    ggplot(aes(date, avg_debt_to_gdp, color = bucket)) +
+    geom_line() +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    labs(x="", y = "Avg. Debt-to-GDP", color = "") +
+    scale_y_continuous(labels = scales::label_percent()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top")
+```
+:::
+
+While the data is not crystal clear, the above generally corroborates the idea that financial bubbles have formed during times of increased leverage. Let's calculate each group's standard distance from their median line:
+
+::: panel-tabset
+#### Metric 1
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+r3000_nested %>% 
+    select(date:bucket, -year, balance_sheet, classification) %>% 
+    unnest(c(balance_sheet, classification)) %>% 
+    mutate(d_e = (st_debt + lt_debt) / total_equity) %>% 
+    select(date:bucket, classification_1, d_e) %>% 
+    group_by(date, classification_1, bucket) %>% 
+    summarize(d_e = median(d_e, na.rm = T)) %>% 
+    ungroup() %>% 
+    group_by(classification_1, bucket) %>% 
+    mutate(med_d_e = median(d_e, na.rm = T)) %>% 
+    mutate(distance = d_e - med_d_e) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, standardized_distance, color = bucket)) +
+    geom_line() +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    labs(x="", y = "Distance from Median Line", color = "") +
+    scale_y_continuous(labels = scales::label_number()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top")
+```
+
+#### Metric 2
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+#| fig-cap: Y-axis labels have been removed for ease of readability
+
+r3000_nested %>%
+    select(date:bucket, -year, balance_sheet, classification) %>%
+    unnest(c(balance_sheet, classification)) %>%
+    select(date:bucket, classification_1, total_debt) %>%
+    filter(!is.na(total_debt)) %>%
+    group_by(date, classification_1, bucket) %>%
+    summarize(
+        sum_debt = sum(total_debt, na.rm = T),
+        count = n()
+    ) %>%
+    ungroup() %>%
+    mutate(avg_debt = sum_debt / count) %>%
+    left_join(gdp) %>%
+    mutate(avg_debt_to_gdp = avg_debt / gdp) %>%
+    group_by(classification_1, bucket) %>%
+    mutate(mid_avg_debt_to_gdp = median(avg_debt_to_gdp, na.rm = T)) %>%
+    mutate(distance = avg_debt_to_gdp - mid_avg_debt_to_gdp) %>%
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>%
+    ggplot(aes(date, standardized_distance, color = bucket)) +
+    geom_line() +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    labs(x="", y = "Distance from Median Line", color = "") +
+    scale_y_continuous(labels = scales::label_number()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top")
+```
+:::
+
+Let's repeat our process and identify time periods where debt levels were high in each sector:
+
++------------------------+-----------------------------------+
+| Sector                 | Time Period(s)                    |
++========================+===================================+
+| Communications         | '97 - '99, '02, '10, '18 - '21    |
++------------------------+-----------------------------------+
+| Consumer Discretionary | '18, '20-'22                      |
++------------------------+-----------------------------------+
+| Consumer Staples       |                                   |
++------------------------+-----------------------------------+
+| Energy                 | '01, '03, '19 - '22               |
++------------------------+-----------------------------------+
+| Financials             | '01 - '09                         |
++------------------------+-----------------------------------+
+| Health Care            | '18 - '23                         |
++------------------------+-----------------------------------+
+| Industrials            | '09, '19-'23                      |
++------------------------+-----------------------------------+
+| Materials              | '01 - '03, '15, '21               |
++------------------------+-----------------------------------+
+| Real Estate            | '08-'10                           |
++------------------------+-----------------------------------+
+| Technology             | '18 - '23                         |
++------------------------+-----------------------------------+
+| Utilities              | '03 - '05, '18 - '23              |
++------------------------+-----------------------------------+
+
+#### Digging Deeper
+
+```{r, include=FALSE}
+start_tbl <- r3000_raw %>% 
+    select(date, classification_1, classification_3, market_cap, total_debt, total_equity) %>% 
+    filter(!is.na(market_cap)) %>% 
+    group_by(date, classification_3) %>% 
+    mutate(quantile = ntile(market_cap, n=10)) %>% 
+    ungroup() %>% 
+    filter(quantile %in% 9:10)
+```
+
+::: panel-tabset
+#### Metric 1
+
+::: panel-tabset
+```{r}
+#| results: asis
+#| fig-width: 12
+#| fig-height: 15
+
+plots <- list()
+for (i in seq_along(classification_1_vec)){
+    
+    g <- start_tbl %>% 
+    filter(classification_1 == classification_1_vec[i]) %>% 
+    mutate(d_e = total_debt / total_equity) %>% 
+    group_by(date, classification_3) %>%
+    summarize(d_e = median(d_e, na.rm = T)) %>% 
+    ungroup() %>% 
+    group_by(classification_3) %>% 
+    mutate(med_d_e = median(d_e, na.rm = T)) %>% 
+    mutate(distance = d_e - med_d_e) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, standardized_distance)) +
+    geom_line() +
+    geom_hline(yintercept = 0, color = "black", lty = 2) +
+    theme_tq(base_size = 24) +
+    scale_color_tq() +
+    facet_wrap(~classification_3, scales = "free", ncol = 2) +
+    labs(x="", y = "Average Distance from Median", color = "") +
+    scale_y_continuous(labels = scales::label_number()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top")
+    
+    plots[[classification_1_vec[i]]] <- g
+    
+}
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+```
+:::
+
+#### Metric 2
+
+::: panel-tabset
+```{r}
+#| results: asis
+#| fig-width: 12
+#| fig-height: 15
+
+plots <- list()
+for (i in seq_along(classification_1_vec)){
+    
+    g <- start_tbl %>% 
+    filter(classification_1 == classification_1_vec[i]) %>% 
+    group_by(date, classification_3) %>% 
+    summarize(sum_debt = sum(total_debt, na.rm = T),
+              count = n()) %>% 
+    ungroup() %>% 
+    left_join(gdp) %>% 
+    mutate(avg_debt_to_gdp = (sum_debt / count) / gdp) %>% 
+    group_by(classification_3) %>%
+    mutate(mid_avg_debt_to_gdp = median(avg_debt_to_gdp, na.rm = T)) %>%
+    mutate(distance = avg_debt_to_gdp - mid_avg_debt_to_gdp) %>%
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(standardized_distance = distance / avg_distance) %>%
+    ungroup() %>% 
+    ggplot(aes(date, standardized_distance)) +
+    geom_line() +
+    geom_hline(yintercept = 0, color = "black", lty = 2) +
+    theme_tq(base_size = 24) +
+    scale_color_tq() +
+    facet_wrap(~classification_3, scales = "free", ncol = 2) +
+    labs(x="", y = "Average Distance from Median", color = "") +
+    scale_y_continuous(labels = NULL) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top")
+    
+    plots[[classification_1_vec[i]]] <- g
+    
+}
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+```
+:::
+:::
+
+### 3) New Entrants to the Market
+
+There are several ways we can assess whether new players are entering markets. The most direct and simple way is to track when private companies become public (i.e. IPO data). This method is likely to produce the clearest results, but it has a glaring shortfall - the classification scheme of our IPO data is different.
+
+::: panel-tabset
+#### Aggregate
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 7
+
+ipo_data %>%
+    filter(country == "UNITED STATES") %>%
+    filter(!(industry_sector %in% c("N.A.", "Government"))) %>%
+    mutate(floor_date = floor_date(announced_date, unit = "month")) %>% 
+    count(announced_date) %>% 
+    ggplot(aes(announced_date, n)) +
+    geom_col(color = palette_light()[1]) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y="", title = "# of IPOs (Monthly)"
+    )
+```
+
+#### Sector-Level
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+ipo_data %>%
+    filter(country == "UNITED STATES") %>%
+    filter(!(industry_sector %in% c("N.A.", "Government"))) %>%
+    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
+    count(floor_date, industry_sector) %>%
+    ggplot(aes(floor_date, n)) +
+    geom_col(color = palette_light()[1]) +
+    facet_wrap(~industry_sector, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y = "", title = "# of IPOs (Monthly)"
+    ) +
+    theme(title = element_text(hjust = .5))
+```
+:::
+
+The problem aggravates further down the classification hierarchy. While reclassifying the data is a viable solution, it is time-consuming; therefore, we will not incorporate this data when building out our system to identify bubbles at the sector-level. However, the above plot clearly demonstrates that bubbles were forming in *Technology*, *Communications,* and *Non-cyclical Consumer* around 2000, and *Diversified, Non-cyclical Consumer* around 2021.
+
+Here are their following subcategories:
+
+::: panel-tabset
+#### Technology
+
+```{r}
+#| column: page
+#| fig-width: 10
+#| fig-height: 8
+ipo_data %>%
+    filter(country == "UNITED STATES") %>%
+    filter(industry_sector == "Technology") %>%
+    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
+    count(floor_date, industry_group) %>%
+    ggplot(aes(floor_date, n)) +
+    geom_col() +
+    facet_wrap(~industry_group, scales = "free") +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y = "", title = "# of IPOs (Monthly)"
+    ) +
+    theme(title = element_text(hjust = .5))
+```
+
+#### Communications
+
+```{r}
+#| column: page
+#| fig-width: 10
+#| fig-height: 8
+ipo_data %>%
+    filter(country == "UNITED STATES") %>%
+    filter(industry_sector == "Communications") %>%
+    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
+    count(floor_date, industry_group) %>%
+    ggplot(aes(floor_date, n)) +
+    geom_col() +
+    facet_wrap(~industry_group, scales = "free") +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y = "", title = "# of IPOs (Monthly)"
+    ) +
+    theme(title = element_text(hjust = .5))
+```
+
+#### Non-Cyclical Consumer
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+ipo_data %>%
+    filter(country == "UNITED STATES") %>%
+    filter(industry_sector == "Consumer, Non-cyclical") %>%
+    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
+    count(floor_date, industry_group) %>%
+    ggplot(aes(floor_date, n)) +
+    geom_col() +
+    facet_wrap(~industry_group, scales = "free") +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y = "", title = "# of IPOs (Monthly)"
+    ) +
+    theme(title = element_text(hjust = .5))
+```
+
+#### Diversified
+
+```{r}
+#| column: page
+#| fig-width: 8
+#| fig-height: 6
+ipo_data %>%
+    filter(country == "UNITED STATES") %>%
+    filter(industry_sector == "Diversified") %>%
+    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
+    count(floor_date, industry_subgroup) %>%
+    ggplot(aes(floor_date, n)) +
+    geom_col() +
+    facet_wrap(~industry_subgroup, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y = "", title = "# of IPOs (Monthly)"
+    ) +
+    theme(title = element_text(hjust = .5))
+```
+:::
+
+The second method of tracking market entrants is to track the weight of each sector within the Russell 3000 Index. In doing this, we will have the same classification schema as our prior analysis, but the findings may not be as clear as those in our IPO data.
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+r3000_nested %>%
+    select(date, classification) %>%
+    unnest(c(classification)) %>%
+    select(date, classification_1) %>%
+    count(date, classification_1) %>%
+    group_by(date) %>% 
+    mutate(prop = n/sum(n)) %>%
+    ungroup() %>% 
+    ggplot(aes(date, prop)) +
+    geom_line() +
+    theme_tq(base_size = 16) +
+    theme(title = element_text(hjust = .5)) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    labs(x="", y = "", color = "", title = "Proportion of Russell 3000 Constituents") +
+    scale_y_continuous(labels = scales::label_percent()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years")
+```
+
+We can repeat the above at a more granular level:
+
+::: panel-tabset
+```{r}
+#| results: asis
+#| fig-width: 12
+#| fig-height: 15
+
+start_tbl <- r3000_nested %>% 
+    select(date, classification) %>%
+    unnest(c(classification)) %>%
+    select(date, classification_1, classification_3)
+
+plots <- list()
+for (i in seq_along(classification_1_vec)){
+    
+    g <- start_tbl %>% 
+        filter(classification_1 == classification_1_vec[i]) %>% 
+        count(date, classification_3) %>% 
+        left_join(r3000_raw %>% 
+                      count(date) %>% 
+                      rename(total = n)) %>% 
+        mutate(prop = n / total) %>% 
+        ggplot(aes(date, prop)) +
+        geom_line() +
+        theme_tq(base_size = 24) +
+        theme(title = element_text(hjust = .5)) +
+        scale_color_tq() +
+        facet_wrap(~classification_3, scales = "free", ncol = 2) +
+        labs(x="", y = "", color = "", title = "Proportion of Russell 3000 Constituents") +
+        scale_y_continuous(labels = scales::label_percent()) +
+        scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years")
+    
+    plots[[classification_1_vec[i]]] <- g
+    
+}
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+```
+:::
+
+A third, albeit indirect method of assessing market entrants is to track the proportion of the labor force in different markets and its growth rate. It is likely that the labor force will shift towards segments of the market where bubbles are forming because workers tend to be well compensated during these times.
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+labor_force <- read_rds(here("raw_data", "Financial Bubbles", "labor_force.rds"))
+
+r3000_nested %>%
+    select(date, misc, classification) %>%
+    unnest(c(misc, classification)) %>%
+    select(date, num_employees, classification_1) %>%
+    group_by(date, classification_1) %>%
+    summarize(tot_employees = sum(num_employees, na.rm = T)) %>%
+    ungroup() %>%
+    left_join(labor_force) %>%
+    mutate(prop = tot_employees / labor_force) %>%
+    ggplot(aes(date, prop)) +
+    geom_line() +
+    theme_tq(base_size = 16) +
+    theme(title = element_text(hjust = .5)) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    labs(x="", y = "", color = "", title = "Proportion of Labor Force") +
+    scale_y_continuous(labels = scales::label_percent()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years")
+```
+
+<hr>
+
+### 4) Tightening Risks Popping the Bubble
+
+## Putting It All Together
