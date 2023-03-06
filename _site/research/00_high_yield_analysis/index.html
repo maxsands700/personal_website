@@ -230,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#going-back-even-further" id="toc-going-back-even-further" class="nav-link" data-scroll-target="#going-back-even-further">Going Back Even Further</a></li>
   <li><a href="#applying-the-key-takeaways-and-narrative" id="toc-applying-the-key-takeaways-and-narrative" class="nav-link" data-scroll-target="#applying-the-key-takeaways-and-narrative">Applying the Key Takeaways and Narrative</a></li>
-  <li><a href="#the-future-where-are-we-heading" id="toc-the-future-where-are-we-heading" class="nav-link" data-scroll-target="#the-future-where-are-we-heading">The Future: Where are we heading?</a></li>
+  <li><a href="#the-future-where-are-we-heading" id="toc-the-future-where-are-we-heading" class="nav-link" data-scroll-target="#the-future-where-are-we-heading">The Future: Where are we Heading?</a></li>
   <li><a href="#final-remarks" id="toc-final-remarks" class="nav-link" data-scroll-target="#final-remarks">Final Remarks</a></li>
   </ul>
 </nav>
@@ -253,8 +253,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Variable Definitions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Plot</a></li></ul>
 <div class="tab-content page-columns page-full">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell">
+<div id="tabset-1-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>high_yield_data_filled <span class="sc">%&gt;%</span> </span>
@@ -262,489 +262,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>), <span class="at">.fns =</span> <span class="sc">~</span>scales<span class="sc">::</span><span class="fu">percent</span>(.x, <span class="at">accuracy =</span> .<span class="dv">01</span>, <span class="at">scale =</span> <span class="dv">1</span>))) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">7</span>), <span class="at">.fns =</span> <span class="sc">~</span>scales<span class="sc">::</span><span class="fu">number</span>(.x, <span class="at">accuracy =</span> <span class="dv">1</span>))) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Date =</span> date) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Date =</span> date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-
-<div id="xsjozflblj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
-
-:where(#xsjozflblj) .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-:where(#xsjozflblj) .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-:where(#xsjozflblj) .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-:where(#xsjozflblj) .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-:where(#xsjozflblj) .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-:where(#xsjozflblj) .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-:where(#xsjozflblj) .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-:where(#xsjozflblj) .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-:where(#xsjozflblj) .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-:where(#xsjozflblj) .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-:where(#xsjozflblj) .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-:where(#xsjozflblj) .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-:where(#xsjozflblj) .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#xsjozflblj) .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-:where(#xsjozflblj) .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-:where(#xsjozflblj) .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#xsjozflblj) .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-:where(#xsjozflblj) .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#xsjozflblj) .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-:where(#xsjozflblj) .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#xsjozflblj) .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-:where(#xsjozflblj) .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-:where(#xsjozflblj) .gt_left {
-  text-align: left;
-}
-
-:where(#xsjozflblj) .gt_center {
-  text-align: center;
-}
-
-:where(#xsjozflblj) .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-:where(#xsjozflblj) .gt_font_normal {
-  font-weight: normal;
-}
-
-:where(#xsjozflblj) .gt_font_bold {
-  font-weight: bold;
-}
-
-:where(#xsjozflblj) .gt_font_italic {
-  font-style: italic;
-}
-
-:where(#xsjozflblj) .gt_super {
-  font-size: 65%;
-}
-
-:where(#xsjozflblj) .gt_two_val_uncert {
-  display: inline-block;
-  line-height: 1em;
-  text-align: right;
-  font-size: 60%;
-  vertical-align: -0.25em;
-  margin-left: 0.1em;
-}
-
-:where(#xsjozflblj) .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
-  font-size: 75%;
-  vertical-align: 0.4em;
-}
-
-:where(#xsjozflblj) .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-:where(#xsjozflblj) .gt_slash_mark {
-  font-size: 0.7em;
-  line-height: 0.7em;
-  vertical-align: 0.15em;
-}
-
-:where(#xsjozflblj) .gt_fraction_numerator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: 0.45em;
-}
-
-:where(#xsjozflblj) .gt_fraction_denominator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: -0.05em;
-}
-</style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Date</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Inflation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Coupon Rate</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Federal Funds Rate</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">High Yield Index</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">High Yield Spread</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">SP500 Index</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Yield to Worst</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left">1997-12-31</td>
-<td class="gt_row gt_left">1.70%</td>
-<td class="gt_row gt_left">8.29%</td>
-<td class="gt_row gt_left">5.56%</td>
-<td class="gt_row gt_left">527</td>
-<td class="gt_row gt_left">2.96%</td>
-<td class="gt_row gt_left">970</td>
-<td class="gt_row gt_left">8.88%</td></tr>
-    <tr><td class="gt_row gt_left">1998-01-01</td>
-<td class="gt_row gt_left">1.70%</td>
-<td class="gt_row gt_left">8.28%</td>
-<td class="gt_row gt_left">5.56%</td>
-<td class="gt_row gt_left">527</td>
-<td class="gt_row gt_left">2.99%</td>
-<td class="gt_row gt_left">973</td>
-<td class="gt_row gt_left">8.87%</td></tr>
-    <tr><td class="gt_row gt_left">1998-01-02</td>
-<td class="gt_row gt_left">1.70%</td>
-<td class="gt_row gt_left">8.28%</td>
-<td class="gt_row gt_left">5.56%</td>
-<td class="gt_row gt_left">527</td>
-<td class="gt_row gt_left">3.02%</td>
-<td class="gt_row gt_left">975</td>
-<td class="gt_row gt_left">8.87%</td></tr>
-    <tr><td class="gt_row gt_left">1998-01-03</td>
-<td class="gt_row gt_left">1.70%</td>
-<td class="gt_row gt_left">8.28%</td>
-<td class="gt_row gt_left">5.56%</td>
-<td class="gt_row gt_left">528</td>
-<td class="gt_row gt_left">3.04%</td>
-<td class="gt_row gt_left">976</td>
-<td class="gt_row gt_left">8.87%</td></tr>
-    <tr><td class="gt_row gt_left">1998-01-04</td>
-<td class="gt_row gt_left">1.70%</td>
-<td class="gt_row gt_left">8.27%</td>
-<td class="gt_row gt_left">5.56%</td>
-<td class="gt_row gt_left">528</td>
-<td class="gt_row gt_left">3.07%</td>
-<td class="gt_row gt_left">976</td>
-<td class="gt_row gt_left">8.86%</td></tr>
-    <tr><td class="gt_row gt_left">1998-01-05</td>
-<td class="gt_row gt_left">1.70%</td>
-<td class="gt_row gt_left">8.27%</td>
-<td class="gt_row gt_left">5.55%</td>
-<td class="gt_row gt_left">528</td>
-<td class="gt_row gt_left">3.09%</td>
-<td class="gt_row gt_left">977</td>
-<td class="gt_row gt_left">8.86%</td></tr>
-  </tbody>
-  
-  
+<div class="cell-output-display column-page">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 14%">
+<col style="width: 15%">
+<col style="width: 10%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Inflation</th>
+<th style="text-align: left;">Coupon Rate</th>
+<th style="text-align: left;">Federal Funds Rate</th>
+<th style="text-align: left;">High Yield Index</th>
+<th style="text-align: left;">High Yield Spread</th>
+<th style="text-align: left;">SP500 Index</th>
+<th style="text-align: left;">Yield to Worst</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1997-12-31</td>
+<td style="text-align: left;">1.70%</td>
+<td style="text-align: left;">8.29%</td>
+<td style="text-align: left;">5.56%</td>
+<td style="text-align: left;">527</td>
+<td style="text-align: left;">2.96%</td>
+<td style="text-align: left;">970</td>
+<td style="text-align: left;">8.88%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1998-01-01</td>
+<td style="text-align: left;">1.70%</td>
+<td style="text-align: left;">8.28%</td>
+<td style="text-align: left;">5.56%</td>
+<td style="text-align: left;">527</td>
+<td style="text-align: left;">2.99%</td>
+<td style="text-align: left;">973</td>
+<td style="text-align: left;">8.87%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1998-01-02</td>
+<td style="text-align: left;">1.70%</td>
+<td style="text-align: left;">8.28%</td>
+<td style="text-align: left;">5.56%</td>
+<td style="text-align: left;">527</td>
+<td style="text-align: left;">3.02%</td>
+<td style="text-align: left;">975</td>
+<td style="text-align: left;">8.87%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1998-01-03</td>
+<td style="text-align: left;">1.70%</td>
+<td style="text-align: left;">8.28%</td>
+<td style="text-align: left;">5.56%</td>
+<td style="text-align: left;">528</td>
+<td style="text-align: left;">3.04%</td>
+<td style="text-align: left;">976</td>
+<td style="text-align: left;">8.87%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1998-01-04</td>
+<td style="text-align: left;">1.70%</td>
+<td style="text-align: left;">8.27%</td>
+<td style="text-align: left;">5.56%</td>
+<td style="text-align: left;">528</td>
+<td style="text-align: left;">3.07%</td>
+<td style="text-align: left;">976</td>
+<td style="text-align: left;">8.86%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1998-01-05</td>
+<td style="text-align: left;">1.70%</td>
+<td style="text-align: left;">8.27%</td>
+<td style="text-align: left;">5.55%</td>
+<td style="text-align: left;">528</td>
+<td style="text-align: left;">3.09%</td>
+<td style="text-align: left;">977</td>
+<td style="text-align: left;">8.86%</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
@@ -1066,12 +672,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output-display">
 
-<div id="avxcuyohil" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="yszwqccdbx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#avxcuyohil) .gt_table {
+:where(#yszwqccdbx) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1096,7 +702,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_heading {
+:where(#yszwqccdbx) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1108,7 +714,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_title {
+:where(#yszwqccdbx) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1120,7 +726,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#avxcuyohil) .gt_subtitle {
+:where(#yszwqccdbx) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1132,13 +738,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#avxcuyohil) .gt_bottom_border {
+:where(#yszwqccdbx) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_col_headings {
+:where(#yszwqccdbx) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1153,7 +759,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_col_heading {
+:where(#yszwqccdbx) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1173,7 +779,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#avxcuyohil) .gt_column_spanner_outer {
+:where(#yszwqccdbx) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1185,15 +791,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#avxcuyohil) .gt_column_spanner_outer:first-child {
+:where(#yszwqccdbx) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#avxcuyohil) .gt_column_spanner_outer:last-child {
+:where(#yszwqccdbx) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#avxcuyohil) .gt_column_spanner {
+:where(#yszwqccdbx) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1205,7 +811,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#avxcuyohil) .gt_group_heading {
+:where(#yszwqccdbx) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1230,7 +836,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#avxcuyohil) .gt_empty_group_heading {
+:where(#yszwqccdbx) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1245,15 +851,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#avxcuyohil) .gt_from_md > :first-child {
+:where(#yszwqccdbx) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#avxcuyohil) .gt_from_md > :last-child {
+:where(#yszwqccdbx) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#avxcuyohil) .gt_row {
+:where(#yszwqccdbx) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1272,7 +878,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#avxcuyohil) .gt_stub {
+:where(#yszwqccdbx) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1285,7 +891,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#avxcuyohil) .gt_stub_row_group {
+:where(#yszwqccdbx) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1299,11 +905,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#avxcuyohil) .gt_row_group_first td {
+:where(#yszwqccdbx) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#avxcuyohil) .gt_summary_row {
+:where(#yszwqccdbx) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1313,16 +919,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#avxcuyohil) .gt_first_summary_row {
+:where(#yszwqccdbx) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_first_summary_row.thick {
+:where(#yszwqccdbx) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#avxcuyohil) .gt_last_summary_row {
+:where(#yszwqccdbx) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1332,7 +938,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_grand_summary_row {
+:where(#yszwqccdbx) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1342,7 +948,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#avxcuyohil) .gt_first_grand_summary_row {
+:where(#yszwqccdbx) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1352,11 +958,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_striped {
+:where(#yszwqccdbx) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#avxcuyohil) .gt_table_body {
+:where(#yszwqccdbx) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1365,7 +971,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_footnotes {
+:where(#yszwqccdbx) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1379,7 +985,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_footnote {
+:where(#yszwqccdbx) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1388,7 +994,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#avxcuyohil) .gt_sourcenotes {
+:where(#yszwqccdbx) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1402,7 +1008,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#avxcuyohil) .gt_sourcenote {
+:where(#yszwqccdbx) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1410,36 +1016,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#avxcuyohil) .gt_left {
+:where(#yszwqccdbx) .gt_left {
   text-align: left;
 }
 
-:where(#avxcuyohil) .gt_center {
+:where(#yszwqccdbx) .gt_center {
   text-align: center;
 }
 
-:where(#avxcuyohil) .gt_right {
+:where(#yszwqccdbx) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#avxcuyohil) .gt_font_normal {
+:where(#yszwqccdbx) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#avxcuyohil) .gt_font_bold {
+:where(#yszwqccdbx) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#avxcuyohil) .gt_font_italic {
+:where(#yszwqccdbx) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#avxcuyohil) .gt_super {
+:where(#yszwqccdbx) .gt_super {
   font-size: 65%;
 }
 
-:where(#avxcuyohil) .gt_two_val_uncert {
+:where(#yszwqccdbx) .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -1448,31 +1054,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin-left: 0.1em;
 }
 
-:where(#avxcuyohil) .gt_footnote_marks {
+:where(#yszwqccdbx) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#avxcuyohil) .gt_asterisk {
+:where(#yszwqccdbx) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#avxcuyohil) .gt_slash_mark {
+:where(#yszwqccdbx) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-:where(#avxcuyohil) .gt_fraction_numerator {
+:where(#yszwqccdbx) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-:where(#avxcuyohil) .gt_fraction_denominator {
+:where(#yszwqccdbx) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1727,7 +1333,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As we can see, these 3 simple metrics, especially the YTW metric, provide a decent signal for periods of strong High Yield Debt returns. And while these metrics have been created with a knowledge of the past, they certainly corroborate the simple narrative we created above. Possible next steps include applying these signals to other developed markets while being mindful of their current position in their interest rate cycle, improving these signals, and assessing hypothetical performance, etc… I leave these as exercises to the reader…</p>
 </section>
 <section id="the-future-where-are-we-heading" class="level1">
-<h1>The Future: Where are we heading?</h1>
+<h1>The Future: Where are we Heading?</h1>
 <p>In our above research, one of our key takeaways involved the Federal Funds Rate (i.e.&nbsp;the ‘interest’ rate). This should be self-evident as the interest rate measures the cost of borrowing money and is therefore the primary drivers of the economy and financial markets. We noted that during periods of economic hurt (typically after some sort of ‘bubble’) the Fed would lower rates and kick the can down the road. However, we have now reached that special point in time wherein interest rates can no longer be lowered. Instead, the Fed has been forced to aggressively raise rates, subsequently popping the Tech bubble. This makes for an interesting investment environment going forward. We have noted that High Yield Debt performs better during these reactionary, declining interest rate environments, and equities during the post-recovery ‘rising’ rate environment. However, in spite of all this, my outlook for equities is still slightly more pessimistic. Instead, I think that High Yield Debt is likely to outperform over the next 2 years, followed by Equities picking back up…</p>
 </section>
 <section id="final-remarks" class="level1">

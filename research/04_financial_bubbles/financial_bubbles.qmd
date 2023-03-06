@@ -1,8 +1,9 @@
 ---
 title: "★Assessing Financial Bubbles"
 author: "Max Sands"
-date: "2023-02-16"
-image: preview_image.jpeg
+date: "2023-03-06"
+image: preview_image.png
+title-block-banner: preview_image.png
 description: "Read Time: 10-15 mins"
 categories: [Equities, ★]
 editor_options: 
@@ -19,7 +20,7 @@ library(here)
 library(gt)
 library(patchwork)
 
-source(here("R scripts", "plot_formatting.R"))
+# source(here("R scripts", "plot_formatting.R"))
 
 r3000_raw <- read_rds(here("raw_data", "Financial Bubbles", "r3000_data.rds")) %>% 
     mutate(year = year - 1) %>% 
@@ -69,6 +70,8 @@ In his book [*Principles for Navigating Big Debt Crises*](https://www.bridgewate
 
 While the above framework is tailored for large-scale economic bubbles that drastically affected national economies, we will extend, adapt, and apply this framework to identify financial bubbles within various sectors of the U.S. economy and markets.
 
+<hr>
+
 ## Methods for Quantifying the Framework
 
 The following table outlines certain figures that can help us measure each component of Dalio's Rubric:
@@ -106,7 +109,7 @@ The following table outlines certain figures that can help us measure each compo
 | *Does tightening risk popping the bubble?*                | 1.  Interest Coverage Ratio: The interest coverage ratio measures a company's ability to pay its interest expenses on its debt. If a company's interest coverage ratio is low, it may suggest that the company is struggling to make its interest payments. Assessing hypothetical interest coverage ratios if interest rates increase will likely help answer this question. |
 +-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Going forward, we will only consider the following framework components, as I believe they best encapsulate the entirety of the framework and are relatively easy to quantify:
+Going forward, we will only consider the following framework components, as I believe they best encapsulate the underpinnings of the framework and are simultaneously easy to quantify:
 
 1.  Are prices high relative to traditional measures?
 
@@ -115,6 +118,8 @@ Going forward, we will only consider the following framework components, as I be
 3.  Have new participants entered the market?
 
 4.  Does tightening risk popping the bubble?
+
+<hr>
 
 ## The Data
 
@@ -136,14 +141,13 @@ Here is a glimpse of each data-set:
 
 ```{r}
 #| column: page
-r3000_nested %>% 
-    head(n=10) %>% 
-    select(year:name, income_statement) %>% 
-    unnest(income_statement) %>% 
-    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
-    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens"))) %>% 
-    gt() %>% 
-    gt::sub_missing()
+
+r3000_nested %>%
+    head(n=10) %>%
+    select(year:name, income_statement) %>%
+    unnest(income_statement) %>%
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>%
+    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens")))
 ```
 
 #### Balance Sheet
@@ -155,9 +159,7 @@ r3000_nested %>%
     select(year:name, balance_sheet) %>% 
     unnest(balance_sheet) %>% 
     set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
-    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens"))) %>% 
-    gt() %>% 
-    gt::sub_missing()
+    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens"))) 
 ```
 
 #### Cash Flow Statement
@@ -169,9 +171,7 @@ r3000_nested %>%
     select(year:name, cash_flow_statement) %>% 
     unnest(cash_flow_statement) %>% 
     set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
-    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens"))) %>% 
-    gt() %>% 
-    gt::sub_missing()
+    mutate(across(.cols = c(-Year, -Ticker, -Name), .fns = ~scales::dollar(.x, scale = 1e-6, suffix = "M", largest_with_cents = 1, style_negative = "parens")))
 ```
 
 #### Miscellaneous
@@ -186,9 +186,7 @@ r3000_nested %>%
     mutate(price = scales::dollar(price)) %>%
     mutate(across(.cols = c(contains("num")), .fns = ~scales::number(.x, big.mark = ",", scale_cut = scales::cut_long_scale()))) %>% 
     mutate(across(.cols = c(contains("price_to"), inventory_turnover), .fns = ~scales::number(round(.x, digits = 1), suffix = "x"))) %>% 
-    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
-    gt() %>% 
-    gt::sub_missing()
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title())
 ```
 
 #### Classification
@@ -199,9 +197,7 @@ r3000_nested %>%
     head(n=10) %>% 
     select(year:name, classification) %>% 
     unnest(classification) %>% 
-    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
-    gt() %>% 
-    gt::sub_missing()
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title())
 ```
 :::
 
@@ -211,12 +207,13 @@ r3000_nested %>%
 #| column: page
 ipo_data %>% 
     head(n=10) %>% 
+    select(-type) %>% 
     mutate(size = scales::dollar(size, suffix = "M")) %>% 
-    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
-    gt() %>% 
-    gt::sub_missing()
+    set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title())
 ```
 :::
+
+<hr>
 
 ## Quantifying the Framework
 
@@ -269,8 +266,8 @@ r3000_nested %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "Median Price-to-Sales", color = "") +
-    theme(legend.position = "top")
+    labs(x = "", y = "", title = "Median Price-to-Sales", color = "") +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
 
 #### Price-to-Book
@@ -303,8 +300,8 @@ r3000_nested %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "Median Price-to-Book", color = "") +
-    theme(legend.position = "top")
+    labs(x = "", y = "", title = "Median Price-to-Book", color = "") +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
 
 #### Price-to-Earnings
@@ -337,14 +334,18 @@ r3000_nested %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "Median Price-to-Earnings", color = "") +
-    theme(legend.position = "top")
+    labs(x = "", y = "", title = "Median Price-to-Earnings", color = "") +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
 :::
 
 The above is overwhelming, but it does paint the general picture that financial bubbles have formed when prices are high relative to traditional measures. For instance, the Dot-Com Bubble of '00/'01 is seen most uniformly in the above with high price ratios across the board.
 
-However, let's try to represent the data in a more concise and standardized fashion by:
+However, let's try to represent the data in a more concise and standardized fashion.
+
+#### Creating a Price Metric
+
+Let's create a standard `Price Metric` by:
 
 1.  Calculating the distance of each of these ratios from a median line
 2.  Dividing this distance by the average absolute distance from the median line
@@ -357,7 +358,7 @@ By doing this we will have a rough estimation of how elevated prices are for eac
 #| fig-width: 12
 #| fig-height: 10
 
-r3000_nested %>% 
+price_metric_tbl <- r3000_nested %>% 
     select(date:bucket, misc, classification) %>% 
     unnest(c(misc, classification)) %>%
     select(date, ticker, name, bucket, classification_1, contains("price_to")) %>% 
@@ -373,7 +374,9 @@ r3000_nested %>%
     ungroup() %>%
     group_by(date, classification_1, bucket) %>% 
     summarize(price_metric = mean(standardized_distance, na.rm = T)) %>% 
-    ungroup() %>% 
+    ungroup()
+
+price_metric_tbl %>% 
     ggplot(aes(date, price_metric, color = bucket)) +
     geom_line() +
     geom_hline(yintercept = 0, color = "black", lty = 2) +
@@ -382,8 +385,33 @@ r3000_nested %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number()) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "Price Metric", color = "") +
-    theme(legend.position = "top")
+    labs(x = "", y = "", title = "Price Metric", color = "") +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+```
+
+#### Creating a Price Growth Metric
+
+While the absolute level of prices in different markets are important, it is also likely that the amount by which they change, especially if that change occurs abruptly, is also important. Therefore, let's create a `Price Growth Metric` by simply calculating the year-over-year change of our `Price Metric`:
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+price_metric_tbl %>% 
+    group_by(classification_1, bucket) %>% 
+    mutate(price_growth_metric = price_metric - lag(price_metric)) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, price_growth_metric, color = bucket)) +
+    geom_line() +
+    geom_hline(yintercept = 0, color = "black", lty = 2) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    scale_y_continuous(labels = scales::label_number()) +
+    scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
+    labs(x = "", y = "", title = "Price Growth Metric", color = "") +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
 
 ##### Takeaways:
@@ -391,7 +419,7 @@ r3000_nested %>%
 From eye-balling the above charts we can conclude that the following sectors were highly priced relative to traditional measures:
 
 +------------------------+-----------------------------------+
-| Sector                 | Time Period(s)                    |
+| Sector                 | Time Periods                      |
 +========================+===================================+
 | Communications         | '99 - '01, '20 - '22              |
 +------------------------+-----------------------------------+
@@ -420,7 +448,12 @@ As we continue through our framework, we will see if the same time periods resur
 
 #### Digging Deeper
 
-Now that we have time periods in which certain broad sectors were highly priced, we can repeat the above at a more granular level. In the following, we consider only *Large Cap* and *Ultra-Large Cap* as there are fewer companies in each bucket when aggregating at a more granular sector level:
+Now that we have time periods in which certain broad sectors were highly priced, we can repeat the above at a more granular level. This is important since large values can be washed away in averages when aggregating at broader hierarchical sector levels. For instance, we could have a high price metric of +3 for *Semiconductors* and a low metric of -3 for *Software*; if these were the only two sub-sectors in the *Technology* space, then the price metric for *Technology* would likely lie around 0. This scenario is much different from one wherein both *Semiconductors* and *Software* have price metrics of 0, which would also consequently yield a price metric of around 0 for *Technology*.
+
+In the following, we consider only *Large Cap* and *Ultra-Large Cap* as there are fewer companies in each bucket when aggregating at a more granular sector level:
+
+::: panel-tabset
+##### Price Metric
 
 ::: panel-tabset
 ```{r}
@@ -463,10 +496,10 @@ for (i in seq_along(classification_1_vec)){
     theme_tq(base_size = 24) +
     scale_color_tq() +
     facet_wrap(~classification_3, scales = "free", ncol = 2) +
-    labs(x="", y = "Price Metric", color = "") +
+    labs(x="", y = "", title = "Price Metric", color = "") +
     scale_y_continuous(labels = scales::label_number()) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top")
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
     
     plots[[classification_1_vec[i]]] <- g
     
@@ -483,6 +516,65 @@ iwalk(plots, ~ {
 ```
 :::
 
+##### Price Growth Metric
+
+::: panel-tabset
+```{r}
+#| results: asis
+#| fig-width: 12
+#| fig-height: 15
+
+plots <- list()
+for (i in seq_along(classification_1_vec)){
+    
+    g <- start_tbl %>% 
+    filter(classification_1 == classification_1_vec[i]) %>% 
+    group_by(date, classification_3) %>% 
+    summarize(across(contains("price_to"), ~median(.x, na.rm = T))) %>% 
+    ungroup() %>% 
+    pivot_longer(contains("price_to")) %>% 
+    group_by(classification_3, name) %>% 
+    mutate(med_value = median(value, na.rm = T)) %>% 
+    mutate(distance = value - med_value) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>% 
+    group_by(date, classification_3) %>% 
+    summarize(price_metric = mean(standardized_distance, na.rm = T)) %>% 
+    ungroup() %>% 
+    group_by(classification_3) %>% 
+    mutate(price_growth_metric = price_metric - lag(price_metric)) %>% 
+    ungroup() %>% 
+    drop_na() %>% 
+    ggplot(aes(date, price_growth_metric)) +
+    geom_line() +
+    geom_hline(yintercept = 0, color = "black", lty = 2) +
+    theme_tq(base_size = 24) +
+    scale_color_tq() +
+    facet_wrap(~classification_3, scales = "free", ncol = 2) +
+    labs(x="", y = "", title = "Price Growth Metric", color = "") +
+    scale_y_continuous(labels = scales::label_number()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+    
+    plots[[classification_1_vec[i]]] <- g
+    
+}
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+```
+:::
+:::
+
+<hr>
+
 ### 2) Purchases are Being Financed w/ High Leverage
 
 Let's take a look at the historical debt levels of each sector since 1995. Once again, we will aggregate by company size and plot the median value for different sectors. In this section we will consider two metrics to assess debt levels:
@@ -497,7 +589,7 @@ $$
 
 The first metric aims to represent leverage at the company level, whereas the second metric aims to represent the significance of that debt in relation to the size of the general economy.
 
-In the second metric, we consider the *average* debt level as a ratio to GDP because the number of companies within each sector of the Russell 3000 varies each year. Therefore, simply calculating the sum for each year could overstate debt levels for years in which there are more companies than usual. Instead, we hope to measure this in isolation in the section *`5) New entrants are entering the market`*.
+In the second metric, we consider the *average* debt level as a ratio to GDP because the number of companies within each sector of the Russell 3000 varies each year. Therefore, simply calculating the sum for each year could overstate debt levels for years in which there are more companies than usual. Instead, we hope to measure this in isolation in the section *`3) New entrants are entering the market`*.
 
 ::: panel-tabset
 #### Metric 1
@@ -519,10 +611,10 @@ r3000_nested %>%
     theme_tq(base_size = 16) +
     scale_color_tq() +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "Median Debt-to-Equity", color = "") +
+    labs(x="", y = "", title = "Median Debt-to-Equity", color = "") +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top")
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
 
 #### Metric 2
@@ -553,23 +645,33 @@ r3000_nested %>%
     theme_tq(base_size = 16) +
     scale_color_tq() +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "Avg. Debt-to-GDP", color = "") +
+    labs(x="", y = "", title = "Avg. Debt-to-GDP", color = "") +
     scale_y_continuous(labels = scales::label_percent()) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top")
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
 :::
 
-While the data is not crystal clear, the above generally corroborates the idea that financial bubbles have formed during times of increased leverage. Let's calculate each group's standard distance from their median line:
+While the data is not crystal clear, the above generally corroborates the idea that financial bubbles have formed during times of increased leverage. Again, let's try to represent the data in a more concise and standard fashion.
 
-::: panel-tabset
-#### Metric 1
+#### Creating a Debt Metric
+
+Let's create a standard `Debt Metric` by:
+
+1.  Calculating the distance of each of these ratios from a median line
+2.  Dividing this distance by the average absolute distance from the median line
+3.  Averaging the standardized distances for Metric 1 & Metric 2 with the respective weights of 90% and 10%*\**
+
+::: column-margin
+*\*Metric 1 is more stationary and cyclical; therefore, we are giving it a greater weight as it will be more reliable when measuring absolute debt levels.*
+:::
 
 ```{r}
 #| column: page
 #| fig-width: 12
 #| fig-height: 10
-r3000_nested %>% 
+
+d_e_stand_dist_tbl <- r3000_nested %>% 
     select(date:bucket, -year, balance_sheet, classification) %>% 
     unnest(c(balance_sheet, classification)) %>% 
     mutate(d_e = (st_debt + lt_debt) / total_equity) %>% 
@@ -578,31 +680,14 @@ r3000_nested %>%
     summarize(d_e = median(d_e, na.rm = T)) %>% 
     ungroup() %>% 
     group_by(classification_1, bucket) %>% 
-    mutate(med_d_e = median(d_e, na.rm = T)) %>% 
-    mutate(distance = d_e - med_d_e) %>% 
+    mutate(med_value = median(d_e)) %>% 
+    mutate(distance = d_e - med_value) %>% 
     mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
-    mutate(standardized_distance = distance / avg_distance) %>% 
+    mutate(d_e_standardized_distance = distance / avg_distance) %>% 
     ungroup() %>% 
-    ggplot(aes(date, standardized_distance, color = bucket)) +
-    geom_line() +
-    theme_tq(base_size = 16) +
-    scale_color_tq() +
-    facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "Distance from Median Line", color = "") +
-    scale_y_continuous(labels = scales::label_number()) +
-    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top")
-```
+    select(date:bucket, d_e_standardized_distance)
 
-#### Metric 2
-
-```{r}
-#| column: page
-#| fig-width: 12
-#| fig-height: 10
-#| fig-cap: Y-axis labels have been removed for ease of readability
-
-r3000_nested %>%
+d_gdp_stand_dist_tbl <- r3000_nested %>%
     select(date:bucket, -year, balance_sheet, classification) %>%
     unnest(c(balance_sheet, classification)) %>%
     select(date:bucket, classification_1, total_debt) %>%
@@ -613,31 +698,107 @@ r3000_nested %>%
         count = n()
     ) %>%
     ungroup() %>%
-    mutate(avg_debt = sum_debt / count) %>%
     left_join(gdp) %>%
-    mutate(avg_debt_to_gdp = avg_debt / gdp) %>%
-    group_by(classification_1, bucket) %>%
-    mutate(mid_avg_debt_to_gdp = median(avg_debt_to_gdp, na.rm = T)) %>%
-    mutate(distance = avg_debt_to_gdp - mid_avg_debt_to_gdp) %>%
+    mutate(avg_debt_to_gdp = ((sum_debt / count) / gdp)) %>% 
+    group_by(classification_1, bucket) %>% 
+    mutate(med_value = median(avg_debt_to_gdp, na.rm = T)) %>% 
+    mutate(distance = avg_debt_to_gdp - med_value) %>% 
     mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
-    mutate(standardized_distance = distance / avg_distance) %>% 
-    ungroup() %>%
-    ggplot(aes(date, standardized_distance, color = bucket)) +
+    mutate(d_gdp_standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>% 
+    select(date:bucket, d_gdp_standardized_distance)
+
+d_e_stand_dist_tbl %>% 
+    left_join(d_gdp_stand_dist_tbl) %>% 
+    mutate(debt_metric = (.9 * d_e_standardized_distance) + (.1 * d_gdp_standardized_distance)) %>% 
+    ggplot(aes(date, debt_metric, color = bucket)) +
     geom_line() +
     theme_tq(base_size = 16) +
     scale_color_tq() +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "Distance from Median Line", color = "") +
+    labs(x="", y = "", title = "Debt Metric", color = "") +
     scale_y_continuous(labels = scales::label_number()) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top")
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
-:::
+
+#### Creating a Debt Growth Metric
+
+Like in the previous section, let's create a `Debt Growth Metric` by:
+
+1.  Calculating the year-over-year change for both Metrics 1 & 2
+2.  Calculate the distance of this year-over-year change from a median line
+3.  Divide this distance by the average absolute distance from the median line
+4.  Averaging the standardized distances for Metric 1 & Metric 2 together to a create a single `Debt Growth Metric`
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+delta_d_e_stand_dist_tbl <- r3000_nested %>% 
+    select(date:bucket, -year, balance_sheet, classification) %>% 
+    unnest(c(balance_sheet, classification)) %>% 
+    mutate(d_e = (st_debt + lt_debt) / total_equity) %>% 
+    select(date:bucket, classification_1, d_e) %>% 
+    group_by(date, classification_1, bucket) %>% 
+    summarize(d_e = median(d_e, na.rm = T)) %>% 
+    ungroup() %>% 
+    group_by(classification_1, bucket) %>% 
+    mutate(delta_d_e = d_e - lag(d_e)) %>% 
+    ungroup() %>% 
+    drop_na() %>% 
+    group_by(classification_1, bucket) %>% 
+    mutate(med_value = median(delta_d_e)) %>% 
+    mutate(distance = delta_d_e - med_value) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(delta_d_e_standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>% 
+    select(date:bucket, delta_d_e_standardized_distance)
+
+delta_d_gdp_stand_dist_tbl <- r3000_nested %>%
+    select(date:bucket, -year, balance_sheet, classification) %>%
+    unnest(c(balance_sheet, classification)) %>%
+    select(date:bucket, classification_1, total_debt) %>%
+    filter(!is.na(total_debt)) %>%
+    group_by(date, classification_1, bucket) %>%
+    summarize(
+        sum_debt = sum(total_debt, na.rm = T),
+        count = n()
+    ) %>%
+    ungroup() %>%
+    left_join(gdp) %>%
+    mutate(avg_debt_to_gdp = ((sum_debt / count) / gdp)) %>% 
+    group_by(classification_1, bucket) %>% 
+    mutate(delta_avg_debt_to_gdp = avg_debt_to_gdp - lag(avg_debt_to_gdp)) %>% 
+    drop_na() %>% 
+    mutate(med_value = median(delta_avg_debt_to_gdp, na.rm = T)) %>% 
+    mutate(distance = delta_avg_debt_to_gdp - med_value) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(delta_d_gdp_standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>% 
+    select(date:bucket, delta_d_gdp_standardized_distance)
+
+delta_d_e_stand_dist_tbl %>% 
+    left_join(delta_d_gdp_stand_dist_tbl) %>% 
+    mutate(debt_growth_metric = (.5 * delta_d_e_standardized_distance) + (.5 * delta_d_gdp_standardized_distance)) %>% 
+    ggplot(aes(date, debt_growth_metric, color = bucket)) +
+    geom_line() +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    labs(x="", y = "", title = "Debt Growth Metric", color = "") +
+    scale_y_continuous(labels = scales::label_number()) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+```
+
+##### Takeaways:
 
 Let's repeat our process and identify time periods where debt levels were high in each sector:
 
 +------------------------+-----------------------------------+
-| Sector                 | Time Period(s)                    |
+| Sector                 | Time Periods                      |
 +========================+===================================+
 | Communications         | '97 - '99, '02, '10, '18 - '21    |
 +------------------------+-----------------------------------+
@@ -664,6 +825,8 @@ Let's repeat our process and identify time periods where debt levels were high i
 
 #### Digging Deeper
 
+Once again, we can take a more granular look at the data:
+
 ```{r, include=FALSE}
 start_tbl <- r3000_raw %>% 
     select(date, classification_1, classification_3, market_cap, total_debt, total_equity) %>% 
@@ -675,39 +838,64 @@ start_tbl <- r3000_raw %>%
 ```
 
 ::: panel-tabset
-#### Metric 1
+##### Debt Metric
 
 ::: panel-tabset
 ```{r}
 #| results: asis
 #| fig-width: 12
 #| fig-height: 15
-
 plots <- list()
 for (i in seq_along(classification_1_vec)){
-    
+
     g <- start_tbl %>% 
-    filter(classification_1 == classification_1_vec[i]) %>% 
-    mutate(d_e = total_debt / total_equity) %>% 
-    group_by(date, classification_3) %>%
-    summarize(d_e = median(d_e, na.rm = T)) %>% 
-    ungroup() %>% 
-    group_by(classification_3) %>% 
-    mutate(med_d_e = median(d_e, na.rm = T)) %>% 
-    mutate(distance = d_e - med_d_e) %>% 
-    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
-    mutate(standardized_distance = distance / avg_distance) %>% 
-    ungroup() %>% 
-    ggplot(aes(date, standardized_distance)) +
-    geom_line() +
-    geom_hline(yintercept = 0, color = "black", lty = 2) +
-    theme_tq(base_size = 24) +
-    scale_color_tq() +
-    facet_wrap(~classification_3, scales = "free", ncol = 2) +
-    labs(x="", y = "Average Distance from Median", color = "") +
-    scale_y_continuous(labels = scales::label_number()) +
-    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top")
+        filter(classification_1 == classification_1_vec[i]) %>% 
+        mutate(d_e = total_debt / total_equity) %>% 
+        group_by(date, classification_3) %>% 
+        summarize(d_e = median(d_e, na.rm = T)) %>% 
+        ungroup() %>% 
+        group_by(classification_3) %>% 
+        mutate(
+            med_d_e = median(d_e, na.rm = T),
+            distance = d_e - med_d_e,
+            avg_distance = mean(abs(distance), na.rm = T),
+            d_e_standardized_distance = distance / avg_distance
+        ) %>% 
+        ungroup() %>% 
+        select(date, classification_3, d_e_standardized_distance) %>% 
+        left_join(
+            start_tbl %>% 
+        filter(classification_1 == classification_1_vec[i]) %>% 
+        drop_na() %>% 
+        group_by(date, classification_3) %>% 
+        summarize(
+            sum_debt = sum(total_debt, na.rm = T),
+            count = n()
+        ) %>% 
+        ungroup() %>% 
+        left_join(gdp) %>% 
+        mutate(avg_debt_to_gdp = ((sum_debt / count) / gdp)) %>% 
+        group_by(classification_3) %>% 
+        mutate(
+            med_value = median(avg_debt_to_gdp, na.rm = T),
+            distance = avg_debt_to_gdp - med_value,
+            avg_distance = mean(abs(distance), na.rm = T),
+            d_gdp_standardized_distance = distance / avg_distance
+        ) %>% 
+        ungroup() %>% 
+        select(date, classification_3, d_gdp_standardized_distance)
+        ) %>% 
+        mutate(debt_metric = (.9 * d_e_standardized_distance) + (.1 * d_gdp_standardized_distance)) %>% 
+        ggplot(aes(date, debt_metric)) +
+        geom_line() +
+        geom_hline(yintercept = 0, color = "black", lty = 2) +
+        theme_tq(base_size = 24) +
+        scale_color_tq() +
+        facet_wrap(~classification_3, scales = "free", ncol = 2) +
+        labs(x="", y = "", title = "Debt Metric", color = "") +
+        scale_y_continuous(labels = scales::label_number()) +
+        scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+        theme(legend.position = "top", plot.title = element_text(hjust = .5))
     
     plots[[classification_1_vec[i]]] <- g
     
@@ -724,41 +912,66 @@ iwalk(plots, ~ {
 ```
 :::
 
-#### Metric 2
+##### Debt Growth Metric
 
 ::: panel-tabset
 ```{r}
 #| results: asis
 #| fig-width: 12
 #| fig-height: 15
-
 plots <- list()
 for (i in seq_along(classification_1_vec)){
-    
+
     g <- start_tbl %>% 
-    filter(classification_1 == classification_1_vec[i]) %>% 
-    group_by(date, classification_3) %>% 
-    summarize(sum_debt = sum(total_debt, na.rm = T),
-              count = n()) %>% 
-    ungroup() %>% 
-    left_join(gdp) %>% 
-    mutate(avg_debt_to_gdp = (sum_debt / count) / gdp) %>% 
-    group_by(classification_3) %>%
-    mutate(mid_avg_debt_to_gdp = median(avg_debt_to_gdp, na.rm = T)) %>%
-    mutate(distance = avg_debt_to_gdp - mid_avg_debt_to_gdp) %>%
-    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
-    mutate(standardized_distance = distance / avg_distance) %>%
-    ungroup() %>% 
-    ggplot(aes(date, standardized_distance)) +
-    geom_line() +
-    geom_hline(yintercept = 0, color = "black", lty = 2) +
-    theme_tq(base_size = 24) +
-    scale_color_tq() +
-    facet_wrap(~classification_3, scales = "free", ncol = 2) +
-    labs(x="", y = "Average Distance from Median", color = "") +
-    scale_y_continuous(labels = NULL) +
-    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top")
+        filter(classification_1 == classification_1_vec[i]) %>% 
+        mutate(d_e = total_debt / total_equity) %>% 
+        group_by(date, classification_3) %>% 
+        summarize(d_e = median(d_e, na.rm = T)) %>% 
+        ungroup() %>% 
+        group_by(classification_3) %>% 
+        mutate(
+            delta_d_e = d_e - lag(d_e),
+            med_delta_d_e = median(delta_d_e, na.rm = T),
+            distance = delta_d_e - med_delta_d_e,
+            avg_distance = mean(abs(distance), na.rm = T),
+            delta_d_e_standardized_distance = distance / avg_distance
+        ) %>% 
+        ungroup() %>% 
+        select(date, classification_3, delta_d_e_standardized_distance) %>% 
+        left_join(
+            start_tbl %>% 
+        filter(classification_1 == classification_1_vec[i]) %>% 
+        drop_na() %>% 
+        group_by(date, classification_3) %>% 
+        summarize(
+            sum_debt = sum(total_debt, na.rm = T),
+            count = n()
+        ) %>% 
+        ungroup() %>% 
+        left_join(gdp) %>% 
+        mutate(avg_debt_to_gdp = ((sum_debt / count) / gdp)) %>% 
+        group_by(classification_3) %>% 
+        mutate(
+            delta_avg_debt_to_gdp = avg_debt_to_gdp - lag(avg_debt_to_gdp),
+            med_value = median(delta_avg_debt_to_gdp, na.rm = T),
+            distance = delta_avg_debt_to_gdp - med_value,
+            avg_distance = mean(abs(distance), na.rm = T),
+            delta_d_gdp_standardized_distance = distance / avg_distance
+        ) %>% 
+        ungroup() %>% 
+        select(date, classification_3, delta_d_gdp_standardized_distance)
+        ) %>% 
+        mutate(debt_growth_metric = (.5 * delta_d_e_standardized_distance) + (.5 * delta_d_gdp_standardized_distance)) %>% 
+        ggplot(aes(date, debt_growth_metric)) +
+        geom_line() +
+        geom_hline(yintercept = 0, color = "black", lty = 2) +
+        theme_tq(base_size = 24) +
+        scale_color_tq() +
+        facet_wrap(~classification_3, scales = "free", ncol = 2) +
+        labs(x="", y = "", title = "Debt Metric", color = "") +
+        scale_y_continuous(labels = scales::label_number()) +
+        scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+        theme(legend.position = "top", plot.title = element_text(hjust = .5))
     
     plots[[classification_1_vec[i]]] <- g
     
@@ -775,18 +988,19 @@ iwalk(plots, ~ {
 ```
 :::
 :::
+
+<hr>
 
 ### 3) New Entrants to the Market
 
-There are several ways we can assess whether new players are entering markets. The most direct and simple way is to track when private companies become public (i.e. IPO data). This method is likely to produce the clearest results, but it has a glaring shortfall - the classification scheme of our IPO data is different.
+There are several ways that we can assess whether new players are entering markets. The most direct and simple way is to track when private companies become public (i.e. IPO data). This method is likely to produce the clearest results, but it has a glaring shortfall - the classification scheme of our IPO data is different. `Work on reclassifying data!!`
 
 ::: panel-tabset
 #### Aggregate
 
 ```{r}
-#| column: page
-#| fig-width: 12
-#| fig-height: 7
+#| fig-width: 8
+#| fig-height: 5
 
 ipo_data %>%
     filter(country == "UNITED STATES") %>%
@@ -798,7 +1012,8 @@ ipo_data %>%
     theme_tq(base_size = 16) +
     labs(
         x="", y="", title = "# of IPOs (Monthly)"
-    )
+    ) +
+    theme(plot.title = element_text(hjust = .5))
 ```
 
 #### Sector-Level
@@ -819,204 +1034,16 @@ ipo_data %>%
     labs(
         x="", y = "", title = "# of IPOs (Monthly)"
     ) +
-    theme(title = element_text(hjust = .5))
+    theme(plot.title = element_text(hjust = .5))
 ```
 :::
-
-The problem aggravates further down the classification hierarchy. While reclassifying the data is a viable solution, it is time-consuming; therefore, we will not incorporate this data when building out our system to identify bubbles at the sector-level. However, the above plot clearly demonstrates that bubbles were forming in *Technology*, *Communications,* and *Non-cyclical Consumer* around 2000, and *Diversified, Non-cyclical Consumer* around 2021.
-
-Here are their following subcategories:
-
-::: panel-tabset
-#### Technology
-
-```{r}
-#| column: page
-#| fig-width: 10
-#| fig-height: 8
-ipo_data %>%
-    filter(country == "UNITED STATES") %>%
-    filter(industry_sector == "Technology") %>%
-    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
-    count(floor_date, industry_group) %>%
-    ggplot(aes(floor_date, n)) +
-    geom_col() +
-    facet_wrap(~industry_group, scales = "free") +
-    theme_tq(base_size = 16) +
-    labs(
-        x="", y = "", title = "# of IPOs (Monthly)"
-    ) +
-    theme(title = element_text(hjust = .5))
-```
-
-#### Communications
-
-```{r}
-#| column: page
-#| fig-width: 10
-#| fig-height: 8
-ipo_data %>%
-    filter(country == "UNITED STATES") %>%
-    filter(industry_sector == "Communications") %>%
-    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
-    count(floor_date, industry_group) %>%
-    ggplot(aes(floor_date, n)) +
-    geom_col() +
-    facet_wrap(~industry_group, scales = "free") +
-    theme_tq(base_size = 16) +
-    labs(
-        x="", y = "", title = "# of IPOs (Monthly)"
-    ) +
-    theme(title = element_text(hjust = .5))
-```
-
-#### Non-Cyclical Consumer
-
-```{r}
-#| column: page
-#| fig-width: 12
-#| fig-height: 10
-ipo_data %>%
-    filter(country == "UNITED STATES") %>%
-    filter(industry_sector == "Consumer, Non-cyclical") %>%
-    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
-    count(floor_date, industry_group) %>%
-    ggplot(aes(floor_date, n)) +
-    geom_col() +
-    facet_wrap(~industry_group, scales = "free") +
-    theme_tq(base_size = 16) +
-    labs(
-        x="", y = "", title = "# of IPOs (Monthly)"
-    ) +
-    theme(title = element_text(hjust = .5))
-```
-
-#### Diversified
-
-```{r}
-#| column: page
-#| fig-width: 8
-#| fig-height: 6
-ipo_data %>%
-    filter(country == "UNITED STATES") %>%
-    filter(industry_sector == "Diversified") %>%
-    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
-    count(floor_date, industry_subgroup) %>%
-    ggplot(aes(floor_date, n)) +
-    geom_col() +
-    facet_wrap(~industry_subgroup, scales = "free", ncol = 3) +
-    theme_tq(base_size = 16) +
-    labs(
-        x="", y = "", title = "# of IPOs (Monthly)"
-    ) +
-    theme(title = element_text(hjust = .5))
-```
-:::
-
-The second method of tracking market entrants is to track the weight of each sector within the Russell 3000 Index. In doing this, we will have the same classification schema as our prior analysis, but the findings may not be as clear as those in our IPO data.
-
-```{r}
-#| column: page
-#| fig-width: 12
-#| fig-height: 10
-r3000_nested %>%
-    select(date, classification) %>%
-    unnest(c(classification)) %>%
-    select(date, classification_1) %>%
-    count(date, classification_1) %>%
-    group_by(date) %>% 
-    mutate(prop = n/sum(n)) %>%
-    ungroup() %>% 
-    ggplot(aes(date, prop)) +
-    geom_line() +
-    theme_tq(base_size = 16) +
-    theme(title = element_text(hjust = .5)) +
-    scale_color_tq() +
-    facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "", color = "", title = "Proportion of Russell 3000 Constituents") +
-    scale_y_continuous(labels = scales::label_percent()) +
-    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years")
-```
-
-We can repeat the above at a more granular level:
-
-::: panel-tabset
-```{r}
-#| results: asis
-#| fig-width: 12
-#| fig-height: 15
-
-start_tbl <- r3000_nested %>% 
-    select(date, classification) %>%
-    unnest(c(classification)) %>%
-    select(date, classification_1, classification_3)
-
-plots <- list()
-for (i in seq_along(classification_1_vec)){
-    
-    g <- start_tbl %>% 
-        filter(classification_1 == classification_1_vec[i]) %>% 
-        count(date, classification_3) %>% 
-        left_join(r3000_raw %>% 
-                      count(date) %>% 
-                      rename(total = n)) %>% 
-        mutate(prop = n / total) %>% 
-        ggplot(aes(date, prop)) +
-        geom_line() +
-        theme_tq(base_size = 24) +
-        theme(title = element_text(hjust = .5)) +
-        scale_color_tq() +
-        facet_wrap(~classification_3, scales = "free", ncol = 2) +
-        labs(x="", y = "", color = "", title = "Proportion of Russell 3000 Constituents") +
-        scale_y_continuous(labels = scales::label_percent()) +
-        scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years")
-    
-    plots[[classification_1_vec[i]]] <- g
-    
-}
-
-iwalk(plots, ~ {
-  cat('## ', .y, '\n\n')
-  
-  print(.x)
-  
-  cat('\n\n')
-  
-})
-```
-:::
-
-A third, albeit indirect method of assessing market entrants is to track the proportion of the labor force in different markets and its growth rate. It is likely that the labor force will shift towards segments of the market where bubbles are forming because workers tend to be well compensated during these times.
-
-```{r}
-#| column: page
-#| fig-width: 12
-#| fig-height: 10
-
-labor_force <- read_rds(here("raw_data", "Financial Bubbles", "labor_force.rds"))
-
-r3000_nested %>%
-    select(date, misc, classification) %>%
-    unnest(c(misc, classification)) %>%
-    select(date, num_employees, classification_1) %>%
-    group_by(date, classification_1) %>%
-    summarize(tot_employees = sum(num_employees, na.rm = T)) %>%
-    ungroup() %>%
-    left_join(labor_force) %>%
-    mutate(prop = tot_employees / labor_force) %>%
-    ggplot(aes(date, prop)) +
-    geom_line() +
-    theme_tq(base_size = 16) +
-    theme(title = element_text(hjust = .5)) +
-    scale_color_tq() +
-    facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "", color = "", title = "Proportion of Labor Force") +
-    scale_y_continuous(labels = scales::label_percent()) +
-    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years")
-```
 
 <hr>
 
 ### 4) Tightening Risks Popping the Bubble
 
 ## Putting It All Together
+
+##### Final Remarks
+
+*The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice.*

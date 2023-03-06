@@ -70,13 +70,13 @@ high_yield_data_filled <- high_yield_data %>%
 ### Data
 
 ```{r}
+#| column: page
 high_yield_data_filled %>% 
     pivot_wider(names_from = name, values_from = value) %>% 
     mutate(across(.cols = c(2,3,4,6,8), .fns = ~scales::percent(.x, accuracy = .01, scale = 1))) %>% 
     mutate(across(.cols = c(5,7), .fns = ~scales::number(.x, accuracy = 1))) %>% 
     head() %>% 
-    rename(Date = date) %>% 
-    gt()
+    rename(Date = date)
 ```
 
 ### Variable Definitions
@@ -539,7 +539,7 @@ cowplot::plot_grid(g1, g2, g3, ncol = 1, align = "hv")
 
 As we can see, these 3 simple metrics, especially the YTW metric, provide a decent signal for periods of strong High Yield Debt returns. And while these metrics have been created with a knowledge of the past, they certainly corroborate the simple narrative we created above. Possible next steps include applying these signals to other developed markets while being mindful of their current position in their interest rate cycle, improving these signals, and assessing hypothetical performance, etc... I leave these as exercises to the reader...
 
-# The Future: Where are we heading?
+# The Future: Where are we Heading?
 
 In our above research, one of our key takeaways involved the Federal Funds Rate (i.e. the 'interest' rate). This should be self-evident as the interest rate measures the cost of borrowing money and is therefore the primary drivers of the economy and financial markets. We noted that during periods of economic hurt (typically after some sort of 'bubble') the Fed would lower rates and kick the can down the road. However, we have now reached that special point in time wherein interest rates can no longer be lowered. Instead, the Fed has been forced to aggressively raise rates, subsequently popping the Tech bubble. This makes for an interesting investment environment going forward. We have noted that High Yield Debt performs better during these reactionary, declining interest rate environments, and equities during the post-recovery 'rising' rate environment. However, in spite of all this, my outlook for equities is still slightly more pessimistic. Instead, I think that High Yield Debt is likely to outperform over the next 2 years, followed by Equities picking back up...
 
