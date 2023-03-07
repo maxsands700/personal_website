@@ -244,7 +244,11 @@ background-size: cover;
   <li><a href="#creating-a-debt-growth-metric" id="toc-creating-a-debt-growth-metric" class="nav-link" data-scroll-target="#creating-a-debt-growth-metric">Creating a Debt Growth Metric</a></li>
   <li><a href="#digging-deeper-1" id="toc-digging-deeper-1" class="nav-link" data-scroll-target="#digging-deeper-1">Digging Deeper</a></li>
   </ul></li>
-  <li><a href="#new-entrants-to-the-market" id="toc-new-entrants-to-the-market" class="nav-link" data-scroll-target="#new-entrants-to-the-market">3) New Entrants to the Market</a></li>
+  <li><a href="#new-entrants-to-the-market" id="toc-new-entrants-to-the-market" class="nav-link" data-scroll-target="#new-entrants-to-the-market">3) New Entrants to the Market</a>
+  <ul class="collapse">
+  <li><a href="#creating-an-ipo-metric" id="toc-creating-an-ipo-metric" class="nav-link" data-scroll-target="#creating-an-ipo-metric">Creating an IPO Metric</a></li>
+  <li><a href="#digging-deeper-2" id="toc-digging-deeper-2" class="nav-link" data-scroll-target="#digging-deeper-2">Digging Deeper</a></li>
+  </ul></li>
   <li><a href="#tightening-risks-popping-the-bubble" id="toc-tightening-risks-popping-the-bubble" class="nav-link" data-scroll-target="#tightening-risks-popping-the-bubble">4) Tightening Risks Popping the Bubble</a></li>
   </ul></li>
   <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">Putting It All Together</a></li>
@@ -270,7 +274,7 @@ background-size: cover;
 <p><em>At this point I want to emphasize that it is a mistake to think that any one metric can serve as an indicator of an impending debt crisis. The ratio of debt to income for the economy as a whole, or even debt service payments to income for the economy as a whole, which is better, are useful but ultimately inadequate measures. To anticipate a debt crisis well, one has to look at the specific debt-service abilities of the individual entities, which are lost in these averages. More specifically, a high level of debt or debt service to income is less problematic if the average is well distributed across the economy than if it is concentrated — especially if it is concentrated in key entities.</em></p>
 <p><em>- Ray Dalio</em></p>
 </blockquote>
-<p>While the above framework is tailored for large-scale economic bubbles that drastically affected national economies, we will extend, adapt, and apply this framework to identify financial bubbles within various sectors of the U.S. economy and markets.</p>
+<p>While the above framework is tailored for large-scale economic bubbles that drastically affected national economies, we will extend, adapt, and apply this framework to create a <code>Grand Financial Bubble Metric</code> and identify financial bubbles within various sectors of the U.S. economy and markets.</p>
 <hr>
 </section>
 <section id="methods-for-quantifying-the-framework" class="level2">
@@ -1223,171 +1227,100 @@ background-size: cover;
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>type) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">size =</span> scales<span class="sc">::</span><span class="fu">dollar</span>(size, <span class="at">suffix =</span> <span class="st">"M"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="fu">names</span>(.) <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(announced_date, ticker, issuer_name, offer_size, classification_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">size =</span> offer_size) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">size =</span> scales<span class="sc">::</span><span class="fu">dollar</span>(size, <span class="at">suffix =</span> <span class="st">"M"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="fu">names</span>(.) <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display column-page">
 <div class="kable-table">
 <table class="table table-sm table-striped">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 7%">
-<col style="width: 10%">
-<col style="width: 11%">
-<col style="width: 13%">
-<col style="width: 6%">
+<col style="width: 14%">
+<col style="width: 15%">
+<col style="width: 30%">
 <col style="width: 16%">
-<col style="width: 5%">
-<col style="width: 4%">
-<col style="width: 7%">
+<col style="width: 22%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Announced Date</th>
-<th style="text-align: left;">Effective Date</th>
-<th style="text-align: left;">Country</th>
-<th style="text-align: left;">Industry Sector</th>
-<th style="text-align: left;">Industry Group</th>
-<th style="text-align: left;">Industry Subgroup</th>
 <th style="text-align: left;">Ticker</th>
-<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Issuer Name</th>
 <th style="text-align: left;">Size</th>
-<th style="text-align: left;">Stage</th>
-<th style="text-align: left;">Security Type</th>
+<th style="text-align: left;">Classification 1</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2023-01-22</td>
-<td style="text-align: left;">2023-03-14</td>
-<td style="text-align: left;">OMAN</td>
-<td style="text-align: left;">Energy</td>
-<td style="text-align: left;">Oil&amp;Gas</td>
-<td style="text-align: left;">Oil&amp;Gas Drilling</td>
-<td style="text-align: left;">0880137D OM</td>
-<td style="text-align: left;">Abraj Energy Services LLC</td>
-<td style="text-align: left;">$244,091M</td>
-<td style="text-align: left;">Pending</td>
-<td style="text-align: left;">Common</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">2021-10-01</td>
-<td style="text-align: left;">2021-11-09</td>
-<td style="text-align: left;">UNITED STATES</td>
-<td style="text-align: left;">Consumer, Cyclical</td>
-<td style="text-align: left;">Auto Manufacturers</td>
-<td style="text-align: left;">Auto-Cars/Light Trucks</td>
-<td style="text-align: left;">RIVN US</td>
+<td style="text-align: left;">RIVN US EQUITY</td>
 <td style="text-align: left;">Rivian Automotive Inc</td>
-<td style="text-align: left;">$13,724M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">Class A</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2021-12-07</td>
-<td style="text-align: left;">2022-01-27</td>
-<td style="text-align: left;">SOUTH KOREA</td>
-<td style="text-align: left;">Consumer, Cyclical</td>
-<td style="text-align: left;">Auto Parts&amp;Equipment</td>
-<td style="text-align: left;">Auto/Trk Prts&amp;Equip-Orig</td>
-<td style="text-align: left;">373220 KS</td>
-<td style="text-align: left;">LG Energy Solution Ltd</td>
-<td style="text-align: left;">$10,818M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">Common</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2022-09-18</td>
-<td style="text-align: left;">2022-09-29</td>
-<td style="text-align: left;">GERMANY</td>
-<td style="text-align: left;">Consumer, Cyclical</td>
-<td style="text-align: left;">Auto Manufacturers</td>
-<td style="text-align: left;">Auto-Cars/Light Trucks</td>
-<td style="text-align: left;">P911 GR</td>
-<td style="text-align: left;">Dr Ing hc F Porsche AG</td>
-<td style="text-align: left;">$9,088M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">Preference</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2021-08-18</td>
-<td style="text-align: left;">2022-01-05</td>
-<td style="text-align: left;">HONG KONG</td>
-<td style="text-align: left;">Communications</td>
-<td style="text-align: left;">Telecommunications</td>
-<td style="text-align: left;">Cellular Telecom</td>
-<td style="text-align: left;">600941 CH</td>
-<td style="text-align: left;">China Mobile Ltd</td>
-<td style="text-align: left;">$8,636M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">Common</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2022-03-15</td>
-<td style="text-align: left;">2022-04-12</td>
-<td style="text-align: left;">UAE</td>
-<td style="text-align: left;">Utilities</td>
-<td style="text-align: left;">Electric</td>
-<td style="text-align: left;">Electric-Integrated</td>
-<td style="text-align: left;">DEWA UH</td>
-<td style="text-align: left;">Dubai Electricity &amp; Water Auth</td>
-<td style="text-align: left;">$6,077M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">Common</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2021-11-15</td>
-<td style="text-align: left;">2022-04-21</td>
-<td style="text-align: left;">CHINA</td>
-<td style="text-align: left;">Energy</td>
-<td style="text-align: left;">Oil&amp;Gas</td>
-<td style="text-align: left;">Oil Comp-Explor&amp;Prodtn</td>
-<td style="text-align: left;">600938 CH</td>
-<td style="text-align: left;">CNOOC Ltd</td>
-<td style="text-align: left;">$5,059M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">Common</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2021-06-10</td>
-<td style="text-align: left;">2021-06-30</td>
-<td style="text-align: left;">CHINA</td>
-<td style="text-align: left;">Industrial</td>
-<td style="text-align: left;">Transportation</td>
-<td style="text-align: left;">Transport-Services</td>
-<td style="text-align: left;">DIDIY US</td>
-<td style="text-align: left;">DiDi Global Inc</td>
-<td style="text-align: left;">$4,435M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">ADR</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2021-06-16</td>
-<td style="text-align: left;">2021-08-10</td>
-<td style="text-align: left;">SOUTH KOREA</td>
-<td style="text-align: left;">Technology</td>
-<td style="text-align: left;">Software</td>
-<td style="text-align: left;">Entertainment Software</td>
-<td style="text-align: left;">259960 KS</td>
-<td style="text-align: left;">Krafton Inc</td>
-<td style="text-align: left;">$3,854M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">Common</td>
+<td style="text-align: left;">$13,724,100,000M</td>
+<td style="text-align: left;">Consumer Discretionary</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2021-10-04</td>
-<td style="text-align: left;">2021-10-27</td>
-<td style="text-align: left;">UNITED STATES</td>
-<td style="text-align: left;">Technology</td>
-<td style="text-align: left;">Semiconductors</td>
-<td style="text-align: left;">Electronic Compo-Semicon</td>
-<td style="text-align: left;">GFS US</td>
+<td style="text-align: left;">GFS US EQUITY</td>
 <td style="text-align: left;">GLOBALFOUNDRIES Inc</td>
-<td style="text-align: left;">$2,855M</td>
-<td style="text-align: left;">Trading</td>
-<td style="text-align: left;">Common</td>
+<td style="text-align: left;">$2,855,160,000M</td>
+<td style="text-align: left;">Technology</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2021-07-01</td>
+<td style="text-align: left;">HOOD US EQUITY</td>
+<td style="text-align: left;">Robinhood Markets Inc</td>
+<td style="text-align: left;">$2,255,460,000M</td>
+<td style="text-align: left;">Financials</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021-06-24</td>
+<td style="text-align: left;">SPNGU US EQUITY</td>
+<td style="text-align: left;">Spinning Eagle Acquisition Cor</td>
+<td style="text-align: left;">$2,000,000,000M</td>
+<td style="text-align: left;">Financials</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2021-08-27</td>
+<td style="text-align: left;">OLPX US EQUITY</td>
+<td style="text-align: left;">Olaplex Holdings Inc</td>
+<td style="text-align: left;">$1,779,850,000M</td>
+<td style="text-align: left;">Consumer Staples</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2022-03-28</td>
+<td style="text-align: left;">CRBG US EQUITY</td>
+<td style="text-align: left;">Corebridge Financial Inc</td>
+<td style="text-align: left;">$1,680,000,000M</td>
+<td style="text-align: left;">Financials</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2021-06-21</td>
+<td style="text-align: left;">RYAN US EQUITY</td>
+<td style="text-align: left;">Ryan Specialty Holdings Inc</td>
+<td style="text-align: left;">$1,538,220,000M</td>
+<td style="text-align: left;">Financials</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021-06-03</td>
+<td style="text-align: left;">S US EQUITY</td>
+<td style="text-align: left;">SentinelOne Inc</td>
+<td style="text-align: left;">$1,408,750,000M</td>
+<td style="text-align: left;">Technology</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2021-11-04</td>
+<td style="text-align: left;">HCP US EQUITY</td>
+<td style="text-align: left;">HashiCorp Inc</td>
+<td style="text-align: left;">$1,322,400,000M</td>
+<td style="text-align: left;">Technology</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021-10-15</td>
+<td style="text-align: left;">HTZ US EQUITY</td>
+<td style="text-align: left;">Hertz Global Holdings Inc</td>
+<td style="text-align: left;">$1,291,080,000M</td>
+<td style="text-align: left;">Consumer Discretionary</td>
 </tr>
 </tbody>
 </table>
@@ -2249,7 +2182,15 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 </section>
 <section id="new-entrants-to-the-market" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="new-entrants-to-the-market">3) New Entrants to the Market</h3>
-<p>There are several ways that we can assess whether new players are entering markets. The most direct and simple way is to track when private companies become public (i.e.&nbsp;IPO data). This method is likely to produce the clearest results, but it has a glaring shortfall - the classification scheme of our IPO data is different. <code>Work on reclassifying data!!</code></p>
+<p>There are several ways that we can assess whether new players are entering markets. The most direct and simple method is to track when private companies become public (i.e.&nbsp;IPO data). Let’s track IPO activity by:</p>
+<ol type="1">
+<li>Counting the # of IPOs each month</li>
+<li>Summing the IPO Offer Size each month</li>
+</ol>
+<div class="panel-tabset page-columns page-full">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true">IPO Count</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false">Sum Offer Size ($)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-3" role="tab" aria-controls="tabset-15-3" aria-selected="false">Avg Offer Size ($)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-4" role="tab" aria-controls="tabset-15-4" aria-selected="false">Median Offer Size ($)</a></li></ul>
+<div class="tab-content page-columns page-full">
+<div id="tabset-15-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-15-1-tab">
 <div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">Sector-Level</a></li></ul>
 <div class="tab-content page-columns page-full">
@@ -2258,17 +2199,16 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"UNITED STATES"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>(industry_sector <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"N.A."</span>, <span class="st">"Government"</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">floor_date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(announced_date) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(announced_date, n)) <span class="sc">+</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"# of IPOs (Monthly)"</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(date) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, n)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"# of IPOs"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Frequency"</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>), <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="financial_bubbles_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="768"></p>
@@ -2280,18 +2220,18 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"UNITED STATES"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>(industry_sector <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"N.A."</span>, <span class="st">"Government"</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">floor_date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(floor_date, industry_sector) <span class="sc">%&gt;%</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(floor_date, n)) <span class="sc">+</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>industry_sector, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>, <span class="at">title =</span> <span class="st">"# of IPOs (Monthly)"</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(classification_1 <span class="sc">!=</span> <span class="st">"Unclassifiable"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(date, classification_1) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, n)) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>classification_1, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>, <span class="at">title =</span> <span class="st">"# of IPOs"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Frequency"</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>), <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display column-page">
 <p><img src="financial_bubbles_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="1152"></p>
@@ -2300,7 +2240,407 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 </div>
 </div>
 </div>
+</div>
+<div id="tabset-15-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-15-2-tab">
+<div class="panel-tabset page-columns page-full">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">Sector-Level</a></li></ul>
+<div class="tab-content page-columns page-full">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dollar_deflator_2022_tbl <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="fu">here</span>(<span class="st">"raw_data"</span>, <span class="st">"Financial Bubbles"</span>, <span class="st">"dollar_deflator_2022.rds"</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">offer_size =</span> <span class="fu">sum</span>(offer_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(dollar_deflator_2022_tbl) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">real_offer_size =</span> offer_size <span class="sc">/</span> deflator) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, real_offer_size)) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"Sum of IPO Offer Sizes in 2022 Dollars"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Frequency"</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="fl">1e-9</span>, <span class="at">suffix =</span> <span class="st">"B"</span>, <span class="at">accuracy =</span> .<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>), <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</div>
+<div id="tabset-12-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div class="cell page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(date, classification_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">offer_size =</span> <span class="fu">sum</span>(offer_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(dollar_deflator_2022_tbl) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">real_offer_size =</span> offer_size <span class="sc">/</span> deflator) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, real_offer_size)) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>classification_1, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"IPO Offer Size in 2022 Dollars"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Frequency"</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="fl">1e-9</span>, <span class="at">suffix =</span> <span class="st">"B"</span>, <span class="at">accuracy =</span> .<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>), <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display column-page">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-15-3" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-15-3-tab">
+<div class="panel-tabset page-columns page-full">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false">Sector-Level</a></li></ul>
+<div class="tab-content page-columns page-full">
+<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dollar_deflator_2022_tbl <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="fu">here</span>(<span class="st">"raw_data"</span>, <span class="st">"Financial Bubbles"</span>, <span class="st">"dollar_deflator_2022.rds"</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">offer_size =</span> <span class="fu">mean</span>(offer_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(dollar_deflator_2022_tbl) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">real_offer_size =</span> offer_size <span class="sc">/</span> deflator) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, real_offer_size)) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"Average IPO Offer Size in 2022 Dollars"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Frequency"</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="fl">1e-9</span>, <span class="at">suffix =</span> <span class="st">"B"</span>, <span class="at">accuracy =</span> .<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>), <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</div>
+<div id="tabset-13-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-13-2-tab">
+<div class="cell page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(date, classification_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">offer_size =</span> <span class="fu">mean</span>(offer_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(dollar_deflator_2022_tbl) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">real_offer_size =</span> offer_size <span class="sc">/</span> deflator) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, real_offer_size)) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>classification_1, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"Average IPO Offer Size in 2022 Dollars"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Frequency"</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="fl">1e-9</span>, <span class="at">suffix =</span> <span class="st">"B"</span>, <span class="at">accuracy =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>), <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display column-page">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-15-4" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-15-4-tab">
+<div class="panel-tabset page-columns page-full">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">Sector-Level</a></li></ul>
+<div class="tab-content page-columns page-full">
+<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dollar_deflator_2022_tbl <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="fu">here</span>(<span class="st">"raw_data"</span>, <span class="st">"Financial Bubbles"</span>, <span class="st">"dollar_deflator_2022.rds"</span>))</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">offer_size =</span> <span class="fu">median</span>(offer_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(dollar_deflator_2022_tbl) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">real_offer_size =</span> offer_size <span class="sc">/</span> deflator) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, real_offer_size)) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"Median IPO Offer Size in 2022 Dollars"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Frequency"</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="fl">1e-9</span>, <span class="at">suffix =</span> <span class="st">"B"</span>, <span class="at">accuracy =</span> .<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>), <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</div>
+<div id="tabset-14-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<div class="cell page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(date, classification_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">offer_size =</span> <span class="fu">median</span>(offer_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(dollar_deflator_2022_tbl) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">real_offer_size =</span> offer_size <span class="sc">/</span> deflator) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, real_offer_size)) <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="fu">palette_light</span>()[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>classification_1, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"Median IPO Offer Size in 2022 Dollars"</span>, <span class="at">subtitle =</span> <span class="st">"Monthly Frequency"</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="fl">1e-9</span>, <span class="at">suffix =</span> <span class="st">"B"</span>, <span class="at">accuracy =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>), <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display column-page">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>From eye-balling the data, we notice that IPO data is a helpful indicator when assessing if markets are growing past capacity. We notice that the count of monthly IPOs is somewhat cyclical with peaks before time periods typically associated with financial bubbles (’01, ’08, ’22).</p>
+<section id="creating-an-ipo-metric" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="creating-an-ipo-metric">Creating an IPO Metric</h4>
+<p>Let’s create a standard <code>IPO Metric</code> by:</p>
+<ol type="1">
+<li>Calculating the distance between a 3-month rolling average and a 4-year rolling average of IPO Count &amp; Avg. Offer Size</li>
+<li>Calculating a standardized distance for both of these rolling averages</li>
+<li>Averaging the standardized distances together to a create a single <code>IPO Metric</code></li>
+</ol>
+<p>By doing this we will have a rough estimation of how ‘hot’ markets are and if the number of entrants is high relative to historical averages:</p>
+<div class="panel-tabset page-columns page-full">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false">Sector-Level</a></li></ul>
+<div class="tab-content page-columns page-full">
+<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(date) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tk_augment_slidify</span>(</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">.value =</span> n,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">.period =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">48</span>),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">.f =</span> <span class="sc">~</span><span class="fu">mean</span>(.x),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">.partial =</span> T,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">.align =</span> <span class="st">"right"</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">distance =</span> n_roll_3 <span class="sc">-</span> n_roll_48) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_dist =</span> <span class="fu">mean</span>(distance),</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">mad_dist =</span> <span class="fu">mad</span>(distance),</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">count_standardized_distance =</span> (distance <span class="sc">-</span> avg_dist) <span class="sc">/</span> mad_dist</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(date, count_standardized_distance) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>        ipo_data <span class="sc">%&gt;%</span> </span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">offer_size =</span> <span class="fu">mean</span>(offer_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(dollar_deflator_2022_tbl) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">real_offer_size =</span> offer_size <span class="sc">/</span> deflator) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(date, real_offer_size) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tk_augment_slidify</span>(</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">.value =</span> real_offer_size,</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">.period =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">48</span>),</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">.f =</span> <span class="sc">~</span><span class="fu">mean</span>(.x),</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">.partial =</span> T,</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">.align =</span> <span class="st">"right"</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">distance =</span> real_offer_size_roll_3 <span class="sc">-</span> real_offer_size_roll_48) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_dist =</span> <span class="fu">mean</span>(distance),</span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">mad_dist =</span> <span class="fu">mad</span>(distance),</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">real_offer_size_standardized_distance =</span> (distance <span class="sc">-</span> avg_dist) <span class="sc">/</span> mad_dist</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(date, real_offer_size_standardized_distance)</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">ipo_metric =</span> (.<span class="dv">5</span> <span class="sc">*</span> count_standardized_distance) <span class="sc">+</span> (.<span class="dv">5</span> <span class="sc">*</span> real_offer_size_standardized_distance)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, ipo_metric)) <span class="sc">+</span></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_tq</span>() <span class="sc">+</span></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"IPO Metric"</span></span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number</span>()) <span class="sc">+</span></span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</div>
+<div id="tabset-16-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-16-2-tab">
+<div class="cell page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ipo_data <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(date, classification_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(classification_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tk_augment_slidify</span>(</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">.value =</span> n,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">.period =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">48</span>),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">.f =</span> <span class="sc">~</span><span class="fu">median</span>(.x),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">.partial =</span> T,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">.align =</span> <span class="st">"right"</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">distance =</span> n_roll_3 <span class="sc">-</span> n_roll_48) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">avg_dist =</span> <span class="fu">mean</span>(distance),</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">mad_dist =</span> <span class="fu">mad</span>(distance),</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">count_standardized_distance =</span> (distance <span class="sc">-</span> avg_dist) <span class="sc">/</span> mad_dist</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(date, classification_1, count_standardized_distance) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>        ipo_data <span class="sc">%&gt;%</span> </span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">floor_date</span>(announced_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>            <span class="fu">group_by</span>(date, classification_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">summarize</span>(<span class="at">offer_size =</span> <span class="fu">mean</span>(offer_size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>            <span class="fu">left_join</span>(dollar_deflator_2022_tbl) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">real_offer_size =</span> offer_size <span class="sc">/</span> deflator) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(date, classification_1, real_offer_size) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>            <span class="fu">group_by</span>(classification_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tk_augment_slidify</span>(</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>                <span class="at">.value =</span> real_offer_size,</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>                <span class="at">.period =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">48</span>),</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>                <span class="at">.f =</span> <span class="sc">~</span><span class="fu">median</span>(.x),</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>                <span class="at">.partial =</span> T,</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>                <span class="at">.align =</span> <span class="st">"right"</span></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">distance =</span> real_offer_size_roll_3 <span class="sc">-</span> real_offer_size_roll_48) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>                <span class="at">avg_dist =</span> <span class="fu">mean</span>(distance),</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>                <span class="at">mad_dist =</span> <span class="fu">mad</span>(distance),</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>                <span class="at">real_offer_size_standardized_distance =</span> (distance <span class="sc">-</span> avg_dist) <span class="sc">/</span> mad_dist</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(date, classification_1, real_offer_size_standardized_distance)</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">ipo_metric =</span> (.<span class="dv">5</span> <span class="sc">*</span> count_standardized_distance) <span class="sc">+</span> (.<span class="dv">5</span> <span class="sc">*</span> real_offer_size_standardized_distance)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, ipo_metric)) <span class="sc">+</span></span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>classification_1, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_tq</span>() <span class="sc">+</span></span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span><span class="st">""</span>, <span class="at">title =</span> <span class="st">"IPO Metric"</span></span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_date</span>(<span class="at">format =</span> <span class="st">"'%y"</span>), <span class="at">date_breaks =</span> <span class="st">"5 years"</span>) <span class="sc">+</span></span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number</span>()) <span class="sc">+</span></span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display column-page">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
 <hr>
+</section>
+<section id="digging-deeper-2" class="level4">
+<h4 class="anchored" data-anchor-id="digging-deeper-2">Digging Deeper</h4>
+<p>Once again, let’s take a more granular look at the data:</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true">Health Care</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false">Materials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-3" role="tab" aria-controls="tabset-17-3" aria-selected="false">Industrials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-4" role="tab" aria-controls="tabset-17-4" aria-selected="false">Consumer Discretionary</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-5" role="tab" aria-controls="tabset-17-5" aria-selected="false">Technology</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-6" role="tab" aria-controls="tabset-17-6" aria-selected="false">Real Estate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-7" role="tab" aria-controls="tabset-17-7" aria-selected="false">Financials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-8" role="tab" aria-controls="tabset-17-8" aria-selected="false">Communications</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-9-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-9" role="tab" aria-controls="tabset-17-9" aria-selected="false">Energy</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-10-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-10" role="tab" aria-controls="tabset-17-10" aria-selected="false">Consumer Staples</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-11-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-11" role="tab" aria-controls="tabset-17-11" aria-selected="false">Utilities</a></li></ul>
+<div class="tab-content">
+<div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-2.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-3-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-3.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-4-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-4.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-5-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-5.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-6-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-6.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-7-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-7.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-8-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-8.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-9" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-9-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-9.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-10" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-10-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-10.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<div id="tabset-17-11" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-11-tab">
+<div class="cell-output-display">
+<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-11.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</div>
+</div>
+<p>From observing the above at Sector Level 3, we notice that the IPO metric behaves oddly for several segments. This odd behavior is the result of limited IPO data for those segments and we will have to address this when creating our grand summary <code>Financial Bubble Metric</code>.</p>
+</section>
 </section>
 <section id="tightening-risks-popping-the-bubble" class="level3">
 <h3 class="anchored" data-anchor-id="tightening-risks-popping-the-bubble">4) Tightening Risks Popping the Bubble</h3>

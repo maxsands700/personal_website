@@ -15,9 +15,9 @@ message: false
 ```{r, include=FALSE}
 library(tidyverse)
 library(tidyquant)
+library(timetk)
 library(lubridate)
 library(here)
-library(gt)
 library(patchwork)
 
 # source(here("R scripts", "plot_formatting.R"))
@@ -40,13 +40,7 @@ r3000_raw <- read_rds(here("raw_data", "Financial Bubbles", "r3000_data.rds")) %
     ungroup() %>% 
     select(date:name, bucket, everything())
 
-ipo_data <- read_rds(here("raw_data", "Financial Bubbles", "ipo_data.rds")) %>% 
-    set_names(c(
-        "announced_date", "effective_date", "country", "industry_sector",
-        "industry_group", "industry_subgroup", "ticker", "name",
-        "size", "stage", "type", "security_type"
-    ))
-    
+ipo_data <- read_rds(here("raw_data", "Financial Bubbles", "us_ipo_data.rds"))
 
 r3000_nested <- r3000_raw %>% 
     nest(misc             = c(num_employees:inventory_turnover),
@@ -68,7 +62,7 @@ In his book [*Principles for Navigating Big Debt Crises*](https://www.bridgewate
 >
 > *- Ray Dalio*
 
-While the above framework is tailored for large-scale economic bubbles that drastically affected national economies, we will extend, adapt, and apply this framework to identify financial bubbles within various sectors of the U.S. economy and markets.
+While the above framework is tailored for large-scale economic bubbles that drastically affected national economies, we will extend, adapt, and apply this framework to create a `Grand Financial Bubble Metric` and identify financial bubbles within various sectors of the U.S. economy and markets.
 
 <hr>
 
@@ -207,7 +201,8 @@ r3000_nested %>%
 #| column: page
 ipo_data %>% 
     head(n=10) %>% 
-    select(-type) %>% 
+    select(announced_date, ticker, issuer_name, offer_size, classification_1) %>% 
+    rename(size = offer_size) %>% 
     mutate(size = scales::dollar(size, suffix = "M")) %>% 
     set_names(names(.) %>% str_replace_all("_", " ") %>% str_to_title())
 ```
@@ -993,7 +988,13 @@ iwalk(plots, ~ {
 
 ### 3) New Entrants to the Market
 
-There are several ways that we can assess whether new players are entering markets. The most direct and simple way is to track when private companies become public (i.e. IPO data). This method is likely to produce the clearest results, but it has a glaring shortfall - the classification scheme of our IPO data is different. `Work on reclassifying data!!`
+There are several ways that we can assess whether new players are entering markets. The most direct and simple method is to track when private companies become public (i.e. IPO data). Let's track IPO activity by:
+
+1.  Counting the \# of IPOs each month
+2.  Summing the IPO Offer Size each month
+
+::: panel-tabset
+### IPO Count
 
 ::: panel-tabset
 #### Aggregate
@@ -1003,17 +1004,16 @@ There are several ways that we can assess whether new players are entering marke
 #| fig-height: 5
 
 ipo_data %>%
-    filter(country == "UNITED STATES") %>%
-    filter(!(industry_sector %in% c("N.A.", "Government"))) %>%
-    mutate(floor_date = floor_date(announced_date, unit = "month")) %>% 
-    count(announced_date) %>% 
-    ggplot(aes(announced_date, n)) +
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    count(date) %>% 
+    ggplot(aes(date, n)) +
     geom_col(color = palette_light()[1]) +
     theme_tq(base_size = 16) +
     labs(
-        x="", y="", title = "# of IPOs (Monthly)"
+        x="", y="", title = "# of IPOs", subtitle = "Monthly Frequency"
     ) +
-    theme(plot.title = element_text(hjust = .5))
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
 ```
 
 #### Sector-Level
@@ -1023,22 +1023,428 @@ ipo_data %>%
 #| fig-width: 12
 #| fig-height: 10
 ipo_data %>%
-    filter(country == "UNITED STATES") %>%
-    filter(!(industry_sector %in% c("N.A.", "Government"))) %>%
-    mutate(floor_date = floor_date(announced_date, unit = "month")) %>%
-    count(floor_date, industry_sector) %>%
-    ggplot(aes(floor_date, n)) +
+    filter(classification_1 != "Unclassifiable") %>% 
+    mutate(date = floor_date(announced_date, unit = "month")) %>%
+    count(date, classification_1) %>%
+    ggplot(aes(date, n)) +
     geom_col(color = palette_light()[1]) +
-    facet_wrap(~industry_sector, scales = "free", ncol = 3) +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
     theme_tq(base_size = 16) +
     labs(
-        x="", y = "", title = "# of IPOs (Monthly)"
+        x="", y = "", title = "# of IPOs", subtitle = "Monthly Frequency"
     ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+```
+:::
+
+### Sum Offer Size (\$)
+
+::: panel-tabset
+#### Aggregate
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+
+dollar_deflator_2022_tbl <- read_rds(here("raw_data", "Financial Bubbles", "dollar_deflator_2022.rds"))
+
+ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    group_by(date) %>% 
+    summarize(offer_size = sum(offer_size)) %>% 
+    left_join(dollar_deflator_2022_tbl) %>% 
+    mutate(real_offer_size = offer_size / deflator) %>% 
+    ggplot(aes(date, real_offer_size)) +
+    geom_col(color = palette_light()[1]) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y="", title = "Sum of IPO Offer Sizes in 2022 Dollars", subtitle = "Monthly Frequency"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = .1)) +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+```
+
+#### Sector-Level
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    group_by(date, classification_1) %>% 
+    summarize(offer_size = sum(offer_size)) %>% 
+    left_join(dollar_deflator_2022_tbl) %>% 
+    mutate(real_offer_size = offer_size / deflator) %>% 
+    ggplot(aes(date, real_offer_size)) +
+    geom_col(color = palette_light()[1]) +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y="", title = "IPO Offer Size in 2022 Dollars", subtitle = "Monthly Frequency"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = .1)) +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+```
+:::
+
+### Avg Offer Size (\$)
+
+::: panel-tabset
+#### Aggregate
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+
+dollar_deflator_2022_tbl <- read_rds(here("raw_data", "Financial Bubbles", "dollar_deflator_2022.rds"))
+
+ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    group_by(date) %>% 
+    summarize(offer_size = mean(offer_size)) %>% 
+    left_join(dollar_deflator_2022_tbl) %>% 
+    mutate(real_offer_size = offer_size / deflator) %>% 
+    ggplot(aes(date, real_offer_size)) +
+    geom_col(color = palette_light()[1]) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y="", title = "Average IPO Offer Size in 2022 Dollars", subtitle = "Monthly Frequency"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = .1)) +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+```
+
+#### Sector-Level
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    group_by(date, classification_1) %>% 
+    summarize(offer_size = mean(offer_size)) %>% 
+    left_join(dollar_deflator_2022_tbl) %>% 
+    mutate(real_offer_size = offer_size / deflator) %>% 
+    ggplot(aes(date, real_offer_size)) +
+    geom_col(color = palette_light()[1]) +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y="", title = "Average IPO Offer Size in 2022 Dollars", subtitle = "Monthly Frequency"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = 1)) +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+```
+:::
+
+### Median Offer Size (\$)
+
+::: panel-tabset
+#### Aggregate
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+
+dollar_deflator_2022_tbl <- read_rds(here("raw_data", "Financial Bubbles", "dollar_deflator_2022.rds"))
+
+ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    group_by(date) %>% 
+    summarize(offer_size = median(offer_size)) %>% 
+    left_join(dollar_deflator_2022_tbl) %>% 
+    mutate(real_offer_size = offer_size / deflator) %>% 
+    ggplot(aes(date, real_offer_size)) +
+    geom_col(color = palette_light()[1]) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y="", title = "Median IPO Offer Size in 2022 Dollars", subtitle = "Monthly Frequency"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = .1)) +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+```
+
+#### Sector-Level
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    group_by(date, classification_1) %>% 
+    summarize(offer_size = median(offer_size)) %>% 
+    left_join(dollar_deflator_2022_tbl) %>% 
+    mutate(real_offer_size = offer_size / deflator) %>% 
+    ggplot(aes(date, real_offer_size)) +
+    geom_col(color = palette_light()[1]) +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y="", title = "Median IPO Offer Size in 2022 Dollars", subtitle = "Monthly Frequency"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = 1)) +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+```
+:::
+:::
+
+From eye-balling the data, we notice that IPO data is a helpful indicator when assessing if markets are growing past capacity. We notice that the count of monthly IPOs is somewhat cyclical with peaks before time periods typically associated with financial bubbles ('01, '08, '22).
+
+#### Creating an IPO Metric
+
+Let's create a standard `IPO Metric` by:
+
+1.  Calculating the distance between a 3-month rolling average and a 4-year rolling average of IPO Count & Avg. Offer Size
+2.  Calculating a standardized distance for both of these rolling averages
+3.  Averaging the standardized distances together to a create a single `IPO Metric`
+
+By doing this we will have a rough estimation of how 'hot' markets are and if the number of entrants is high relative to historical averages:
+
+::: panel-tabset
+#### Aggregate
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+
+ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    count(date) %>% 
+    tk_augment_slidify(
+        .value = n,
+        .period = c(3, 48),
+        .f = ~mean(.x),
+        .partial = T,
+        .align = "right"
+    ) %>% 
+    mutate(distance = n_roll_3 - n_roll_48) %>% 
+    mutate(
+        avg_dist = mean(distance),
+        mad_dist = mad(distance),
+        count_standardized_distance = (distance - avg_dist) / mad_dist
+    ) %>% 
+    select(date, count_standardized_distance) %>% 
+    
+    left_join(
+        ipo_data %>% 
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    group_by(date) %>% 
+    summarize(offer_size = mean(offer_size)) %>% 
+    left_join(dollar_deflator_2022_tbl) %>% 
+    mutate(real_offer_size = offer_size / deflator) %>% 
+    select(date, real_offer_size) %>% 
+    tk_augment_slidify(
+        .value = real_offer_size,
+        .period = c(3, 48),
+        .f = ~mean(.x),
+        .partial = T,
+        .align = "right"
+    ) %>% 
+    mutate(distance = real_offer_size_roll_3 - real_offer_size_roll_48) %>% 
+    drop_na() %>% 
+    mutate(
+        avg_dist = mean(distance),
+        mad_dist = mad(distance),
+        real_offer_size_standardized_distance = (distance - avg_dist) / mad_dist
+    ) %>% 
+    select(date, real_offer_size_standardized_distance)
+    ) %>% 
+    
+    mutate(ipo_metric = (.5 * count_standardized_distance) + (.5 * real_offer_size_standardized_distance)) %>% 
+    ggplot(aes(date, ipo_metric)) +
+    geom_line() +
+    geom_hline(yintercept = 0, color = "black", lty = 2) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    labs(
+        x="", y="", title = "IPO Metric"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_number()) +
+    theme(plot.title = element_text(hjust = .5))
+```
+
+#### Sector-Level
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    count(date, classification_1) %>% 
+    group_by(classification_1) %>% 
+    tk_augment_slidify(
+        .value = n,
+        .period = c(3, 48),
+        .f = ~median(.x),
+        .partial = T,
+        .align = "right"
+    ) %>% 
+    mutate(distance = n_roll_3 - n_roll_48) %>% 
+    mutate(
+        avg_dist = mean(distance),
+        mad_dist = mad(distance),
+        count_standardized_distance = (distance - avg_dist) / mad_dist
+    ) %>% 
+    ungroup() %>% 
+    select(date, classification_1, count_standardized_distance) %>% 
+    
+    left_join(
+        ipo_data %>% 
+            mutate(date = floor_date(announced_date, unit = "month")) %>% 
+            group_by(date, classification_1) %>% 
+            summarize(offer_size = mean(offer_size)) %>% 
+            ungroup() %>% 
+            left_join(dollar_deflator_2022_tbl) %>% 
+            mutate(real_offer_size = offer_size / deflator) %>% 
+            select(date, classification_1, real_offer_size) %>% 
+            group_by(classification_1) %>% 
+            tk_augment_slidify(
+                .value = real_offer_size,
+                .period = c(3, 48),
+                .f = ~median(.x),
+                .partial = T,
+                .align = "right"
+            ) %>% 
+            mutate(distance = real_offer_size_roll_3 - real_offer_size_roll_48) %>% 
+            drop_na() %>% 
+            mutate(
+                avg_dist = mean(distance),
+                mad_dist = mad(distance),
+                real_offer_size_standardized_distance = (distance - avg_dist) / mad_dist
+            ) %>% 
+            ungroup() %>% 
+            select(date, classification_1, real_offer_size_standardized_distance)
+    ) %>% 
+    
+    mutate(ipo_metric = (.5 * count_standardized_distance) + (.5 * real_offer_size_standardized_distance)) %>% 
+    ggplot(aes(date, ipo_metric)) +
+    geom_line() +
+    geom_hline(yintercept = 0, color = "black", lty = 2) +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    labs(
+        x="", y="", title = "IPO Metric"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_number()) +
     theme(plot.title = element_text(hjust = .5))
 ```
 :::
 
 <hr>
+
+#### Digging Deeper
+
+Once again, let's take a more granular look at the data:
+
+:::panel-tabset
+
+```{r}
+#| results: asis
+#| fig-width: 12
+#| fig-height: 15
+           
+plots <- list()
+for (i in seq_along(classification_1_vec)){
+    
+    g <- ipo_data %>% 
+        filter(classification_1 == classification_1_vec[i]) %>% 
+        mutate(date = floor_date(announced_date, unit = "month")) %>% 
+        count(date, classification_3) %>% 
+        group_by(classification_3) %>% 
+        tk_augment_slidify(
+            .value = n,
+            .period = c(3, 48),
+            .f = ~median(.x),
+            .partial = T,
+            .align = "right"
+        ) %>% 
+        mutate(distance = n_roll_3 - n_roll_48) %>% 
+        mutate(
+            avg_dist = mean(distance),
+            mad_dist = mad(distance),
+            count_standardized_distance = (distance - avg_dist) / mad_dist
+        ) %>% 
+        ungroup() %>% 
+        select(date, classification_3, count_standardized_distance) %>% 
+        
+        left_join(
+            ipo_data %>% 
+                filter(classification_1 == classification_1_vec[i]) %>% 
+                    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+                    group_by(date, classification_3) %>% 
+                    summarize(offer_size = mean(offer_size)) %>% 
+                    ungroup() %>% 
+                    left_join(dollar_deflator_2022_tbl) %>% 
+                    mutate(real_offer_size = offer_size / deflator) %>% 
+                    select(date, classification_3, real_offer_size) %>% 
+                    group_by(classification_3) %>% 
+                    tk_augment_slidify(
+                        .value = real_offer_size,
+                        .period = c(3, 48),
+                        .f = ~median(.x),
+                        .partial = T,
+                        .align = "right"
+                    ) %>% 
+                    mutate(distance = real_offer_size_roll_3 - real_offer_size_roll_48) %>% 
+                    drop_na() %>% 
+                    mutate(
+                        avg_dist = mean(distance),
+                        mad_dist = mad(distance),
+                        real_offer_size_standardized_distance = (distance - avg_dist) / mad_dist
+                    ) %>% 
+                    ungroup() %>% 
+                    select(date, classification_3, real_offer_size_standardized_distance)
+        ) %>% 
+        
+            mutate(ipo_metric = (.5 * count_standardized_distance) + (.5 * real_offer_size_standardized_distance)) %>% 
+            ggplot(aes(date, ipo_metric)) +
+            geom_line() +
+            geom_hline(yintercept = 0, color = "black", lty = 2) +
+            facet_wrap(~classification_3, scales = "free", ncol = 2) +
+            theme_tq(base_size = 24) +
+            scale_color_tq() +
+            labs(
+                x="", y="", title = "IPO Metric"
+            ) +
+            scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+            scale_y_continuous(labels = scales::label_number()) +
+        theme(plot.title = element_text(hjust = .5))
+    
+    plots[[classification_1_vec[i]]] <- g
+    
+}
+
+iwalk(plots, ~ {
+  cat('## ', .y, '\n\n')
+  
+  print(.x)
+  
+  cat('\n\n')
+  
+})
+```
+
+:::
+
+From observing the above at Sector Level 3, we notice that the IPO metric behaves oddly for several segments. This odd behavior is the result of limited IPO data for those segments and we will have to address this when creating our grand summary `Financial Bubble Metric`.
 
 ### 4) Tightening Risks Popping the Bubble
 
