@@ -111,7 +111,11 @@ Going forward, we will only consider the following framework components, as I be
 
 3.  Have new participants entered the market?
 
-4.  Does tightening risk popping the bubble?
+4.  Does tightening risk popping the bubble?*\**
+
+::: column-margin
+\*We will qualitatively consider this section of the framework after building our `Grand Financial Bubble Metric`
+:::
 
 <hr>
 
@@ -1101,8 +1105,6 @@ ipo_data %>%
 #| fig-width: 8
 #| fig-height: 5
 
-dollar_deflator_2022_tbl <- read_rds(here("raw_data", "Financial Bubbles", "dollar_deflator_2022.rds"))
-
 ipo_data %>%
     mutate(date = floor_date(announced_date, unit = "month")) %>% 
     group_by(date) %>% 
@@ -1154,8 +1156,6 @@ ipo_data %>%
 ```{r}
 #| fig-width: 8
 #| fig-height: 5
-
-dollar_deflator_2022_tbl <- read_rds(here("raw_data", "Financial Bubbles", "dollar_deflator_2022.rds"))
 
 ipo_data %>%
     mutate(date = floor_date(announced_date, unit = "month")) %>% 
@@ -1354,8 +1354,7 @@ ipo_data %>%
 
 Once again, let's take a more granular look at the data:
 
-:::panel-tabset
-
+::: panel-tabset
 ```{r}
 #| results: asis
 #| fig-width: 12
@@ -1441,14 +1440,266 @@ iwalk(plots, ~ {
   
 })
 ```
-
 :::
 
 From observing the above at Sector Level 3, we notice that the IPO metric behaves oddly for several segments. This odd behavior is the result of limited IPO data for those segments and we will have to address this when creating our grand summary `Financial Bubble Metric`.
 
-### 4) Tightening Risks Popping the Bubble
-
 ## Putting It All Together
+
+Let's take each of our metrics, and average them together to create a `Grand Financial Bubble Metric`. To do this, we will:
+
+1.  Average our `Price Metric`, `Debt Metric`, and `IPO Metric` together
+    i.  We will only consider Large & Ultra-Large Cap
+2.  Re-scale the resulting output between 0 and 1.
+
+```{r}
+price_metric_tbl <- r3000_nested %>% 
+    select(date:bucket, misc, classification) %>% 
+    unnest(c(misc, classification)) %>%
+    select(date, ticker, name, bucket, classification_1, contains("price_to")) %>% 
+    filter(bucket %in% c("Large Cap", "Ultra-Large Cap")) %>% 
+    select(-bucket) %>% 
+    group_by(date, classification_1) %>% 
+    summarize(across(contains("price_to"), ~median(.x, na.rm = T))) %>% 
+    ungroup() %>% 
+    pivot_longer(contains("price_to")) %>% 
+    group_by(classification_1, name) %>% 
+    mutate(med_value = median(value)) %>% 
+    mutate(distance = value - med_value) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>%
+    group_by(date, classification_1) %>% 
+    summarize(price_metric = mean(standardized_distance, na.rm = T)) %>% 
+    ungroup()
+
+debt_metric_tbl <- r3000_nested %>% 
+    select(date:bucket, -year, balance_sheet, classification) %>% 
+    unnest(c(balance_sheet, classification)) %>% 
+    filter(bucket %in% c("Large Cap", "Ultra-Large Cap")) %>% 
+    select(-bucket) %>%
+    mutate(d_e = (st_debt + lt_debt) / total_equity) %>% 
+    select(date, classification_1, d_e) %>% 
+    group_by(date, classification_1) %>% 
+    summarize(d_e = median(d_e, na.rm = T)) %>% 
+    ungroup() %>% 
+    group_by(classification_1) %>% 
+    mutate(med_value = median(d_e)) %>% 
+    mutate(distance = d_e - med_value) %>% 
+    mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+    mutate(d_e_standardized_distance = distance / avg_distance) %>% 
+    ungroup() %>% 
+    select(date, classification_1, d_e_standardized_distance) %>% 
+    left_join(
+        r3000_nested %>%
+            select(date:bucket, -year, balance_sheet, classification) %>%
+            unnest(c(balance_sheet, classification)) %>%
+            select(date:bucket, classification_1, total_debt) %>%
+            filter(!is.na(total_debt)) %>%
+            filter(bucket %in% c("Large Cap", "Ultra-Large Cap")) %>% 
+            select(-bucket) %>%
+            group_by(date, classification_1) %>%
+            summarize(
+                sum_debt = sum(total_debt, na.rm = T),
+                count = n()
+            ) %>%
+            ungroup() %>%
+            left_join(gdp) %>%
+            mutate(avg_debt_to_gdp = ((sum_debt / count) / gdp)) %>% 
+            group_by(classification_1) %>% 
+            mutate(med_value = median(avg_debt_to_gdp, na.rm = T)) %>% 
+            mutate(distance = avg_debt_to_gdp - med_value) %>% 
+            mutate(avg_distance = mean(abs(distance), na.rm = T)) %>% 
+            mutate(d_gdp_standardized_distance = distance / avg_distance) %>% 
+            ungroup() %>% 
+            select(date, classification_1, d_gdp_standardized_distance)
+    ) %>% 
+    mutate(debt_metric = (.9 * d_e_standardized_distance) + (.1 * d_gdp_standardized_distance)) %>% 
+    select(date, classification_1, debt_metric)
+
+ipo_metric_tbl <- ipo_data %>%
+    mutate(date = floor_date(announced_date, unit = "month")) %>% 
+    count(date, classification_1) %>% 
+    group_by(classification_1) %>% 
+    tk_augment_slidify(
+        .value = n,
+        .period = c(3, 48),
+        .f = ~median(.x),
+        .partial = T,
+        .align = "right"
+    ) %>% 
+    mutate(distance = n_roll_3 - n_roll_48) %>% 
+    mutate(
+        avg_dist = mean(distance),
+        mad_dist = mad(distance),
+        count_standardized_distance = (distance - avg_dist) / mad_dist
+    ) %>% 
+    ungroup() %>% 
+    select(date, classification_1, count_standardized_distance) %>% 
+    
+    left_join(
+        ipo_data %>% 
+            mutate(date = floor_date(announced_date, unit = "month")) %>% 
+            group_by(date, classification_1) %>% 
+            summarize(offer_size = mean(offer_size)) %>% 
+            ungroup() %>% 
+            left_join(dollar_deflator_2022_tbl) %>% 
+            mutate(real_offer_size = offer_size / deflator) %>% 
+            select(date, classification_1, real_offer_size) %>% 
+            group_by(classification_1) %>% 
+            tk_augment_slidify(
+                .value = real_offer_size,
+                .period = c(3, 48),
+                .f = ~median(.x),
+                .partial = T,
+                .align = "right"
+            ) %>% 
+            mutate(distance = real_offer_size_roll_3 - real_offer_size_roll_48) %>% 
+            drop_na() %>% 
+            mutate(
+                avg_dist = mean(distance),
+                mad_dist = mad(distance),
+                real_offer_size_standardized_distance = (distance - avg_dist) / mad_dist
+            ) %>% 
+            ungroup() %>% 
+            select(date, classification_1, real_offer_size_standardized_distance)
+    ) %>% 
+    
+    mutate(ipo_metric = (.5 * count_standardized_distance) + (.5 * real_offer_size_standardized_distance)) %>% 
+    select(date, classification_1, ipo_metric)
+```
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+scale_0_1 <- function(x){(x-min(x))/(max(x)-min(x))}
+
+financial_bubble_metric_tbl <- price_metric_tbl %>% 
+    left_join(debt_metric_tbl) %>% 
+    pivot_longer(contains("metric"), names_to = "metric") %>% 
+    mutate(date = date + days(1)) %>% 
+    group_by(classification_1, metric) %>% 
+    pad_by_time(
+        .date_var = date,
+        .by = "month"
+    ) %>% 
+    fill(value, .direction = "down") %>% 
+    ungroup() %>% 
+    pivot_wider(names_from = "metric", values_from = "value") %>% 
+    left_join(ipo_metric_tbl) %>% 
+    drop_na() %>% 
+    group_by(classification_1) %>% 
+    mutate(financial_bubble_metric = ((1/3) * price_metric) + ((1/3) * debt_metric) + ((1/3) * ipo_metric)) %>% 
+    mutate(financial_bubble_metric = scale_0_1(financial_bubble_metric)) %>% 
+    ungroup() %>% 
+    select(date, classification_1, financial_bubble_metric)
+
+financial_bubble_metric_tbl %>% 
+    ggplot(aes(date, financial_bubble_metric)) +
+    geom_line() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    labs(
+        x="", y="", title = "Grand Financial Bubble Metric"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_number()) +
+    theme(plot.title = element_text(hjust = .5))
+```
+
+It is important to analyze the above in both an absolute and relative fashion. Our re-scaling of the metric between 0 and 1 allows us to compare uniformly through history, but it does not remove the influence of 'outliers'. For instance, we note that *Financials* sees a large spike in 2022 that clearly dwarfs historical values. If we go back and do some digging, we can attribute this to an extreme IPO metric caused by the SPAC frenzy. With human judgement, we may decide (or not) to reduce the effect of this spike, which would then increase values for all other time periods and indicate a moderately strong bubble in '00 - '02. Likewise, if we reduce the effect of the outlier in Health Care in '01, the amended metric would indicate a moderately strong bubble in '20 - '22.
+
+A possible amendment to the above could yield the following:
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+financial_bubble_metric_tbl_amended <- price_metric_tbl %>% 
+    left_join(debt_metric_tbl) %>% 
+    pivot_longer(contains("metric"), names_to = "metric") %>% 
+    mutate(date = date + days(1)) %>% 
+    group_by(classification_1, metric) %>% 
+    pad_by_time(
+        .date_var = date,
+        .by = "month"
+    ) %>% 
+    fill(value, .direction = "down") %>% 
+    ungroup() %>% 
+    pivot_wider(names_from = "metric", values_from = "value") %>% 
+    left_join(ipo_metric_tbl) %>% 
+    drop_na() %>% 
+    group_by(classification_1) %>% 
+    mutate(financial_bubble_metric = ((1/3) * price_metric) + ((1/3) * debt_metric) + ((1/3) * ipo_metric)) %>% 
+    mutate(financial_bubble_metric = case_when(
+    (date %in% c(ymd("2021-03-01"), ymd("2021-04-01"))) & (classification_1 == "Financials") ~ .5 * financial_bubble_metric,
+    (date == ymd("1999-08-01")) & (classification_1 == "Health Care") ~ .27 * financial_bubble_metric,
+    T ~ financial_bubble_metric
+    )) %>% 
+    mutate(financial_bubble_metric = scale_0_1(financial_bubble_metric)) %>% 
+    ungroup() %>% 
+    select(date, classification_1, financial_bubble_metric)
+
+fbm_plot <- financial_bubble_metric_tbl_amended %>% 
+    ggplot(aes(date, financial_bubble_metric)) +
+    geom_line() +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    scale_color_tq() +
+    labs(
+        x="", y="", title = "Grand Financial Bubble Metric", subtitle = "Adjusted w/ Human Judgement"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_number()) +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+
+fbm_plot
+```
+
+This seems more in-line with our expectations.
+
+At this point, I will caution the reader that I would associate any inferences taken from our `Grand Financial Bubble Metric` with 60% confidence. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector is equally as important.
+
+With that said, let's inspect returns for each of these sectors,in conjunction with our plot above:
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+sp500_prices <- read_rds(here("raw_data", "Financial Bubbles", "SP500_price_data.rds"))
+sector_prices <- read_rds(here("raw_data", "Financial Bubbles", "sector_etf_prices.rds"))
+
+ggplot() +
+    geom_rect(
+        data = sector_prices %>% 
+    group_by(classification_1) %>% 
+    tq_transmute(adjusted, periodReturn, period = "yearly") %>% 
+    ungroup() %>% 
+    mutate(date_start = floor_date(date, unit = "year")),
+    
+    mapping = aes(xmin = date_start, xmax = date, ymin = 0, ymax = 1, fill = yearly.returns),
+    alpha = .5
+    ) +
+    geom_line(
+        data = financial_bubble_metric_tbl_amended,
+        mapping = aes(date, financial_bubble_metric)
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
+    facet_wrap(~classification_1, scales = "free", ncol = 3) +
+    theme_tq(base_size = 16) +
+    labs(
+        x="", y="", title = "Grand Financial Bubble Metric", subtitle = "Adjusted w/ Human Judgement"
+    ) +
+    scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
+    scale_y_continuous(labels = scales::label_number()) +
+    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5),
+          legend.position = "none")
+```
 
 ##### Final Remarks
 
