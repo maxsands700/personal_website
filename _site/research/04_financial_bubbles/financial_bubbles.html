@@ -248,7 +248,10 @@ background-size: cover;
   <li><a href="#digging-deeper-2" id="toc-digging-deeper-2" class="nav-link" data-scroll-target="#digging-deeper-2">Digging Deeper</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">Putting It All Together</a></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">Putting It All Together</a>
+  <ul>
+  <li><a href="#timing-the-bubble" id="toc-timing-the-bubble" class="nav-link" data-scroll-target="#timing-the-bubble">‘Timing’ the Bubble</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -359,7 +362,7 @@ background-size: cover;
 <ul>
 <li><p>Key figures from the Income Statements, Balance Sheets, and Cash Flow Statements of all the companies in the Russell 3000 Index since 1996, including the sector classification of each company</p></li>
 <li><p>Global IPO data since 1993</p></li>
-<li><p>Economic Data (GDP, Labor Force, Federal Funds Rate, etc.)</p></li>
+<li><p>Economic Data (GDP, Federal Funds Rate, etc.)</p></li>
 </ul>
 <p>Here is a glimpse of each data-set:</p>
 <div class="panel-tabset page-columns page-full">
@@ -2405,7 +2408,7 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <section id="putting-it-all-together" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="putting-it-all-together">Putting It All Together</h2>
 <p>Let’s take each of our metrics, scale them to values between 0 and 1, and average them together to create a <code>Grand Financial Bubble Metric</code>. We will then re-scale our resulting metric between 0 and 1.</p>
-<p>It is important to note that our IPO metric can take on extreme values at the sector level - <em>Health Care</em> in 2001 and <em>Financials</em> (w/ the SPAC curge) in 2021. Because these extreme points reduce the relative importance of other time periods, we will water them down and keep this in the back of our minds going forward.</p>
+<p>It is important to note that our IPO metric can take on extreme values at the sector level - <em>Health Care</em> in 2001 and <em>Financials</em> (w/ the SPAC surge) in 2021. Because these extreme points reduce the relative importance of other time periods, we will water them down and keep this in the back of our minds going forward.</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
@@ -2471,7 +2474,7 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <p><img src="financial_bubbles_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
-<p>At this point, I will caution the reader that I would associate any inferences taken from our <code>Grand Financial Bubble Metric</code> should be taken with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic environment is equally important.</p>
+<p>At this point, I will caution the reader that I would associate any inferences taken from our <code>Grand Financial Bubble Metric</code> should be taken with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic environment is equally as important.</p>
 <p>With that said, we can see that our <code>Grand Financial Bubble Metric</code> may be helpful in determining sector performance. In general, we observe positive returns when the metric is relatively low and increasing. As the market frenzies and there are new competitors, higher valuations, and debt-financed growth, market returns are particularly strong. Eventually, our metric peaks, and subsequent returns are generally poor.</p>
 <p>There are a few things worth noting from our plot:</p>
 <ol type="1">
@@ -2489,7 +2492,7 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 </ol></li>
 <li>The effects of bubbles in a particular segment tend to affect other segments as well, even if they appear unrelated, with varying degrees of magnitude.</li>
 </ol>
-<p>First, let’s create our <code>Grand Financial Bubble Metric</code> at a more granular level. We are only going to include the sectors that have sufficient data. For those with sufficient Price &amp; Debt data, but insufficient IPO data, we will calculate our <code>Grand Financial Bubble Metric</code> as the average of <code>Price Metric</code> and <code>Debt Metric</code> and exclude the <code>IPO Metric</code>.</p>
+<p>Let’s create our <code>Grand Financial Bubble Metric</code> at a more granular level. We are only going to include the sectors that have sufficient data. For those with sufficient Price &amp; Debt data, but insufficient IPO data, we will calculate our <code>Grand Financial Bubble Metric</code> as the average of <code>Price Metric</code> and <code>Debt Metric</code> and exclude the <code>IPO Metric</code>.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -2596,12 +2599,17 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 </div>
 </div>
 </div>
+<p><code>Get constituent price data from Bloomberg and overlay color scale returns for each Sector Level 3...</code></p>
+<section id="timing-the-bubble" class="level3">
+<h3 class="anchored" data-anchor-id="timing-the-bubble">‘Timing’ the Bubble</h3>
 <p>The ability to time market bubbles is nearly impossible, but the main indicators I would pay attention to are interest rates; since a large part of bubbles are caused by debt, it is logical that the cost of borrowing money is highly relevant.</p>
+<p><code>Analysis of interest rates and T10 - T2, etc...</code></p>
 <section id="final-remarks" class="level5">
 <h5 class="anchored" data-anchor-id="final-remarks">Final Remarks</h5>
 <p><em>The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice.</em></p>
 
 
+</section>
 </section>
 </section>
 

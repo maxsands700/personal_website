@@ -127,7 +127,7 @@ In order to do this, I have collected:
 
 -   Global IPO data since 1993
 
--   Economic Data (GDP, Labor Force, Federal Funds Rate, etc.)
+-   Economic Data (GDP, Federal Funds Rate, etc.)
 
 Here is a glimpse of each data-set:
 
@@ -1230,7 +1230,7 @@ From observing the above at Sector Level 3, we notice that the IPO metric behave
 
 Let's take each of our metrics, scale them to values between 0 and 1, and average them together to create a `Grand Financial Bubble Metric`. We will then re-scale our resulting metric between 0 and 1.
 
-It is important to note that our IPO metric can take on extreme values at the sector level - *Health Care* in 2001 and *Financials* (w/ the SPAC curge) in 2021. Because these extreme points reduce the relative importance of other time periods, we will water them down and keep this in the back of our minds going forward.
+It is important to note that our IPO metric can take on extreme values at the sector level - *Health Care* in 2001 and *Financials* (w/ the SPAC surge) in 2021. Because these extreme points reduce the relative importance of other time periods, we will water them down and keep this in the back of our minds going forward.
 
 ```{r, include=FALSE}
 price_metric_tbl <- r3000_nested %>% 
@@ -1413,7 +1413,7 @@ ggplot() +
           legend.position = "none")
 ```
 
-At this point, I will caution the reader that I would associate any inferences taken from our `Grand Financial Bubble Metric` should be taken with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic environment is equally important.
+At this point, I will caution the reader that I would associate any inferences taken from our `Grand Financial Bubble Metric` should be taken with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic environment is equally as important.
 
 With that said, we can see that our `Grand Financial Bubble Metric` may be helpful in determining sector performance. In general, we observe positive returns when the metric is relatively low and increasing. As the market frenzies and there are new competitors, higher valuations, and debt-financed growth, market returns are particularly strong. Eventually, our metric peaks, and subsequent returns are generally poor.
 
@@ -1427,7 +1427,7 @@ There are a few things worth noting from our plot:
     i.  *We will discuss this shortly...*
 4.  The effects of bubbles in a particular segment tend to affect other segments as well, even if they appear unrelated, with varying degrees of magnitude.
 
-First, let's create our `Grand Financial Bubble Metric` at a more granular level. We are only going to include the sectors that have sufficient data. For those with sufficient Price & Debt data, but insufficient IPO data, we will calculate our `Grand Financial Bubble Metric` as the average of `Price Metric` and `Debt Metric` and exclude the `IPO Metric`.
+Let's create our `Grand Financial Bubble Metric` at a more granular level. We are only going to include the sectors that have sufficient data. For those with sufficient Price & Debt data, but insufficient IPO data, we will calculate our `Grand Financial Bubble Metric` as the average of `Price Metric` and `Debt Metric` and exclude the `IPO Metric`.
 
 ```{r}
 
@@ -1519,7 +1519,13 @@ iwalk(plots, ~ {
 ```
 :::
 
+`Get constituent price data from Bloomberg and overlay color scale returns for each Sector Level 3...`
+
+### 'Timing' the Bubble
+
 The ability to time market bubbles is nearly impossible, but the main indicators I would pay attention to are interest rates; since a large part of bubbles are caused by debt, it is logical that the cost of borrowing money is highly relevant.
+
+`Analysis of interest rates and T10 - T2, etc...`
 
 ##### Final Remarks
 
