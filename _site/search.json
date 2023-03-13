@@ -165,7 +165,7 @@
     "href": "resume.html#choate-hall-stewart-choate-investment-advisors",
     "title": "",
     "section": "Choate Hall & Stewart / Choate Investment Advisors",
-    "text": "Choate Hall & Stewart / Choate Investment Advisors\nBusiness & Investment Analyst | 2022 - Present | Boston, MA\n\nXXXXX\nXXXXX\n\nXXXXX\n\nXXXXX\nXXXXX\n\nXXXXX"
+    "text": "Choate Hall & Stewart / Choate Investment Advisors\nBusiness & Investment Analyst | 2022 - Present | Boston, MA\n\n\nProviding general investment research for the Equity and Fixed Income Teams\n\nBuilt automated preliminary Investment Analysis report using R and Quarto\n\nBy providing a ticker and a list of comps, a report is generated that gathers data from Bloomberg and performs key metric ratio analysis, market share analysis, business segment analysis, etc. to provide a preliminary valuation\n\n\nDeveloping unique solutions and models for the Investment and Operations divisions:\n\nBuilt in-house Monte Carlo Simulation tool for client Retirement Analysis\n\nIncludes sensitivity analysis across several key inputs\nIncludes report generation - both static PDFs and interactive HTML"
   },
   {
     "objectID": "resume.html#mcgill-university-1",

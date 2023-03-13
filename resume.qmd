@@ -33,17 +33,21 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 
 *Business & Investment Analyst* \| *2022 - Present* \| *Boston, MA*
 
--   XXXXX
+::: blur
+-   Providing general investment research for the Equity and Fixed Income Teams
 
--   XXXXX
+    -   Built automated preliminary Investment Analysis report using R and Quarto
 
-    -   XXXXX
+        -   By providing a ticker and a list of comps, a report is generated that gathers data from Bloomberg and performs key metric ratio analysis, market share analysis, business segment analysis, etc. to provide a preliminary valuation
 
-        -   XXXXX
+-   Developing unique solutions and models for the Investment and Operations divisions:
 
-        -   XXXXX
+    -   Built in-house Monte Carlo Simulation tool for client Retirement Analysis
 
-    -   XXXXX
+        -   Includes sensitivity analysis across several key inputs
+
+        -   Includes report generation - both static PDFs and interactive HTML
+:::
 
 ## McGill University
 
@@ -105,4 +109,4 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 
 *Interests:* Financial Analytics/Data Science, Weightlifting, Guitar, Golf, Chess, Poker, Football, Basketball, Math, Creative Writing
 
-*Influential Role Models:* Ray Dalio, Andrew Huberman, Matt Dancho, members of the All-In Podcast
+*Influential Role Models:* Ray Dalio, Andrew Huberman, members of the All-In Podcast
