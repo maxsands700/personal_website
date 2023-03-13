@@ -3,6 +3,8 @@ project:
 
 website:
   title: ""
+  google-analytics: G-XPQZQZDK95
+  cookie-consent: true
   navbar:
     left: 
       - href: index.qmd
@@ -22,6 +24,7 @@ format:
   html:
     theme: lux
     css: styles.css
+
 
 editor: visual
 
