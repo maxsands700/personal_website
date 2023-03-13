@@ -5,6 +5,8 @@ toc-depth: 4
 
 # Education
 
+<hr>
+
 ## Business Science University
 
 *2022 - Present*
@@ -28,6 +30,8 @@ Desautels Faculty of Management, Montréal, Canada
 Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Statistics
 
 # Work Experience
+
+<hr>
 
 ## Choate Hall & Stewart / Choate Investment Advisors
 
@@ -72,6 +76,8 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 -   Tutored students in Mathematics, Statistics, Physics, English, and Finance, and revised college admission essays
 
 # Personal Projects
+
+<hr>
 
 ## Replicating Ray Dalio's Work: Forecasting the 'Big' & 'Debt' Cycles
 

@@ -48,6 +48,20 @@ r3000_nested <- r3000_raw %>%
          balance_sheet    = c(current_assets:total_equity),
          cash_flow_statement = c(free_cash_flow, capex),
          classification   = c(contains("classification")))
+
+sp500_prices <- read_rds(here("raw_data", "Financial Bubbles", "SP500_price_data.rds"))
+sector_prices <- read_rds(here("raw_data", "Financial Bubbles", "sector_etf_prices.rds"))
+
+sp500_ann_ret <- sp500_prices %>% 
+    tq_transmute(price, periodReturn, period = "yearly") %>% 
+    mutate(date_start = floor_date(date, unit = "year")) %>% 
+    filter(date_start >= "1993-01-01")
+
+sector_ann_ret <- sector_prices %>% 
+    group_by(classification_1) %>% 
+    tq_transmute(adjusted, periodReturn, period = "yearly") %>% 
+    ungroup() %>% 
+    mutate(date_start = floor_date(date, unit = "year"))
 ```
 
 ## A Framework for Identifying Bubbles
@@ -249,6 +263,13 @@ r3000_nested %>%
     summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>% 
     ungroup() %>% 
     ggplot(aes(date, price_to_sales, color = bucket)) +
+    geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
     geom_hline(
         data = . %>%
@@ -265,7 +286,7 @@ r3000_nested %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "", title = "Median Price-to-Sales", color = "") +
+    labs(x = "", y = "", title = "Median Price-to-Sales", color = "", fill = "Ann. Sector ETF Return") +
     theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
 
@@ -283,6 +304,13 @@ r3000_nested %>%
     summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>% 
     ungroup() %>% 
     ggplot(aes(date, price_to_book, color = bucket)) +
+        geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
     geom_hline(
         data = . %>%
@@ -317,6 +345,13 @@ r3000_nested %>%
     summarize(across(.cols = contains("price_to"), .fns = ~median(.x, na.rm = T))) %>% 
     ungroup() %>% 
     ggplot(aes(date, price_to_earnings, color = bucket)) +
+        geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
     geom_hline(
         data = . %>%
@@ -377,6 +412,13 @@ price_metric_tbl <- r3000_nested %>%
 
 price_metric_tbl %>% 
     ggplot(aes(date, price_metric, color = bucket)) +
+        geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
     geom_hline(yintercept = 0, color = "black", lty = 2) +
     theme_tq(base_size = 16) +
@@ -524,6 +566,13 @@ r3000_nested %>%
     summarize(d_e = median(d_e, na.rm = T)) %>% 
     ungroup() %>% 
     ggplot(aes(date, d_e, color = bucket)) +
+        geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
     theme_tq(base_size = 16) +
     scale_color_tq() +
@@ -558,6 +607,13 @@ r3000_nested %>%
     left_join(gdp) %>%
     mutate(avg_debt_to_gdp = ((sum_debt / count) / gdp)) %>%
     ggplot(aes(date, avg_debt_to_gdp, color = bucket)) +
+        geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
     theme_tq(base_size = 16) +
     scale_color_tq() +
@@ -629,6 +685,13 @@ d_e_stand_dist_tbl %>%
     left_join(d_gdp_stand_dist_tbl) %>% 
     mutate(debt_metric = (.9 * d_e_standardized_distance) + (.1 * d_gdp_standardized_distance)) %>% 
     ggplot(aes(date, debt_metric, color = bucket)) +
+        geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
     theme_tq(base_size = 16) +
     scale_color_tq() +
@@ -787,13 +850,25 @@ ipo_data %>%
     mutate(date = floor_date(announced_date, unit = "month")) %>% 
     count(date) %>% 
     ggplot(aes(date, n)) +
+        geom_rect(
+        data = sp500_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = 0, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green",
+                         name = "SP500 Annual Return",
+                         labels = scales::label_percent()) +
     geom_col(color = palette_light()[1]) +
     theme_tq(base_size = 16) +
     labs(
         x="", y="", title = "# of IPOs", subtitle = "Monthly Frequency"
     ) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+    theme(plot.title = element_text(hjust = .5),
+          plot.subtitle = element_text(hjust = .5),
+          legend.position = "top",
+          legend.title = element_text(size = 12)) +
+    guides(fill = guide_colorbar(barwidth = 15, barheight = 1, title.position = "top", title.hjust = .5))
 ```
 
 #### Sector-Level
@@ -807,6 +882,13 @@ ipo_data %>%
     mutate(date = floor_date(announced_date, unit = "month")) %>%
     count(date, classification_1) %>%
     ggplot(aes(date, n)) +
+            geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_col(color = palette_light()[1]) +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     theme_tq(base_size = 16) +
@@ -836,6 +918,14 @@ ipo_data %>%
     left_join(dollar_deflator_2022_tbl) %>% 
     mutate(real_offer_size = offer_size / deflator) %>% 
     ggplot(aes(date, real_offer_size)) +
+            geom_rect(
+        data = sp500_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = 0, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green",
+                         name = "SP500 Annual Return",
+                         labels = scales::label_percent()) +
     geom_col(color = palette_light()[1]) +
     theme_tq(base_size = 16) +
     labs(
@@ -843,7 +933,11 @@ ipo_data %>%
     ) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
     scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = .1)) +
-    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+        theme(plot.title = element_text(hjust = .5),
+          plot.subtitle = element_text(hjust = .5),
+          legend.position = "top",
+          legend.title = element_text(size = 12)) +
+    guides(fill = guide_colorbar(barwidth = 15, barheight = 1, title.position = "top", title.hjust = .5))
 ```
 
 #### Sector-Level
@@ -860,6 +954,13 @@ ipo_data %>%
     left_join(dollar_deflator_2022_tbl) %>% 
     mutate(real_offer_size = offer_size / deflator) %>% 
     ggplot(aes(date, real_offer_size)) +
+            geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_col(color = palette_light()[1]) +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     theme_tq(base_size = 16) +
@@ -888,6 +989,14 @@ ipo_data %>%
     left_join(dollar_deflator_2022_tbl) %>% 
     mutate(real_offer_size = offer_size / deflator) %>% 
     ggplot(aes(date, real_offer_size)) +
+            geom_rect(
+        data = sp500_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = 0, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green",
+                         name = "SP500 Annual Return",
+                         labels = scales::label_percent()) +
     geom_col(color = palette_light()[1]) +
     theme_tq(base_size = 16) +
     labs(
@@ -895,7 +1004,11 @@ ipo_data %>%
     ) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
     scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = .1)) +
-    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+        theme(plot.title = element_text(hjust = .5),
+          plot.subtitle = element_text(hjust = .5),
+          legend.position = "top",
+          legend.title = element_text(size = 12)) +
+    guides(fill = guide_colorbar(barwidth = 15, barheight = 1, title.position = "top", title.hjust = .5))
 ```
 
 #### Sector-Level
@@ -912,6 +1025,13 @@ ipo_data %>%
     left_join(dollar_deflator_2022_tbl) %>% 
     mutate(real_offer_size = offer_size / deflator) %>% 
     ggplot(aes(date, real_offer_size)) +
+            geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_col(color = palette_light()[1]) +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     theme_tq(base_size = 16) +
@@ -940,6 +1060,14 @@ ipo_data %>%
     left_join(dollar_deflator_2022_tbl) %>% 
     mutate(real_offer_size = offer_size / deflator) %>% 
     ggplot(aes(date, real_offer_size)) +
+                geom_rect(
+        data = sp500_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = 0, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green",
+                         name = "SP500 Annual Return",
+                         labels = scales::label_percent()) +
     geom_col(color = palette_light()[1]) +
     theme_tq(base_size = 16) +
     labs(
@@ -947,7 +1075,11 @@ ipo_data %>%
     ) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
     scale_y_continuous(labels = scales::label_dollar(scale = 1e-9, suffix = "B", accuracy = .1)) +
-    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5))
+        theme(plot.title = element_text(hjust = .5),
+          plot.subtitle = element_text(hjust = .5),
+          legend.position = "top",
+          legend.title = element_text(size = 12)) +
+    guides(fill = guide_colorbar(barwidth = 15, barheight = 1, title.position = "top", title.hjust = .5))
 ```
 
 #### Sector-Level
@@ -964,6 +1096,13 @@ ipo_data %>%
     left_join(dollar_deflator_2022_tbl) %>% 
     mutate(real_offer_size = offer_size / deflator) %>% 
     ggplot(aes(date, real_offer_size)) +
+            geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_col(color = palette_light()[1]) +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     theme_tq(base_size = 16) +
@@ -1041,6 +1180,14 @@ ipo_data %>%
     
     mutate(ipo_metric = (.5 * count_standardized_distance) + (.5 * real_offer_size_standardized_distance)) %>% 
     ggplot(aes(date, ipo_metric)) +
+                geom_rect(
+        data = sp500_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green",
+                         name = "SP500 Annual Return",
+                         labels = scales::label_percent()) +
     geom_line() +
     geom_hline(yintercept = 0, color = "black", lty = 2) +
     theme_tq(base_size = 16) +
@@ -1050,7 +1197,11 @@ ipo_data %>%
     ) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
     scale_y_continuous(labels = scales::label_number()) +
-    theme(plot.title = element_text(hjust = .5))
+            theme(plot.title = element_text(hjust = .5),
+          plot.subtitle = element_text(hjust = .5),
+          legend.position = "top",
+          legend.title = element_text(size = 12)) +
+    guides(fill = guide_colorbar(barwidth = 15, barheight = 1, title.position = "top", title.hjust = .5))
 ```
 
 #### Sector-Level
@@ -1110,6 +1261,13 @@ ipo_data %>%
     
     mutate(ipo_metric = (.5 * count_standardized_distance) + (.5 * real_offer_size_standardized_distance)) %>% 
     ggplot(aes(date, ipo_metric)) +
+            geom_rect(
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = -Inf, ymax = Inf, fill = yearly.returns, y = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
     geom_hline(yintercept = 0, color = "black", lty = 2) +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
@@ -1383,19 +1541,11 @@ financial_bubble_metric_tbl <- price_metric_tbl %>%
     ungroup() %>% 
     select(date, classification_1, financial_bubble_metric)
 
-sp500_prices <- read_rds(here("raw_data", "Financial Bubbles", "SP500_price_data.rds"))
-sector_prices <- read_rds(here("raw_data", "Financial Bubbles", "sector_etf_prices.rds"))
-
 ggplot() +
     geom_rect(
-        data = sector_prices %>% 
-    group_by(classification_1) %>% 
-    tq_transmute(adjusted, periodReturn, period = "yearly") %>% 
-    ungroup() %>% 
-    mutate(date_start = floor_date(date, unit = "year")),
-    
-    mapping = aes(xmin = date_start, xmax = date, ymin = 0, ymax = 1, fill = yearly.returns),
-    alpha = .5
+        data = sector_ann_ret,
+        mapping = aes(xmin = date_start, xmax = date, ymin = 0, ymax = 1, fill = yearly.returns),
+    alpha = .5,
     ) +
     geom_line(
         data = financial_bubble_metric_tbl,
