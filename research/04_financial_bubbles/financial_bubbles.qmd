@@ -1,7 +1,7 @@
 ---
 title: "★Assessing Financial Bubbles"
 author: "Max Sands"
-date: "2023-03-12"
+date: "2023-03-06"
 image: preview_image.png
 title-block-banner: preview_image.png
 description: "Read Time: 15-30 mins"
@@ -10,6 +10,7 @@ editor_options:
   chunk_output_type: console
 warning: false
 message: false
+echo: false
 ---
 
 ```{r, include=FALSE}
@@ -286,7 +287,8 @@ r3000_nested %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "", title = "Median Price-to-Sales", color = "", fill = "Ann. Sector ETF Return") +
+    labs(x = "", y = "", title = "Median Price-to-Sales",
+         color = "", fill = "Ann. Sector ETF Return") +
     theme(legend.position = "top", plot.title = element_text(hjust = .5))
 ```
 
@@ -1541,7 +1543,7 @@ financial_bubble_metric_tbl <- price_metric_tbl %>%
     ungroup() %>% 
     select(date, classification_1, financial_bubble_metric)
 
-ggplot() +
+fbm_plot_lvl1 <- ggplot() +
     geom_rect(
         data = sector_ann_ret,
         mapping = aes(xmin = date_start, xmax = date, ymin = 0, ymax = 1, fill = yearly.returns),
@@ -1561,6 +1563,8 @@ ggplot() +
     scale_y_continuous(labels = scales::label_number()) +
     theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5),
           legend.position = "none")
+
+fbm_plot_lvl1
 ```
 
 At this point, I will caution the reader that I would associate any inferences taken from our `Grand Financial Bubble Metric` should be taken with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic environment is equally as important.
@@ -1654,7 +1658,7 @@ for (i in seq_along(classification_1_vec_fbm)){
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
     theme(legend.position = "top", plot.title = element_text(hjust = .5))
     
-    plots[[classification_1_vec[i]]] <- g
+    plots[[classification_1_vec_fbm[i]]] <- g
     
 }
 
@@ -1669,13 +1673,118 @@ iwalk(plots, ~ {
 ```
 :::
 
-`Get constituent price data from Bloomberg and overlay color scale returns for each Sector Level 3...`
+`Get constituent price data and overlay color scale returns for each Sector Level 3...`
 
 ### 'Timing' the Bubble
 
-The ability to time market bubbles is nearly impossible, but the main indicators I would pay attention to are interest rates; since a large part of bubbles are caused by debt, it is logical that the cost of borrowing money is highly relevant.
+The ability to time market bubbles is nearly impossible, but the main indicators that many people pay attention to are interest rates/measures of borrowing cost. Since a large part of bubbles are caused by debt, it is logical that the cost of borrowing money is highly relevant.
 
-`Analysis of interest rates and T10 - T2, etc...`
+One of the most observed interest rate metrics in the industry is the "10-2" Yield Spread which measures the difference in the yield of a 10-year Treasury Bond and that of a 2-year Treasury bond. Before we plot this measure below, I think it is important to understand the significance of this metric and its implications. Let's consider two scenarios:
+
+1.  A 10-year TBond is yielding 7% per year, and a 2-year TBond is yielding 3% per year, thus netting out to a 4% spread.
+    i.  This scenario implies that the average person demands 4% more of a return on their investment to loan out their money for 10 years, rather than 2 years. At the most basic level, this is logical. The overarching rationale for this can be boiled down to *General Uncertainty about the Future:* the longer that maturity of the bond, the more time there is for unexpected events to occur that may affect the bond's value, or the buyer's perceived value of the bond, and therefore lenders demand higher rates of return for this increased uncertainty. Economists have outlined key risks attributable to this uncertainty:
+
+        a.  *Future Inflation Expectations/Inflation Risk*: When investors expect higher inflation in the future, they demand higher yields to compensate for the loss of purchasing power. The longer the maturity of the bond, the more sensitive it is to the inflation expectations, which results in higher yields.
+
+        b.  *Credit Risk*: Generally, longer-term bonds have a higher credit risk than shorter-term bonds. This is because the longer the maturity of the bond, the more time there is for the borrower's creditworthiness to change. If investors perceive that there is a higher risk that the issuer may default on the bond, they will demand a higher yield on longer-term bonds to compensate for this credit risk.
+
+        c.  *Liquidity Risk*: Bonds with varying maturities may have various degrees of ease in which they can be bought or sold without affecting its price. This can be due to a lack of market participants, sudden increases or decreases in supply and demand, etc.
+2.  A 10-year TBond is yielding 3% per year, and a 2-year TBond is yielding 2% per year, thus netting out to a -1% spread. When this spread is negative, it is called a yield curve inversion.
+    i.  This scenario implies that the average person is willing to *give up a 1%* return on their investment to loan out their money for an additional 8 years. In other words, lenders are *more uncertain about the near-term than the long-term* (for any of the aforementioned reasons)!
+
+If market consensus indicates greater uncertainty regarding the short-term, as it does in the second scenario, this does not bode well for the economy and markets. Therefore, it is likely that the "10-2" Yield Spread is an insightful metric for our purposes.
+
+Many people, rightfully so, will push back and repeat the famous adage "yield-curve inversions predict 4 out of every 3 recessions," and they are right; it is impossible to predict markets with the use of solely one metric, and there are times when the yield-curve has inverted and markets rallied. This is normal, there are absolutely times when the short-term is uncertain, but the underlying foundation of markets are structurally sound, and therefore the future still holds prospect for healthy growth. However, I believe studying yield curve inversions *in conjunction* with our `Grand Financial Bubble Metric` allows for powerful insights - if markets are uncertain about the near-term ***and*** markets are structurally unsound, or have been growing beyond potential, then it is likely that future growth prospects are weak.
+
+With that said, let's inspect interest rates and the "10-2" Yield spread:
+
+```{r}
+#| fig-width: 12
+#| fig-height: 12
+
+fed_funds <- read_rds(here("raw_data", "Financial Bubbles", "fed_funds.rds"))
+t10y_2y <- read_rds(here("raw_data", "Financial Bubbles", "t10y_2y.rds"))
+sp500_real_ret <- read_rds(here("raw_data", "Financial Bubbles", "sp500_real_return.rds"))
+inflation <- read_rds(here("raw_data", "Financial Bubbles", "inflation.rds"))
+
+g1 <- sp500_real_ret %>% 
+    ggplot() +
+    geom_rect(aes(xmin = date_start, xmax = date,
+                  ymin = -Inf, ymax = Inf,
+                  fill = sp500_real_return),
+              alpha = .5) +
+    geom_line(
+        data = fed_funds, aes(date, fed_funds)
+    ) +
+    scale_fill_gradient2(
+        high = scales::muted("green"),
+        mid = sp500_real_ret %>% summarize(mean_real_return = mean(sp500_real_return)),
+        guide = guide_colorbar(title.position = "top",
+                               barwidth = 40,
+                               ticks = T,
+                               ticks.colour = "black",
+                               title = "SP500 Real Return",
+                               title.theme = element_text(size = 16, hjust = .5)),
+        labels = scales::label_percent(),
+        breaks = seq(-.3, .4, .1)
+    ) +
+    theme_tq(base_size = 20) +
+    scale_y_continuous(labels = scales::label_percent()) +
+    labs(
+        x = "", y = "Federal Funds Rate", title = "Interest Rate Analysis"
+    ) +
+    theme(plot.title = element_text(hjust = .5), legend.position = "top") +
+    coord_cartesian(xlim = c(ymd("1920-01-01"), ymd("2023-01-01")))
+
+g2 <- sp500_real_ret %>% 
+    ggplot() +
+    geom_rect(aes(xmin = date_start, xmax = date,
+                  ymin = -Inf, ymax = Inf,
+                  fill = sp500_real_return),
+              alpha = .5,
+              show.legend = F) +
+    geom_line(
+        data = t10y_2y, aes(date, price)
+    ) +
+    geom_hline(yintercept = 0, color = "darkblue") +
+    scale_fill_gradient2(
+        high = scales::muted("green"),
+        mid = sp500_real_ret %>% summarize(mean_real_return = mean(sp500_real_return))
+    ) +
+    theme_tq(base_size = 20) +
+    scale_y_continuous(labels = scales::label_percent()) +
+    labs(
+        x = "", y = "Treasury 10Y - 2Y", caption = "Midpoint of the colorscale represents average real SP500 return of 5.21%"
+    ) +
+    coord_cartesian(xlim = c(ymd("1920-01-01"), ymd("2023-01-01"))) +
+    theme(plot.caption = element_text(size = 10, face = "italic"))
+
+g1 / g2
+```
+
+As we can see from our plots, real equity returns tend to be negative following yield curve inversions. We can also see that the Fed, when possible, drops interest rates to stimulate the economy. However, we notice that it cannot afford to do so when a) inflation is out of control and/or b) when rates are already at 0%.
+
+```{r}
+#| column: page
+#| fig-width: 12
+#| fig-height: 10
+
+yc_inv_tbl <- t10y_2y %>% 
+    filter(date >= "1995-01-01") %>% 
+    filter(price <= .0001)
+
+fbm_plot_lvl1 +
+    geom_point(
+        data = yc_inv_tbl,
+        aes(x = date, y = 0),
+        alpha = .2, color = palette_light()[1]
+    ) +
+    labs(
+        caption = str_glue("Midpoint of the color scale represents 0% nominal return.
+                           Dots at the bottom of the plot indicate Yield Curve Inversion.")
+    ) +
+    theme(plot.caption = element_text(size = 10, face = "italic"))
+```
 
 ##### Final Remarks
 
