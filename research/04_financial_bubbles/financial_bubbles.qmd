@@ -1580,6 +1580,7 @@ There are a few things worth noting from our plot:
 3.  Our metric provides a framework for historical comparison, but it does not provide a time-based trading signal (and it should not be looked at *in isolation* when making investment decisions). For instance, if we were to look at our plot in 2018, it would have been very reasonable to conjecture that *Technology* was in a bubble and poised for poor investment returns in the coming years. Yet, '19 - '21 were extremely strong years for that industry, and the bubble did not pop until 2022. *Why is that & what are the main catalysts that cause the bubble to pop?*
     i.  *We will discuss this shortly...*
 4.  The effects of bubbles in a particular segment tend to affect other segments as well, even if they appear unrelated, with varying degrees of magnitude.
+    i.  In particular, we note that the *Financials* sector is often affected by bubbles in other segments. This is fairly intuitive, as the *Financials* sector implicitly interacts with all other sectors.
 
 Let's create our `Grand Financial Bubble Metric` at a more granular level. We are only going to include the sectors that have sufficient data. For those with sufficient Price & Debt data, but insufficient IPO data, we will calculate our `Grand Financial Bubble Metric` as the average of `Price Metric` and `Debt Metric` and exclude the `IPO Metric`.
 
@@ -1762,7 +1763,9 @@ g2 <- sp500_real_ret %>%
 g1 / g2
 ```
 
-As we can see from our plots, real equity returns tend to be negative following yield curve inversions. We can also see that the Fed, when possible, drops interest rates to stimulate the economy. However, we notice that it cannot afford to do so when a) inflation is out of control and/or b) when rates are already at 0%.
+As we can see from our plots, real equity returns tend to be negative following yield curve inversions. We can also see that the Fed, when possible, drops interest rates to stimulate the economy. However, we notice that it cannot afford to do so when a) inflation is out of control and/or b) when rates are already at 0%. These scenarios are structurally different and are therefore worth investigating in depth, but we will not discuss that here.
+
+Let's overlay the time periods when the yield curve was inverted to our `Grand Financial Bubble Metric`:
 
 ```{r}
 #| column: page
@@ -1785,6 +1788,34 @@ fbm_plot_lvl1 +
     ) +
     theme(plot.caption = element_text(size = 10, face = "italic"))
 ```
+
+As we can see, looking at yield curve inversions in conjunction with our `Grand Financial Bubble Metric` is helpful in explaining sector returns.
+
+## Additional Areas of Explanation & Possible Amendments
+
+This article scratches the surface of possible ways to identify financial bubbles and can drastically be improved. A few points worth noting include:
+
+-   Calculating our `Price Metric` & `Debt Metric` with rolling averages (or medians) rather than using distance from the population median (similar to our `IPO Metric`)
+
+    -   The above is *an examination of history,* *not an attempt at building a predictive model*. Because of this, I used all available data to calculate the `Price Metric` & `Debt Metric`, which involved calculating distance from the median of all years. In the long-run, this method is acceptable for predictability purposes if we assume that these metrics are cyclical in nature, and that we have enough data. However, this would not have been the case in 2000, where we would only have had 6 years of data to assess, and metrics cannot yet be considered cyclical.
+
+    -   The investigation of the rolling average (or median) growth rate of these metrics, rather than absolute level, is also worthwhile.
+
+-   Increasing the frequency of the data is likely to be extremely worthwhile
+
+    -   In the above, our `Price Metric` & `Debt Metric` were calculated at yearly intervals (unlike our `IPO Metric` which could be calculated monthly) because I gathered yearly figures from the financial statements of the constituents of the Russell 3000 Index. However, much can change in the span of a year, and repeating the above at a quarterly frequency is likely to paint a clearer picture in our illustrations.
+
+-   The logical, qualitative narrative we built around the formation of bubbles is extremely simplistic and can be improved. As such, there are many additional quantitative 'metrics' that could be created to measure and explain this narrative.
+
+### An Overarching Takeaway
+
+I think the above examination of history hints at an over-arching principle that applies to every facet of life - *everything has an optimal growth rate*. Whether it's a single company, the global economy, or even an individual's ability to learn a topic - there is an optimal, healthy rate of progress that is predicated upon the underlying nature and quality of the system.
+
+In the case of a single company, that rate of progress is therefore a function of the quality of the workers, their abilities, location, tools, team chemistry, etc. In the short-run, it is possible to grow beyond optimal; perhaps a company mandates overtime work, which will boost growth in the near-term, but if continued, this will adversely affect long-term growth, as employees will find suitable work elsewhere. In the case of an individual's learning ability, optimal growth is a function of sleep quality, nutritional intake, time spent studying, and numerous other factors. Again, in the short-run, progress can be artificially inflated; perhaps the individual sacrifices sleep to study, which will boost learning-ability in the short-run, but the rate of learning is obviously unsustainable.
+
+With that said, an entity's optimal growth rate can obviously change with time as the nature and the quality of the underlying change.
+
+It is my perspective that this idea of an 'optimal growth rate' is applicable to any subject. In the case of investing, if we can understand an investment's optimal growth rate, its current deviation from this growth rate, and the reasons for this deviation - then we have the ability to capitalize on these deviations and inefficiencies with the correct strategies and tactics.
 
 ##### Final Remarks
 

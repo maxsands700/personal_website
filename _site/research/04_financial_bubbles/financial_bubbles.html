@@ -216,6 +216,10 @@ background-size: cover;
   <ul>
   <li><a href="#timing-the-bubble" id="toc-timing-the-bubble" class="nav-link" data-scroll-target="#timing-the-bubble">‘Timing’ the Bubble</a></li>
   </ul></li>
+  <li><a href="#additional-areas-of-explanation-possible-amendments" id="toc-additional-areas-of-explanation-possible-amendments" class="nav-link" data-scroll-target="#additional-areas-of-explanation-possible-amendments">Additional Areas of Explanation &amp; Possible Amendments</a>
+  <ul>
+  <li><a href="#an-overarching-takeaway" id="toc-an-overarching-takeaway" class="nav-link" data-scroll-target="#an-overarching-takeaway">An Overarching Takeaway</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1857,7 +1861,10 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <ol type="i">
 <li><em>We will discuss this shortly…</em></li>
 </ol></li>
-<li>The effects of bubbles in a particular segment tend to affect other segments as well, even if they appear unrelated, with varying degrees of magnitude.</li>
+<li>The effects of bubbles in a particular segment tend to affect other segments as well, even if they appear unrelated, with varying degrees of magnitude.
+<ol type="i">
+<li>In particular, we note that the <em>Financials</em> sector is often affected by bubbles in other segments. This is fairly intuitive, as the <em>Financials</em> sector implicitly interacts with all other sectors.</li>
+</ol></li>
 </ol>
 <p>Let’s create our <code>Grand Financial Bubble Metric</code> at a more granular level. We are only going to include the sectors that have sufficient data. For those with sufficient Price &amp; Debt data, but insufficient IPO data, we will calculate our <code>Grand Financial Bubble Metric</code> as the average of <code>Price Metric</code> and <code>Debt Metric</code> and exclude the <code>IPO Metric</code>.</p>
 <div class="cell">
@@ -1946,12 +1953,37 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
-<p>As we can see from our plots, real equity returns tend to be negative following yield curve inversions. We can also see that the Fed, when possible, drops interest rates to stimulate the economy. However, we notice that it cannot afford to do so when a) inflation is out of control and/or b) when rates are already at 0%.</p>
+<p>As we can see from our plots, real equity returns tend to be negative following yield curve inversions. We can also see that the Fed, when possible, drops interest rates to stimulate the economy. However, we notice that it cannot afford to do so when a) inflation is out of control and/or b) when rates are already at 0%. These scenarios are structurally different and are therefore worth investigating in depth, but we will not discuss that here.</p>
+<p>Let’s overlay the time periods when the yield curve was inverted to our <code>Grand Financial Bubble Metric</code>:</p>
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page">
 <p><img src="financial_bubbles_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
+<p>As we can see, looking at yield curve inversions in conjunction with our <code>Grand Financial Bubble Metric</code> is helpful in explaining sector returns.</p>
+</section>
+</section>
+<section id="additional-areas-of-explanation-possible-amendments" class="level2">
+<h2 class="anchored" data-anchor-id="additional-areas-of-explanation-possible-amendments">Additional Areas of Explanation &amp; Possible Amendments</h2>
+<p>This article scratches the surface of possible ways to identify financial bubbles and can drastically be improved. A few points worth noting include:</p>
+<ul>
+<li><p>Calculating our <code>Price Metric</code> &amp; <code>Debt Metric</code> with rolling averages (or medians) rather than using distance from the population median (similar to our <code>IPO Metric</code>)</p>
+<ul>
+<li><p>The above is <em>an examination of history,</em> <em>not an attempt at building a predictive model</em>. Because of this, I used all available data to calculate the <code>Price Metric</code> &amp; <code>Debt Metric</code>, which involved calculating distance from the median of all years. In the long-run, this method is acceptable for predictability purposes if we assume that these metrics are cyclical in nature, and that we have enough data. However, this would not have been the case in 2000, where we would only have had 6 years of data to assess, and metrics cannot yet be considered cyclical.</p></li>
+<li><p>The investigation of the rolling average (or median) growth rate of these metrics, rather than absolute level, is also worthwhile.</p></li>
+</ul></li>
+<li><p>Increasing the frequency of the data is likely to be extremely worthwhile</p>
+<ul>
+<li>In the above, our <code>Price Metric</code> &amp; <code>Debt Metric</code> were calculated at yearly intervals (unlike our <code>IPO Metric</code> which could be calculated monthly) because I gathered yearly figures from the financial statements of the constituents of the Russell 3000 Index. However, much can change in the span of a year, and repeating the above at a quarterly frequency is likely to paint a clearer picture in our illustrations.</li>
+</ul></li>
+<li><p>The logical, qualitative narrative we built around the formation of bubbles is extremely simplistic and can be improved. As such, there are many additional quantitative ‘metrics’ that could be created to measure and explain this narrative.</p></li>
+</ul>
+<section id="an-overarching-takeaway" class="level3">
+<h3 class="anchored" data-anchor-id="an-overarching-takeaway">An Overarching Takeaway</h3>
+<p>I think the above examination of history hints at an over-arching principle that applies to every facet of life - <em>everything has an optimal growth rate</em>. Whether it’s a single company, the global economy, or even an individual’s ability to learn a topic - there is an optimal, healthy rate of progress that is predicated upon the underlying nature and quality of the system.</p>
+<p>In the case of a single company, that rate of progress is therefore a function of the quality of the workers, their abilities, location, tools, team chemistry, etc. In the short-run, it is possible to grow beyond optimal; perhaps a company mandates overtime work, which will boost growth in the near-term, but if continued, this will adversely affect long-term growth, as employees will find suitable work elsewhere. In the case of an individual’s learning ability, optimal growth is a function of sleep quality, nutritional intake, time spent studying, and numerous other factors. Again, in the short-run, progress can be artificially inflated; perhaps the individual sacrifices sleep to study, which will boost learning-ability in the short-run, but the rate of learning is obviously unsustainable.</p>
+<p>With that said, an entity’s optimal growth rate can obviously change with time as the nature and the quality of the underlying change.</p>
+<p>It is my perspective that this idea of an ‘optimal growth rate’ is applicable to any subject. In the case of investing, if we can understand an investment’s optimal growth rate, its current deviation from this growth rate, and the reasons for this deviation - then we have the ability to capitalize on these deviations and inefficiencies with the correct strategies and tactics.</p>
 <section id="final-remarks" class="level5">
 <h5 class="anchored" data-anchor-id="final-remarks">Final Remarks</h5>
 <p><em>The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice.</em></p>
