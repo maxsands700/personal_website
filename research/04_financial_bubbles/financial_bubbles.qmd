@@ -256,7 +256,6 @@ Let's take a look at the historical P/S, P/B, and P/E ratios of each sector. To 
 #| column: page
 #| fig-width: 12
 #| fig-height: 10
-#| fig-cap: Dashed line represents median of medians for *Large Cap* bucket
 r3000_nested %>% 
     select(date:bucket, misc, classification) %>% 
     unnest(c(misc, classification)) %>%
@@ -288,8 +287,12 @@ r3000_nested %>%
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
     labs(x = "", y = "", title = "Median Price-to-Sales",
-         color = "", fill = "Ann. Sector ETF Return") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+         color = "", fill = "Ann. Sector ETF Return",
+         caption = str_glue("Dashed line represents median of medians for the *Large Cap* bucket.
+                            Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
+                            The *Communications* sector ETF (XTL) was created in 2011")) +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
 ```
 
 #### Price-to-Book
@@ -298,7 +301,6 @@ r3000_nested %>%
 #| column: page
 #| fig-width: 12
 #| fig-height: 10
-#| fig-cap: Dashed line represents median of medians for *Large Cap* bucket
 r3000_nested %>% 
     select(date:bucket, misc, classification) %>% 
     unnest(c(misc, classification)) %>%
@@ -329,8 +331,13 @@ r3000_nested %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "", title = "Median Price-to-Book", color = "") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+labs(x = "", y = "", title = "Median Price-to-Book",
+         color = "", fill = "Ann. Sector ETF Return",
+         caption = str_glue("Dashed line represents median of medians for the *Large Cap* bucket.
+                            Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
+                            The *Communications* sector ETF (XTL) was created in 2011")) +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
 ```
 
 #### Price-to-Earnings
@@ -339,7 +346,6 @@ r3000_nested %>%
 #| column: page
 #| fig-width: 12
 #| fig-height: 10
-#| fig-cap: Dashed line represents median of medians for *Large Cap* bucket
 r3000_nested %>% 
     select(date:bucket, misc, classification) %>% 
     unnest(c(misc, classification)) %>%
@@ -370,8 +376,13 @@ r3000_nested %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "", title = "Median Price-to-Earnings", color = "") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+labs(x = "", y = "", title = "Median Price-to-Earnings",
+         color = "", fill = "Ann. Sector ETF Return",
+         caption = str_glue("Dashed line represents median of medians for the *Large Cap* bucket.
+                            Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
+                            The *Communications* sector ETF (XTL) was created in 2011")) +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
 ```
 :::
 
@@ -428,8 +439,12 @@ price_metric_tbl %>%
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     scale_y_continuous(labels = scales::label_number()) +
     scale_x_date(date_breaks = "5 years", labels = scales::label_date(format = "'%y")) +
-    labs(x = "", y = "", title = "Price Metric", color = "") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+labs(x = "", y = "", title = "Price Metric",
+         color = "", fill = "Ann. Sector ETF Return",
+         caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
+                            The *Communications* sector ETF (XTL) was created in 2011")) +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
 ```
 
 ##### Takeaways:
@@ -579,10 +594,14 @@ r3000_nested %>%
     theme_tq(base_size = 16) +
     scale_color_tq() +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "", title = "Median Debt-to-Equity", color = "") +
     scale_y_continuous(labels = scales::label_number(suffix = "x")) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+    labs(x = "", y = "", title = "Median Debt-to-Equity",
+         color = "", fill = "Ann. Sector ETF Return",
+         caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
+                            The *Communications* sector ETF (XTL) was created in 2011")) +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
 ```
 
 #### Metric 2
@@ -620,10 +639,14 @@ r3000_nested %>%
     theme_tq(base_size = 16) +
     scale_color_tq() +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "", title = "Avg. Debt-to-GDP", color = "") +
     scale_y_continuous(labels = scales::label_percent()) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+    labs(x = "", y = "", title = "Avg. Debt-to-GDP",
+         color = "", fill = "Ann. Sector ETF Return",
+         caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
+                            The *Communications* sector ETF (XTL) was created in 2011")) +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
 ```
 :::
 
@@ -695,13 +718,18 @@ d_e_stand_dist_tbl %>%
     ) +
     scale_fill_gradient2(low = "red", mid = "white", high = "green") +
     geom_line() +
+    geom_hline(yintercept = 0, lty = 2) +
     theme_tq(base_size = 16) +
     scale_color_tq() +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
-    labs(x="", y = "", title = "Debt Metric", color = "") +
     scale_y_continuous(labels = scales::label_number()) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+    labs(x = "", y = "", title = "Debt Metric",
+         color = "", fill = "Ann. Sector ETF Return",
+         caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
+                            The *Communications* sector ETF (XTL) was created in 2011")) +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
 ```
 
 ##### Takeaways:
@@ -1553,16 +1581,26 @@ fbm_plot_lvl1 <- ggplot() +
         data = financial_bubble_metric_tbl,
         mapping = aes(date, financial_bubble_metric)
     ) +
-    scale_fill_gradient2(low = "red", mid = "white", high = "green") +
+    scale_fill_gradient2(low = alpha("red", 0.5), mid = alpha("white", 0.5), high = alpha("green", 0.5),
+                         guide = guide_colorbar(title.position = "top",
+                               barwidth = 30,
+                               ticks = T,
+                               ticks.colour = "black",
+                               title = "SP500 Real Return",
+                               title.theme = element_text(size = 16, hjust = .5)),
+        labels = scales::label_percent(),
+        breaks = seq(-.3, .4, .1)) +
     facet_wrap(~classification_1, scales = "free", ncol = 3) +
     theme_tq(base_size = 16) +
-    labs(
-        x="", y="", title = "Grand Financial Bubble Metric", subtitle = "Adjusted w/ Human Judgement"
-    ) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
     scale_y_continuous(labels = scales::label_number()) +
-    theme(plot.title = element_text(hjust = .5), plot.subtitle = element_text(hjust = .5),
-          legend.position = "none")
+    labs(x = "", y = "", title = "Grand Financial Bubble Metric",
+         color = "", subtitle = "Adjusted w/ Human Judgement",
+         caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
+                            The *Communications* sector ETF (XTL) was created in 2011")) +
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"),
+          plot.subtitle = element_text(hjust = .5))
 
 fbm_plot_lvl1
 ```
