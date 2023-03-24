@@ -125,10 +125,10 @@ Going forward, we will only consider the following framework components, as I be
 
 3.  Have new participants entered the market?
 
-4.  Does tightening risk popping the bubble?*\**
+4.  Does monetary tightening risk popping the bubble?*\**
 
 ::: column-margin
-\*We will qualitatively consider this section of the framework after building our `Grand Financial Bubble Metric`
+\*We will qualitatively consider a variation of this section of the framework after building our `Grand Financial Bubble Metric`
 :::
 
 <hr>
@@ -289,7 +289,7 @@ r3000_nested %>%
          color = "", fill = "Ann. Sector ETF Return",
          caption = str_glue("Dashed line represents median of medians for the *Large Cap* bucket.
                             Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
-                            The *Communications* sector ETF (XTL) was created in 2011")) +
+                            The Communications sector ETF (XTL) was created in 2011")) +
     theme(legend.position = "top", plot.title = element_text(hjust = .5),
           plot.caption = element_text(size = 10, face = "italic"))
 ```
@@ -334,7 +334,7 @@ labs(x = "", y = "", title = "Median Price-to-Book",
          color = "", fill = "Ann. Sector ETF Return",
          caption = str_glue("Dashed line represents median of medians for the *Large Cap* bucket.
                             Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
-                            The *Communications* sector ETF (XTL) was created in 2011")) +
+                            The Communications sector ETF (XTL) was created in 2011")) +
     theme(legend.position = "top", plot.title = element_text(hjust = .5),
           plot.caption = element_text(size = 10, face = "italic"))
 ```
@@ -379,7 +379,7 @@ labs(x = "", y = "", title = "Median Price-to-Earnings",
          color = "", fill = "Ann. Sector ETF Return",
          caption = str_glue("Dashed line represents median of medians for the *Large Cap* bucket.
                             Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
-                            The *Communications* sector ETF (XTL) was created in 2011")) +
+                            The Communications sector ETF (XTL) was created in 2011")) +
     theme(legend.position = "top", plot.title = element_text(hjust = .5),
           plot.caption = element_text(size = 10, face = "italic"))
 ```
@@ -441,7 +441,7 @@ price_metric_tbl %>%
 labs(x = "", y = "", title = "Price Metric",
          color = "", fill = "Ann. Sector ETF Return",
          caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
-                            The *Communications* sector ETF (XTL) was created in 2011")) +
+                            The Communications sector ETF (XTL) was created in 2011")) +
     theme(legend.position = "top", plot.title = element_text(hjust = .5),
           plot.caption = element_text(size = 10, face = "italic"))
 ```
@@ -598,7 +598,7 @@ r3000_nested %>%
     labs(x = "", y = "", title = "Median Debt-to-Equity",
          color = "", fill = "Ann. Sector ETF Return",
          caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
-                            The *Communications* sector ETF (XTL) was created in 2011")) +
+                            The Communications sector ETF (XTL) was created in 2011")) +
     theme(legend.position = "top", plot.title = element_text(hjust = .5),
           plot.caption = element_text(size = 10, face = "italic"))
 ```
@@ -643,7 +643,7 @@ r3000_nested %>%
     labs(x = "", y = "", title = "Avg. Debt-to-GDP",
          color = "", fill = "Ann. Sector ETF Return",
          caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
-                            The *Communications* sector ETF (XTL) was created in 2011")) +
+                            The Communications sector ETF (XTL) was created in 2011")) +
     theme(legend.position = "top", plot.title = element_text(hjust = .5),
           plot.caption = element_text(size = 10, face = "italic"))
 ```
@@ -726,7 +726,7 @@ d_e_stand_dist_tbl %>%
     labs(x = "", y = "", title = "Debt Metric",
          color = "", fill = "Ann. Sector ETF Return",
          caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
-                            The *Communications* sector ETF (XTL) was created in 2011")) +
+                            The Communications sector ETF (XTL) was created in 2011")) +
     theme(legend.position = "top", plot.title = element_text(hjust = .5),
           plot.caption = element_text(size = 10, face = "italic"))
 ```
@@ -1596,7 +1596,7 @@ fbm_plot_lvl1 <- ggplot() +
     labs(x = "", y = "", title = "Grand Financial Bubble Metric",
          color = "", subtitle = "Adjusted w/ Human Judgement",
          caption = str_glue("Color Scale represents yearly nominal sector ETF returns - the midpoint of the color scale is 0%
-                            The *Communications* sector ETF (XTL) was created in 2011")) +
+                            The Communications sector ETF (XTL) was created in 2011")) +
     theme(legend.position = "top", plot.title = element_text(hjust = .5),
           plot.caption = element_text(size = 10, face = "italic"),
           plot.subtitle = element_text(hjust = .5))
@@ -1604,20 +1604,20 @@ fbm_plot_lvl1 <- ggplot() +
 fbm_plot_lvl1
 ```
 
-At this point, I will caution the reader that I would associate any inferences taken from our `Grand Financial Bubble Metric` should be taken with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic environment is equally as important.
+At this point, I will caution the reader that any inferences taken from our `Grand Financial Bubble Metric` should be held with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic environment is equally as important.
 
 With that said, we can see that our `Grand Financial Bubble Metric` may be helpful in determining sector performance. In general, we observe positive returns when the metric is relatively low and increasing. As the market frenzies and there are new competitors, higher valuations, and debt-financed growth, market returns are particularly strong. Eventually, our metric peaks, and subsequent returns are generally poor.
 
 There are a few things worth noting from our plot:
 
-1.  Our confidence in the metric varies for different market segments
-    i.  For instance, our metric is particularly informative for the *Energy*, *Technology*, and *Consumer* segments, but it is difficult to decipher for the *Real Estate* segment. This is likely due to the fact that we have seen several cycles in the former segments, but not in the latter.
+1.  Our confidence in the metric varies for different market segments and understanding *why* is crucial.
+    i.  For instance, our metric is particularly informative for the *Energy*, *Technology*, and *Consumer* segments, but it is difficult to decipher for the *Real Estate* and *Financials* segment. This is likely due to the fact that the former segments are cyclical in nature, and therefore distance from a measure of central tendency is informative, but for *Real Estate*, this is not the case. *Financials*, however, is certainly cyclical in relative pricing, but due to the nature of the industry, is not cyclical in its leverage; instead banks tend to have uniformly high leverage throughout time.
 2.  Our metric indicated potential bubbles in '00 and '22, but completely missed the mark in 2008.
-    i.  `Explain this…`
+    i.  This is partly a result of the above explanation as well as the fact that our model does not capture any proxy for the *quality of a company's assets* (this is mainly applicable to banks only). In reality, the 2008 GFC was not the result of over leverage relative to historical averages (although the fact that banks are inherently extremely levered was certainly crucial), but instead was the result of poor investment decisions made by these financial institutions, which could only have been deciphered with logic and analysis from the balance sheet of banking institutions. It is likely that this will be the case for all traditional banking crises, due to the nature of the industry, and therefore it would be a good idea to try and built a robust, sector-specific `Banking Crisis Metric`.
 3.  Our metric provides a framework for historical comparison, but it does not provide a time-based trading signal (and it should not be looked at *in isolation* when making investment decisions). For instance, if we were to look at our plot in 2018, it would have been very reasonable to conjecture that *Technology* was in a bubble and poised for poor investment returns in the coming years. Yet, '19 - '21 were extremely strong years for that industry, and the bubble did not pop until 2022. *Why is that & what are the main catalysts that cause the bubble to pop?*
     i.  *We will discuss this shortly...*
 4.  The effects of bubbles in a particular segment tend to affect other segments as well, even if they appear unrelated, with varying degrees of magnitude.
-    i.  In particular, we note that the *Financials* sector is often affected by bubbles in other segments. This is fairly intuitive, as the *Financials* sector implicitly interacts with all other sectors.
+    i.  In particular, we note that the *Financials* sector is often affected by bubbles in other segments. This is fairly intuitive, as the *Financials* sector implicitly interacts with all other sectors, and is inherently levered.
 
 Let's create our `Grand Financial Bubble Metric` at a more granular level. We are only going to include the sectors that have sufficient data. For those with sufficient Price & Debt data, but insufficient IPO data, we will calculate our `Grand Financial Bubble Metric` as the average of `Price Metric` and `Debt Metric` and exclude the `IPO Metric`.
 
@@ -1826,15 +1826,15 @@ fbm_plot_lvl1 +
     theme(plot.caption = element_text(size = 10, face = "italic"))
 ```
 
-As we can see, looking at yield curve inversions in conjunction with our `Grand Financial Bubble Metric` is helpful in explaining sector returns.
+As we can see, looking at yield curve inversions in conjunction with our `Grand Financial Bubble Metric` is somewhat helpful in informing the user on the formation of financial bubbles, sector equity performance, and possible asset allocation decisions. I would like to highlight that the above is a *rough framework (that can be greatly improved)* and that much more analysis should be conducted before making a possible investment decision. While our framework may aid in sector allocation decisions, a savvy investor will then pursue company-specific analysis that either supports or opposes their thesis.
 
 ## Additional Areas of Explanation & Possible Amendments
 
-This article scratches the surface of possible ways to identify financial bubbles and can drastically be improved. A few points worth noting include:
+This article scratches the surface of possible ways to identify financial bubbles and can be drastically improved. A few points worth noting include:
 
 -   Calculating our `Price Metric` & `Debt Metric` with rolling averages (or medians) rather than using distance from the population median (similar to our `IPO Metric`)
 
-    -   The above is *an examination of history,* *not an attempt at building a predictive model*. Because of this, I used all available data to calculate the `Price Metric` & `Debt Metric`, which involved calculating distance from the median of all years. In the long-run, this method is acceptable for predictability purposes if we assume that these metrics are cyclical in nature, and that we have enough data. However, this would not have been the case in 2000, where we would only have had 6 years of data to assess, and metrics cannot yet be considered cyclical.
+    -   The above is *an examination of history,* *not an attempt at building a predictive model*. Because of this, I used all available data to calculate the `Price Metric` & `Debt Metric`, which involved calculating distance from the median of all years. In the long-run, this method is acceptable for predictability purposes if we assume that these metrics are stationary and cyclical in nature (which implies the assumption that market dynamics are the same through time), and that we have enough data. However, this would not have been the case in 2000, where we would only have had 6 years of data to assess, and metrics cannot yet be considered cyclical.
 
     -   The investigation of the rolling average (or median) growth rate of these metrics, rather than absolute level, is also worthwhile.
 
@@ -1844,15 +1844,21 @@ This article scratches the surface of possible ways to identify financial bubble
 
 -   The logical, qualitative narrative we built around the formation of bubbles is extremely simplistic and can be improved. As such, there are many additional quantitative 'metrics' that could be created to measure and explain this narrative.
 
+-   For simplicity (and lack of data), we inspected the "10-2" Yield Spread on TBonds as a catalyst for the 'popping' of a financial bubble, but it is likely beneficial to inspect corporate yield spreads at the sector level.
+
+    -   Again, it is also important to understand the first, second, and third order effects that monetary tightening may have on the key entities within each sector, which was not done here.
+
+-   Improving sector knowledge and building sector-specific models would be tremendously worthwhile, especially when used in conjunction with our broader `Grand Financial Bubble Metric`.
+
 ### An Overarching Takeaway
 
 I think the above examination of history hints at an over-arching principle that applies to every facet of life - *everything has an optimal growth rate*. Whether it's a single company, the global economy, or even an individual's ability to learn a topic - there is an optimal, healthy rate of progress that is predicated upon the underlying nature and quality of the system.
 
-In the case of a single company, that rate of progress is therefore a function of the quality of the workers, their abilities, location, tools, team chemistry, and so on. In the short-run, it is possible to grow beyond optimal; perhaps a company mandates overtime work, which will boost growth in the near-term, but if continued, this will adversely affect long-term growth, as employees will find suitable work elsewhere. In the case of an individual's learning ability, optimal growth is a function of sleep quality, nutritional intake, time spent studying, and numerous other factors. Again, in the short-run, progress can be artificially inflated; perhaps the individual sacrifices sleep to study, which will boost learning-ability in the short-run, but this rate of learning is obviously unsustainable.
+In the case of a single company, that rate of progress is a function of the quality of the workers, their abilities, location, tools, team chemistry, and so on. In the short-run, it is possible to grow beyond optimal; perhaps a company mandates overtime work, which will boost growth in the near-term, but if continued, this will adversely affect long-term growth, as employees will find suitable work elsewhere. In the case of an individual's learning ability, optimal growth is a function of sleep quality, nutritional intake, time spent studying, and numerous other factors. Again, in the short-run, progress can be artificially inflated; perhaps the individual sacrifices sleep to study, which will boost learning-ability in the short-run, but this rate of learning is obviously unsustainable.
 
-With that said, an entity's optimal growth rate can obviously change with time, as the nature and the quality of the underlying system change.
+With that said, an entity's optimal growth rate can obviously change with time, as the nature and the quality of the underlying system change - and it is an analyst's job to identify when and why this occurs.
 
-It is my perspective that this idea of an 'optimal growth rate' is applicable to any subject, including investing. If we can understand an investment's optimal growth rate, its current deviation from this growth rate, and the reasons for this deviation - then we have the ability to capitalize on these deviations and inefficiencies with the correct strategies and tactics.
+Again, it is my perspective that this idea of an 'optimal growth rate' is applicable to any subject, including investing. If we can understand an investment's optimal growth rate, its current deviation from this growth rate, and the reasons for this deviation - then we have the ability to capitalize on these deviations and inefficiencies with the correct strategies and tactics.
 
 ##### Final Remarks
 
