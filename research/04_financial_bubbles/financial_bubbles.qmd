@@ -62,13 +62,27 @@ sector_ann_ret <- sector_prices %>%
     tq_transmute(adjusted, periodReturn, period = "yearly") %>% 
     ungroup() %>% 
     mutate(date_start = floor_date(date, unit = "year"))
+
+class_3_company_returns <- read_rds(here("raw_data", "Financial Bubbles", "class_3_ann_ret.rds"))
+
+class_3_returns <- class_3_company_returns %>% 
+    group_by(start_date, classification_3) %>% 
+    summarize(avg_ann_ret = mean(ann_ret, na.rm = T)) %>% 
+    ungroup() %>% 
+    mutate(end_date = start_date + years(1)) %>% 
+    left_join(
+        r3000_raw %>% 
+            distinct(classification_3, .keep_all = T) %>% 
+            select(classification_1, classification_3) %>% 
+            arrange(classification_1)
+    )
 ```
 
 ## A Framework for Identifying Bubbles
 
 Financial markets have experienced several notable financial bubbles in recent history. The Dot-Com bubble in 2001, the Great Financial Crisis in 2008, and the Tech bubble in 2022 are three examples. In each case, the period leading up to, during, and after the bubble's collapse brought varying degrees of market volatility and returns. Investors who exited before the crash were able to achieve impressive returns, while those who remained in the market experienced significant losses. As such, it is valuable for investors to be able to identify where financial bubbles are forming and their stage of development to avoid potential losses.
 
-In his book [*Principles for Navigating Big Debt Crises*](https://www.bridgewater.com/big-debt-crises/principles-for-navigating-big-debt-crises-by-ray-dalio.pdf), Ray Dalio posits that markets are cyclical and that financial bubbles form for the same underlying reasons; he outlines the following rough framework for identifying financial bubbles with the associated message:
+In his book [*Principles for Navigating Big Debt Crises*](https://www.bridgewater.com/big-debt-crises/principles-for-navigating-big-debt-crises-by-ray-dalio.pdf), Ray Dalio posits that markets are cyclical and that financial bubbles form for the same underlying reasons - healthy growth turns to unhealthy growth as entities over-lever which eventually yields the bust of a financial bubble; he outlines the following rough framework for identifying financial bubbles with the associated message:
 
 ![](financial_framework.png){fig-align="center"}
 
@@ -117,7 +131,7 @@ The following table outlines certain figures that can help us measure each compo
 | *Does tightening risk popping the bubble?*                | 1.  Interest Coverage Ratio: The interest coverage ratio measures a company's ability to pay its interest expenses on its debt. If a company's interest coverage ratio is low, it may suggest that the company is struggling to make its interest payments. Assessing hypothetical interest coverage ratios if interest rates increase will likely help answer this question. |
 +-----------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Going forward, we will only consider the following framework components, as I believe they best encapsulate the underpinnings of the framework and are simultaneously easy to quantify:
+Going forward, we will only consider the following framework components, as I believe they best encapsulate the main underpinnings of the framework and are simultaneously easy to quantify:
 
 1.  Are prices high relative to traditional measures?
 
@@ -523,15 +537,25 @@ for (i in seq_along(classification_1_vec)){
     g <- price_metric_3_tbl %>% 
     filter(classification_1 == classification_1_vec[i]) %>% 
     ggplot(aes(date, price_metric)) +
+    geom_rect(
+        data = class_3_returns %>% 
+            filter(classification_1 == classification_1_vec[i]),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf, fill = avg_ann_ret, y = NULL, x = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green", na.value = "grey50", midpoint = 0) +
     geom_line() +
     geom_hline(yintercept = 0, color = "black", lty = 2) +
     theme_tq(base_size = 24) +
     scale_color_tq() +
     facet_wrap(~classification_3, scales = "free", ncol = 2) +
-    labs(x="", y = "", title = "Price Metric", color = "") +
+    labs(x="", y = "", title = "Price Metric", color = "",
+         caption = "Color Scale represent average yearly nominal return of the companies in each subsector with an 80th+ percentile of Market Cap - midpoint of the color scale is 0%.") +
     scale_y_continuous(labels = scales::label_number()) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
     
     plots[[classification_1_vec[i]]] <- g
     
@@ -831,15 +855,25 @@ for (i in seq_along(classification_1_vec)){
     g <- debt_metric_3_tbl %>% 
         filter(classification_1 == classification_1_vec[i]) %>% 
         ggplot(aes(date, debt_metric)) +
+        geom_rect(
+        data = class_3_returns %>% 
+            filter(classification_1 == classification_1_vec[i]),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf, fill = avg_ann_ret, y = NULL, x = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green", na.value = "grey50", midpoint = 0) +
         geom_line() +
         geom_hline(yintercept = 0, color = "black", lty = 2) +
         theme_tq(base_size = 24) +
         scale_color_tq() +
         facet_wrap(~classification_3, scales = "free", ncol = 2) +
-        labs(x="", y = "", title = "Debt Metric", color = "") +
+        labs(x="", y = "", title = "Debt Metric", color = "",
+             caption = "Color Scale represent average yearly nominal return of the companies in each subsector with an 80th+ percentile of Market Cap - midpoint of the color scale is 0%.") +
         scale_y_continuous(labels = scales::label_number()) +
         scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-        theme(legend.position = "top", plot.title = element_text(hjust = .5))
+        theme(legend.position = "top", plot.title = element_text(hjust = .5),
+              plot.caption = element_text(size = 10, face = "italic"))
     
     plots[[classification_1_vec[i]]] <- g
     
@@ -1384,17 +1418,25 @@ for (i in seq_along(classification_1_vec)){
     g <- ipo_metric_3_tbl %>% 
         filter(classification_1 == classification_1_vec[i]) %>% 
             ggplot(aes(date, ipo_metric)) +
+        geom_rect(
+        data = class_3_returns %>% 
+            filter(classification_1 == classification_1_vec[i]),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf, fill = avg_ann_ret, y = NULL, x = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green", na.value = "grey50", midpoint = 0) +
             geom_line() +
             geom_hline(yintercept = 0, color = "black", lty = 2) +
             facet_wrap(~classification_3, scales = "free", ncol = 2) +
             theme_tq(base_size = 24) +
             scale_color_tq() +
             labs(
-                x="", y="", title = "IPO Metric"
+                x="", y="", title = "IPO Metric", caption = "Color Scale represent average yearly nominal return of the companies in each subsector with an 80th+ percentile of Market Cap - midpoint of the color scale is 0%."
             ) +
             scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
             scale_y_continuous(labels = scales::label_number()) +
-        theme(plot.title = element_text(hjust = .5))
+        theme(plot.title = element_text(hjust = .5), plot.caption = element_text(size = 10, face = "italic"))
     
     plots[[classification_1_vec[i]]] <- g
     
@@ -1604,7 +1646,7 @@ fbm_plot_lvl1 <- ggplot() +
 fbm_plot_lvl1
 ```
 
-At this point, I will caution the reader that any inferences taken from our `Grand Financial Bubble Metric` should be held with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic environment is equally as important.
+At this point, I will caution the reader that any inferences taken from our `Grand Financial Bubble Metric` should be held with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic and political environment is equally as important. In addition, when comparing across history, it is important to have a knowledge of context and qualitative factors that may affect inferential ability. For instance, the Covid-19 Pandemic drastically affected the world economy and markets in 2020-2022, so the reader may decide to skew metrics during those years according to their beliefs and theses.
 
 With that said, we can see that our `Grand Financial Bubble Metric` may be helpful in determining sector performance. In general, we observe positive returns when the metric is relatively low and increasing. As the market frenzies and there are new competitors, higher valuations, and debt-financed growth, market returns are particularly strong. Eventually, our metric peaks, and subsequent returns are generally poor.
 
@@ -1687,14 +1729,23 @@ for (i in seq_along(classification_1_vec_fbm)){
     g <- financial_bubble_metric_3_tbl %>% 
     filter(classification_1 == classification_1_vec_fbm[i]) %>% 
     ggplot(aes(date, financial_bubble_metric)) +
+        geom_rect(
+        data = class_3_returns %>% 
+            filter(classification_1 == classification_1_vec_fbm[i]),
+        mapping = aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf, fill = avg_ann_ret, y = NULL, x = NULL, color = NULL),
+        alpha = .5,
+        show.legend = F
+    ) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "green", na.value = "grey50", midpoint = 0) +
     geom_line() +
     theme_tq(base_size = 24) +
     scale_color_tq() +
     facet_wrap(~classification_3, scales = "free", ncol = 2) +
-    labs(x="", y = "", title = "Grand Financial Bubble Metric", color = "") +
+    labs(x="", y = "", title = "Grand Financial Bubble Metric", color = "", caption = "Color Scale represent average yearly nominal return of the companies in each subsector with an 80th+ percentile of Market Cap - midpoint of the color scale is 0%.") +
     scale_y_continuous(labels = scales::label_number()) +
     scale_x_date(labels = scales::label_date(format = "'%y"), date_breaks = "5 years") +
-    theme(legend.position = "top", plot.title = element_text(hjust = .5))
+    theme(legend.position = "top", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 10, face = "italic"))
     
     plots[[classification_1_vec_fbm[i]]] <- g
     
@@ -1710,8 +1761,6 @@ iwalk(plots, ~ {
 })
 ```
 :::
-
-`Get constituent price data and overlay color scale returns for each Sector Level 3...`
 
 ### 'Timing' the Bubble
 
