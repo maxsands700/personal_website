@@ -2,6 +2,7 @@
 title: "★ Post-Earnings Announcement Drift (PEAD) Anomaly & Machine Learning"
 author: "Max Sands"
 date: "2023-04-01"
+image: preview_image.png
 description: "Read Time: 10 mins"
 categories: [Equities, ★]
 editor_options: 
