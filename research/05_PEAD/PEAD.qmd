@@ -69,7 +69,20 @@ If the PEAD anomaly were to hold, we would expect to see abnormal returns follow
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal
+plots_list$heatmap_nominal$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 #### Pct (%) Earnings Surprise
@@ -78,7 +91,20 @@ plots_list$heatmap_nominal
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_pct
+plots_list$heatmap_pct$data %>% 
+    ggplot(aes(name, eps_surprise_pct, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise (%) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 :::
 
@@ -95,7 +121,20 @@ While the above heat maps represent averages of all the data since 2015, it is a
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal_2015
+plots_list$heatmap_nominal_2015$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 #### 2016
@@ -104,7 +143,20 @@ plots_list$heatmap_nominal_2015
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal_2016
+plots_list$heatmap_nominal_2016$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 #### 2017
@@ -113,7 +165,20 @@ plots_list$heatmap_nominal_2016
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal_2017
+plots_list$heatmap_nominal_2017$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 #### 2018
@@ -122,7 +187,20 @@ plots_list$heatmap_nominal_2017
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal_2018
+plots_list$heatmap_nominal_2018$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 #### 2019
@@ -131,7 +209,20 @@ plots_list$heatmap_nominal_2018
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal_2019
+plots_list$heatmap_nominal_2019$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 #### 2020
@@ -140,7 +231,20 @@ plots_list$heatmap_nominal_2019
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal_2020
+plots_list$heatmap_nominal_2020$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 #### 2021
@@ -149,7 +253,20 @@ plots_list$heatmap_nominal_2020
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal_2021
+plots_list$heatmap_nominal_2021$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 #### 2022
@@ -158,7 +275,20 @@ plots_list$heatmap_nominal_2021
 #| fig-width: 6.75
 #| fig-height: 6.75
 #| fig-align: center
-plots_list$heatmap_nominal_2022
+plots_list$heatmap_nominal_2022$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 :::
 
@@ -169,7 +299,21 @@ Given that we are looking at nominal earnings surprise, which may be affected by
 ```{r}
 #| fig-width: 8
 #| fig-height: 8
-plots_list$heatmap_nominal_grouped_by_market_cap
+plots_list$heatmap_nominal_grouped_by_market_cap$data %>% 
+    ggplot(aes(name, eps_surprise_nominal, fill = avg_ret)) +
+    geom_tile() +
+    geom_label(aes(label = value_text), fill = "white") +
+    scale_fill_gradient2(midpoint = 0, high = scales::muted("green")) +
+    facet_wrap(~market_cap) +
+    labs(
+        x = "Days After Earnings Release",
+        y = "Earnings Surprise ($) Decile",
+        title = "Average Log Returns after Earnings Release",
+        subtitle = "Markets are Inefficient in the Short-Term",
+        caption = "Illustration made by Max Sands w/ data from Alpha Query"
+    ) +
+    theme_max +
+    theme(legend.position = "none")
 ```
 
 From the above, it is clear that the PEAD anomaly exists and that variables like company size have an affect on the magnitude of PEAD.
@@ -196,7 +340,20 @@ plots_list$monte_carlo_5day + scale_color_tq() + theme(text = element_text(size 
 ```{r}
 #| fig-width: 8
 #| fig-height: 6.5
-plots_list$monte_carlo_decile_5day + scale_color_tq() + theme(text = element_text(size = 14))
+plots_list$monte_carlo_decile_5day$data %>% 
+    ggplot(aes(day, median_return, color = as.factor(return_quantile))) +
+    geom_smooth(se = F) +
+    scale_color_brewer(type = "div", palette = 1) +
+    labs(
+        x = "Days",
+        y = "Wealth Index ($1)",
+        title = "Monte Carlo Simulation: PEAD Long Strategy",
+        caption = "Illustration made by Max Sands"
+    ) +
+    scale_y_continuous(labels = scales::label_dollar()) +
+    theme_tq(base_size = 14) +
+    theme(legend.position = "none", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 9, face = "italic"))
 ```
 :::
 
@@ -216,7 +373,20 @@ plots_list$monte_carlo_1day + scale_color_tq() + theme(text = element_text(size 
 ```{r}
 #| fig-width: 8
 #| fig-height: 6.5
-plots_list$monte_carlo_deciles_1day + scale_color_tq() + theme(text = element_text(size = 14))
+plots_list$monte_carlo_deciles_1day$data %>% 
+        ggplot(aes(day, median_return, color = as.factor(return_quantile))) +
+    geom_smooth(se = F) +
+    scale_color_brewer(type = "div", palette = 1) +
+    labs(
+        x = "Days",
+        y = "Wealth Index ($1)",
+        title = "Monte Carlo Simulation: PEAD Long Strategy",
+        caption = "Illustration made by Max Sands"
+    ) +
+    scale_y_continuous(labels = scales::label_dollar()) +
+    theme_tq(base_size = 14) +
+    theme(legend.position = "none", plot.title = element_text(hjust = .5),
+          plot.caption = element_text(size = 9, face = "italic"))
 ```
 :::
 
@@ -236,23 +406,25 @@ g1 <- data_prep %>%
     theme_tq(base_size = 14) +
     labs(
         x = "",
-        y = "# of Earnings Releases"
-    )
+        y = "",
+        title = "# of Earnings Releases"
+    ) +
+    theme_max
 
-g2 <- data_prep %>% 
-    filter(lubridate::year(announcement_date) == 2022) %>% 
-    count(announcement_date) %>% 
+g2 <- data_prep %>%
+    filter(lubridate::year(announcement_date) == 2022) %>%
+    count(announcement_date) %>%
     timetk::pad_by_time(.pad_value = 0) %>%
-    mutate(dow = wday(announcement_date, label = T)) %>% 
-    filter(!(dow %in% c("Sat", "Sun"))) %>% 
+    mutate(dow = wday(announcement_date, label = T)) %>%
+    filter(!(dow %in% c("Sat", "Sun"))) %>%
     ggplot(aes(n)) +
     geom_boxplot(fill = palette_light()[1],
         alpha = .8) +
     geom_label(
-        data = . %>% 
-            mutate(quantile = ntile(n, n = 4)) %>% 
-            group_by(quantile) %>% 
-            summarize(lower_bound = min(n)) %>% 
+        data = . %>%
+            mutate(quantile = ntile(n, n = 4)) %>%
+            group_by(quantile) %>%
+            summarize(lower_bound = min(n)) %>%
             slice(-1),
         mapping = aes(lower_bound, y = 0, label = lower_bound),
         size = 4.5
@@ -260,13 +432,30 @@ g2 <- data_prep %>%
     theme_tq(base_size = 14) +
     coord_cartesian(xlim = c(0, 50)) +
     scale_y_continuous(labels = NULL) +
-    labs(x = "Distribution of Earnings Releases per Day",
+    labs(x = "",
          y = "")
 
-g1 + g2
+g3 <- data_prep %>%
+    filter(lubridate::year(announcement_date) == 2022) %>%
+    count(announcement_date) %>%
+    timetk::pad_by_time(.pad_value = 0) %>%
+    mutate(dow = wday(announcement_date, label = T)) %>%
+    filter(!(dow %in% c("Sat", "Sun"))) %>%
+    ggplot(aes(n)) +
+    geom_density(fill = palette_light()[1], alpha = .8) +
+    theme_tq(base_size = 14) +
+    labs(
+        x = "",
+        y = ""
+    ) +
+    scale_y_continuous(labels = NULL)
+
+g4 <- (g2 + g3)
+
+(g4 / g1) + plot_annotation(title = "Distribution of Earnings Releases per Day", theme = theme_tq(base_size = 13) + theme(plot.title = element_text(hjust = .5)))
 ```
 
-Of the 252 trading days in a year, we observe 211 unique days in which one or more companies released earnings. Moreover, we can see from our box-plot on the right that approximately half of the trading days experience 7 or more earnings releases for the 1633 companies we have gathered data on in 2022.
+Of the 252 trading days in a year, we observe 211 unique days in which one or more companies released earnings. Moreover, we can see from our box-plot that approximately half of the trading days experience 7 or more earnings releases for the 1633 companies we have gathered data on in 2022.
 
 From this, we can assume that strategy can be implemented for a large portion of the trading year. However, an upper-bound on strategy size (i.e. how much money can be invested each day before the strategy is constrained by volume, etc.) is difficult to estimate and will have to be evaluated through trial and error.
 
@@ -307,9 +496,11 @@ monte_carlo(weighted_return_vec, num_simulations = 1000, number_of_returns_avera
     plot_monte_carlo(raw = F, quantiles = 10) +
     labs(
         y = "Wealth Index ($1)",
-        x = "Days"
+        x = "Days",
+        caption = "Illustration made by Max Sands"
     ) +
-    theme(text = element_text(size = 14))
+    theme(text = element_text(size = 14), plot.caption = element_text(size = 9, face = "italic")) +
+    scale_color_brewer(type = "div")
 ```
 
 Under these conditions, our trading strategy yields strong returns, and there is so much that can be improved...
