@@ -3,8 +3,12 @@ project:
 
 website:
   title: ""
-  google-analytics: G-XPQZQZDK95
+  google-analytics: 
+    tracking-id: G-XPQZQZDK95
   cookie-consent: true
+  twitter-card: true
+  open-graph: true
+  favicon: headshot.jpeg
   navbar:
     left: 
       - href: index.qmd
@@ -18,6 +22,8 @@ website:
     right:
       - icon: instagram
         href: https://www.instagram.com/max_sands_7/
+      - icon: twitter
+        href: https://twitter.com/Max_Sands_7
       - icon: linkedin
         href: https://www.linkedin.com/in/max-sands-1798b41a4/
 format:

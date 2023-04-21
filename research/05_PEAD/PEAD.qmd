@@ -5,7 +5,7 @@ date: "2023-04-01"
 image: preview_image.png
 description: "Read Time: 10 mins"
 abstract: |
-  Rather than assess equity returns from a traditional chronological perspective, the below looks at equity returns in relation to each company's earnings release date. In doing so, I have identified two idiosyncrasies that occur in the markets: 
+  Rather than assess equity returns from a traditional chronological perspective, the below looks at equity returns in relation to each company's earnings release date. In doing so, two idiosyncrasies emerge: 
   
   1) Post-Earnings Announcement Drift (PEAD) - stock prices, following earnings releases, exhibit abnormal returns in the short-run 
   2) Return Cyclicality - stock prices, on average, are cyclical with respect to their earnings release dates
