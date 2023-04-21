@@ -37,7 +37,6 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 
 *Business & Investment Analyst* \| *2022 - Present* \| *Boston, MA*
 
-::: blur
 -   Providing general investment research for the Equity and Fixed Income Teams
 
     -   Built automated preliminary Investment Analysis report using R and Quarto
@@ -51,7 +50,8 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
         -   Includes sensitivity analysis across several key inputs
 
         -   Includes report generation - both static PDFs and interactive HTML
-:::
+
+    -   Built automatic Drift Analysis report using R and Quarto that provides insights onto accounts that are drifting off model
 
 #### McGill University
 
