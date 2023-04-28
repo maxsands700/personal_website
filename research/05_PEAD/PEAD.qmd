@@ -26,6 +26,7 @@ library(tidyquant)
 library(patchwork)
 library(timetk)
 library(here)
+library(knitr)
 
 source(here("R Scripts", "plot_formatting.R"))
 source(here("R Scripts", "monte_carlo.R"))
@@ -171,15 +172,13 @@ plots_list$heatmap_nominal_2022
 
 It is clear that the PEAD anomaly is prevalent throughout time, especially in the extreme short-term (1 day post-earnings release).
 
-Given that we are looking at nominal earnings surprise, which may be affected by company size, let's visualize the PEAD anomaly for different buckets of market cap / company size:
+However, it is important to note that in the above, I calculated daily returns from close to close between consecutive days, which implicitly includes price changes that occur during after-hours trading. Typically, companies release earnings after-hours (to avoid issuing a trading halt during normal trading hours), and therefore it is important to identify how much of these returns occur after-hours.
 
-```{r}
-#| fig-width: 8
-#| fig-height: 8
-plots_list$heatmap_nominal_grouped_by_market_cap
-```
+To do this I have plotted the average high, open, low, and close of companies for 5 days before an earnings announcement until 5 days after earnings release. The data is indexed with the first open occurring at \$1, and I have bucketed the data into 9 groups according to nominal earnings surprise (rather than into 10 groups for visual appeal):
 
-From the above, it is clear that the PEAD anomaly exists and that variables like company size have an affect on the magnitude of PEAD.
+![](images/intraday_image.png){fig-align="center" width="2400"}
+
+As we can see from the above, much of the alpha generated after earnings announcements occur during after-hours trading. This is logical, as we expect the quantitative firms, with fast computers, to capitalize on new information as quickly as possible.
 
 # Return Cyclicality
 
@@ -207,7 +206,7 @@ plots_list$return_cycle_index
 
 Once again, it is difficult to find a rational explanation for this behavior. A possible explanation is that from time *t = -25* to *t = 0*, investors optimistically anticipate earnings releases, which drive stock prices up. It is interesting to note that the stocks who rise the most in this time-period tend to have the largest earnings surprise. Then, at *t = 0* the company releases earnings and the price quickly jumps up or down according to the magnitude and direction of the earning surprise, until *t = 1*. This demonstrates the magnitude of 1 Day PEAD. Subsequently, from *t = 1* to *t = 25*, the companies who beat on earnings continue to see a slight trend upwards, perhaps because investors underestimated the importance of the positive earnings surprise. Lastly, after *t = 25*, we see a reversion from the gains exhibited in the previous stage of the cycle, and the cycle repeats itself...
 
-Again, the above chart is an average of more than 20,000 observations, so the prevalence of this return cyclicality is unlikely to be a fluke, but there is likely variation between individual years. Let's investigate each year in isolation:
+Again, the above chart is an average of more than 20,000 observations, so the prevalence of this return cyclicality is unlikely to be a fluke, but there is certainly variation between individual years. Let's investigate each year in isolation:
 
 <br>
 
@@ -502,4 +501,8 @@ monte_carlo(weighted_return_vec, num_simulations = 1000, number_of_returns_avera
     scale_color_brewer(type = "div")
 ```
 
-Under these conditions, our trading strategy yields strong returns, and there is so much that can be improved...
+Under these conditions, our trading strategy yields strong returns.
+
+##### Final Remarks
+
+*The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice.*
