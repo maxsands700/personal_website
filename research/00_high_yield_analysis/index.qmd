@@ -334,13 +334,21 @@ This narrative is by no means detailed, nor complete. In, fact it can be superbl
 
 ### A Note from OpenAI's ChatGPT
 
-When tasked with the following - *"Identify time periods where High Yield Debt outperformed Equities. Give a hypothesis for why it outperforms during periods of high inflation and economic downturns."* - OpenAI's model gave the following answer:
+When tasked with the following - *"Identify time periods where High Yield Debt outperformed Equities. Give a hypothesis for why it outperforms during these time periods."* - OpenAI's GPT4 model gave the following answer:
 
-> "High Yield Debt has historically outperformed Equities during periods of economic downturns, such as the 2008 Financial Crisis and the 2020 Coronavirus pandemic. Additionally, High Yield Debt has outperformed Equities during periods of rising inflation, such as the 1970s and 1980s.
+> "While it's important to note that past performance is not indicative of future results, there are a few historical time periods when high yield debt (also known as junk bonds) outperformed equities. Two notable periods include:
 >
-> The reason why High Yield Debt outperforms Equities during periods of high inflation and economic downturns is because it offers a higher yield than Equities, which can help to offset the effects of inflation and provide a more stable return in a volatile market. Additionally, High Yield Debt is generally less volatile than Equities, making it a more attractive investment during periods of economic uncertainty. Finally, High Yield Debt is typically less sensitive to changes in interest rates, which can be beneficial during periods of rising inflation."
+> 1.  2000-2002: During the dot-com bubble burst and the subsequent market downturn, high yield debt outperformed equities. The S&P 500 experienced a significant decline during this period while high yield debt saw relatively smaller losses.
 >
-> *- ChatGPT*
+> Hypothesis: High yield debt may have outperformed equities during this period due to a flight to safety by investors. As the technology sector crashed and equities experienced a broad decline, investors sought investments with higher yields and potentially lower volatility compared to the plunging stock market. High yield bonds, despite their riskier nature, may have been perceived as a safer alternative to the rapidly falling equities market.
+>
+> 2.  2008-2009: During the Global Financial Crisis, high yield debt also outperformed equities, particularly in the early stages of the crisis. While both asset classes experienced losses, high yield bonds started to recover faster than equities in 2009.
+>
+> Hypothesis: One possible reason for high yield debt outperforming equities during this period is the massive intervention by central banks and governments in the form of quantitative easing and fiscal stimulus. These measures helped stabilize financial markets and injected liquidity into the credit markets, which in turn lowered borrowing costs for high yield issuers. As a result, high yield bonds became more attractive to investors searching for higher returns in a low-interest-rate environment, leading to a faster recovery in high yield debt compared to equities.
+>
+> It's important to note that these are specific historical periods, and the relative performance of high yield debt and equities can vary depending on economic conditions, market sentiment, and interest rate environments."
+>
+> *- GPT 4*
 
 # Going Back Even Further
 
