@@ -48,7 +48,7 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 
         -   Includes report generation - both static PDFs and interactive HTML
 
-    -   Built automatic Drift Analysis report using R and Quarto that provides insights onto accounts that are drifting off model
+    -   Built automatic Drift Analysis report using R and Quarto that provides insights on accounts that are drifting off model
 
     -   Cleaned and formatted data for upload to Addepar
 
@@ -122,7 +122,7 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 
 *Language & Computer Skills:* Fluent French & English, Moderate R & Basic Python
 
-*Interests:* Financial Analytics/Data Science, Weightlifting, Guitar, Golf, Chess, Poker, Football, Basketball, Math, Creative Writing
+*Interests:* Financial Analytics/Data Science, Weightlifting, Guitar, Golf, Chess, Poker, Football, Basketball, Math, Creative Writing, Rock Climbing
 
 *Influential Role Models:* Ray Dalio, Andrew Huberman, members of the All-In Podcast
 :::
