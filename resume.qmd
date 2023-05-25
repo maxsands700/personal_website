@@ -3,6 +3,8 @@ toc: true
 toc-depth: 1
 ---
 
+[Download My Resume - PDF](files/Max_Sands_Resume.pdf){.btn .btn-primary}
+
 ::: panel-tabset
 # Education
 
