@@ -6,11 +6,15 @@ about:
   template: trestles
   links:
     - icon: instagram
-      text: Instagram
       href: https://www.instagram.com/max_sands_7/
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/max-sands-1798b41a4/
+    - icon: twitter
+      href: https://twitter.com/Max_Sands_7
+    - icon: filetype-pdf
+      text: Resume
+      href: files/Max_Sands_Resume.pdf
 ---
 
 ## Welcome
