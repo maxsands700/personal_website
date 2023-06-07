@@ -42,8 +42,6 @@ At a first glance, it appears that the STOCK Act of 2012 has had limited success
 
 As we can see, the back tested Quiver portfolio yielded a CAGR of 43.69% since 2020-04-01, whereas the market experienced a CAGR of approximately 11% during this time period. This 32% difference seems rather large, especially when compared to the findings provided by Ziobrowski and his team. Because of this, we will explore the current state of this phenomena, scrutinizing available data, and evaluating whether the investment outperformance trend among U.S. politicians persists to this day. We will analyze the implications of these patterns, probe the role of legislation such as the STOCK Act, and examine the potential factors contributing to the superior returns exhibited by this unique class of investors.
 
-::: blur
-
 #### The Data
 
 Below is a glimpse of the data, scraped from regulatory filings and provided by [House Stock Watcher](https://housestockwatcher.com/) & [Senate Stock Watcher](https://senatestockwatcher.com/):
@@ -54,6 +52,8 @@ politicians_data %>%
 ```
 
 <hr>
+
+::: blur
 
 # Analysis
 
@@ -80,4 +80,5 @@ politicians_data %>%
     theme_bw() +
     theme_max
 ```
+
 :::
