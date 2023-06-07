@@ -2,8 +2,8 @@
 title: "Research"
 listing:
   contents: research
-  sort: "date desc"
   type: grid
+  sort: "date desc"
   categories: true
   sort-ui: true
   filter-ui: true

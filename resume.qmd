@@ -3,7 +3,7 @@ toc: true
 toc-depth: 1
 ---
 
-[Download My Resume - PDF](files/Max_Sands_Resume.pdf){.btn .btn-primary}
+[Download My Resume - PDF](files/Max_Sands_Resume.pdf){.btn .btn-primary} [Download My Resume - DOCX](files/Max_Sands_Resume.docx){.btn .btn-primary}
 
 ::: panel-tabset
 # Education
