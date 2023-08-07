@@ -1,0 +1,227 @@
+---
+title: "★ A Case for Equities: Bull vs. Bear?"
+author: "Max Sands"
+date: "2023-06-18"
+image: images/bull_vs_bear_image.jpeg
+description: "Read Time: 15 mins"
+categories: [Equities, ★]
+editor_options: 
+  chunk_output_type: console
+warning: false
+message: false
+echo: false
+fig-align: center
+abstract: "The recent U.S. equity market environment has been a unique one - with a strong narrow rally in the face of macroeconomic uncertainty, and a market drawdown the previous year. The following article investigates reasons to be both bullish and bearish U.S. equities, and delivers a final hypothesis in light of the research presented."
+---
+
+```{r}
+library(tidyverse)
+library(tidyquant)
+library(timetk)
+library(patchwork)
+library(here)
+
+source(here("R Scripts", "plot_formatting.r"))
+plots_list <- read_rds(here("raw_data", "Bull vs. Bear", "plots_list.rds"))
+
+erp_data <- read_rds(here("raw_data", "Bull vs. Bear", "erp_data.rds"))
+sp500_ann_fwd_rets <- read_rds(here("raw_data", "Bull vs. Bear", "sp500_ann_fwd_rets.rds"))
+hy_data <- read_rds(here("raw_data", "Bull vs. Bear", "hy_data.rds"))
+hy_ann_fwd_rets <- read_rds(here("raw_data", "Bull vs. Bear", "hy_ann_fwd_rets.rds"))
+```
+
+# Intro
+
+In 2022, the U.S. equity markets - inflated by exorbitant Quantitative Easing and financial stimulation due to the Covid-19 pandemic - suffered as the bubble eventually popped. As expected, the areas that had seen the most rapid increase in prices (in this case, the 'Growth' sectors like Tech) also saw the most severe draw-down:
+
+```{r}
+#| fig-height: 7
+#| fig-width: 9
+
+(plots_list$g1 | plots_list$g2) / plots_list$g3
+```
+
+However, the start of 2023 marks the beginning of an odd rally in U.S. Equity markets. The top 8 names in the SP500 have rallied *significantly* since the start of the year, whereas the remaining companies in the SP500 have flat-lined.
+
+```{r}
+#| fig-height: 6
+#| fig-width: 9
+
+plots_list$g4
+```
+
+This begs the question: *how long can the rally continue, and what does the medium-term future look like for U.S. Equities?*
+
+# The Bear Case
+
+While there are many reasons that may bolster the argument for a bear case, we will cover the following two in-depth:
+
+1.  [Relative Valuations & the Equity Risk Premium:]{.underline} *Valuations are still high and the risk-to-reward ratio for Equities is not attractive, especially when compared to other assets...*
+2.  [Macroeconomic Uncertainty:]{.underline} *The future macroeconomic landscape is hazy; consensus indicates a near-term recession, and relations between U.S. & China are becoming increasingly tenuous...*
+
+<br>
+
+## Relative Valuations & ERP
+
+Perhaps the most clear argument for a bear case is that valuations are still high. If we perform a simple breakdown of the valuations for the companies in the SP500, we notice that the implied yield is relatively low. Even if we exclude the top 8 companies, the implied yield of 6.5% is low in relation to the current 1-year TBill rate of approximately 5.3%.
+
+![](images/sp500_implied_yield.png){fig-align="center"}
+
+Therefore, let's compare the implied yield on Equities to the yields on High Yield Debt and Investment Grade Debt across different hypothetical senarios:
+
+![*IG Debt* refers to 1-Year TBill](images/simple_scenarios.png){fig-align="center"}
+
+```{r}
+#| fig-height: 6
+#| fig-width: 9
+
+erp_data %>% 
+    ggplot(aes(date, ntm_pe)) +
+    geom_line(color = "#16365c") +
+    geom_smooth(se = F, color = "black") +
+    theme_bw(base_size = 14) +
+    theme_max() +
+    labs(x = "", y = "", title = "SP500 NTM P/E",
+         subtitle = "Valuations are Still High",
+         caption = "Illustration made by Max Sands w/ data from Bloomberg") +
+    scale_y_continuous(labels = scales::label_number(suffix = "x")) +
+    theme(
+        panel.border = element_blank(),
+        axis.line = element_line()
+    )
+```
+
+When comparing nominal yields, we notice that High Yield Debt and 1-year TBills appear much more attractive than Equities. Even after adjusting the Yield-to-Worst with hypothetical default rates, High Yield Debt seems to be a suitable alternative to Equities.
+
+However, many individuals would refute the above by claiming that, while, in the long-run, implied yield may equate to long-run equity returns, this one-to-one relationship has not held in recent history\*\*.
+
+::: column-margin
+\*\*This may be indicative of the current growth tilt in U.S. Equity markets in recent history - especially when considering the `Return Yield-Gap Factor` increases when looking at the past 30 years only...
+:::
+
+In light of this rebuttal, let's adjust the implied yield with an artificial `Return Yield-Gap Factor`:
+
+![](images/return_yield_gap.png){fig-align="center"}
+
+![](images/adjusted_scenarios.png){fig-align="center"}
+
+Even after adjusting for the artificial `Return Yield-Gap Factor` we notice that Equities only seem attractive in the most optimistic scenario where we use:
+
+1.  The Implied Yield *excluding the top 8 companies*
+2.  The most generous `Return Yield-Gap Factor` of 1.69x which implies that we expect a similar growth economy to that of the past 30 years
+
+For all other scenarios, High Yield Debt and Investment Grade Debt appear to be a more rewarding asset class, especially when considering each asset's risk profile. The illustration below compares U.S. Equity performance to that of U.S. High Yield Debt - performance has been relatively similar, with less volatility occurring in debt markets:
+
+```{r}
+#| cache: true
+#| fig-height: 6
+#| fig-width: 9
+
+sp500_price <- tq_get("^GSPC", from = "1983-07-29") %>% 
+    select(date, value = adjusted) %>% 
+    mutate(name = "SP500 Index")
+
+sp500_price %>% 
+    bind_rows(hy_data) %>% 
+    group_by(name) %>% 
+    mutate(value = value / first(value)) %>% 
+    ungroup() %>% 
+    ggplot(aes(date, value, color = name)) +
+    geom_line() +
+    theme_bw(base_size = 16) +
+    theme_max() +
+    labs(
+        x = "", y = "Wealth Index ($1)", color = "",
+        title = "Historical Performance Comparison",
+        caption = "Illustration made by Max Sands w/ data from YahooFinance and Bloomberg"
+    ) +
+    scale_color_manual(values = c("#16365c", "#bfbfbf")) +
+    scale_y_continuous(labels = scales::label_dollar())
+```
+
+Moreover, we note that, historically, value investing has consistently delivered strong returns; as we can see below, investors are typically rewarded for investing when implied earnings yields are high (i.e. at low valuations):
+
+```{r}
+#| fig-height: 6
+#| fig-width: 9
+
+erp_data %>% 
+    select(date, value = earnings_yield) %>% 
+    mutate(name = "Impled Earnings Yield") %>% 
+    bind_rows(
+        sp500_ann_fwd_rets %>% 
+            filter(name %>% str_detect("10")) %>% 
+            mutate(value = (value/4) + .05)
+    ) %>% 
+    mutate(name = as_factor(name)) %>% 
+    filter(date >= "1991-01-01") %>% 
+    ggplot(aes(date, value, color = name, size = name)) +
+    geom_line() +
+    scale_y_continuous(
+        labels = scales::label_percent(),
+        sec.axis = sec_axis(trans = ~((.x - .05)*4),
+                            labels = scales::label_percent(style_neg = "parens"),
+                            name = "SP500 Annualized Forward Return")
+    ) +
+    theme_bw(base_size = 16) +
+    theme_max() +
+    labs(
+        x = "", y = "Implied Earnings Yield", color = "",
+        title = "Basis of Value Investing",
+        subtitle = "Investors are rewarded in the long-run for buying at high Implied Earnings Yield",
+        caption = "Illustration made by Max Sands w/ data from Bloomberg"
+    ) +
+    scale_color_manual(values = c("#16365c", "#bfbfbf")) +
+    scale_size_manual(values = c(.8, .5), guide = "none") +
+    guides(color = guide_legend(override.aes = list(lwd = 2))) +
+    theme(legend.position = "top")
+```
+
+In addition to high valuations, the current earnings environment is not extremely favorable. From the chart below, we can wee that while valuations have increased since the start of 2023, analyst consensus NTM earnings estimates (adjusted for inflation) ...
+
+::: blur
+
+have declined.
+
+![](images/current_environment_snapshot.png){fig-align="center"}
+
+If we consider that there are 4 investing environments that can occur:
+
+1.  Valuations increase & Real Earnings Estimates increase
+2.  Valuations increase & Real Earnings Estimates decrease
+3.  Valuations decrease & Real Earnings Estimates decrease
+4.  Valuations decrease & Real Earnings Estimates decrease
+
+and investigate how the SP500 behaves in these environments, we can see that...
+
+![](images/4_environments.png){fig-align="center"}
+
+```{r}
+erp_data %>% 
+    select(date, erp_high_yield) %>% 
+    mutate(name = "Implied Earnings Yield - YTW") %>% 
+    rename(value = 2) %>% 
+    bind_rows(
+        sp500_ann_fwd_rets %>% 
+            mutate(name = paste0("SP500 ", name)) %>% 
+            filter(name %>% str_detect("10"))
+    ) %>% 
+    bind_rows(
+        hy_ann_fwd_rets %>% 
+            mutate(name = paste0("High Yield ", name)) %>% 
+            filter(name %>% str_detect("10"))
+    ) %>% 
+    filter(date >= "1991-01-01") %>% 
+    ggplot(aes(date, value, color = name)) +
+    geom_line() +
+    theme_bw(base_size = 16) +
+    theme_max()
+```
+
+<br>
+
+## Macroeconomic Uncertainty
+
+# The Bull Case
+
+:::
