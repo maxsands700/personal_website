@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -45,13 +45,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -60,8 +69,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XPQZQZDK95"></script>
@@ -85,6 +96,8 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
 </script> 
@@ -104,8 +117,8 @@ cookieconsent.run({
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -114,42 +127,42 @@ cookieconsent.run({
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../research.html" rel="" target="">
- <span class="menu-text">Research</span></a>
+    <a class="nav-link" href="../../research.html"> 
+<span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../instructional_articles.html" rel="" target="">
- <span class="menu-text">Instructional Articles</span></a>
+    <a class="nav-link" href="../../instructional_articles.html"> 
+<span class="menu-text">Instructional Articles</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../resume.html" rel="" target="">
- <span class="menu-text">Resume</span></a>
+    <a class="nav-link" href="../../resume.html"> 
+<span class="menu-text">Resume</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.instagram.com/max_sands_7/" rel="" target=""><i class="bi bi-instagram" role="img">
+    <a class="nav-link" href="https://www.instagram.com/max_sands_7/"> <i class="bi bi-instagram" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Max_Sands_7" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Max_Sands_7"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/max-sands-1798b41a4/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/max-sands-1798b41a4/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -192,7 +205,7 @@ cookieconsent.run({
     
   <div>
     <div class="abstract">
-      <div class="abstract-title">Abstract</div>
+      <div class="block-title">Abstract</div>
       The recent U.S. equity market environment has been a unique one - with a strong narrow rally in the face of macroeconomic uncertainty, and a market drawdown the previous year. The following article investigates reasons to be both bullish and bearish U.S. equities, and delivers a final hypothesis in light of the research presented.
     </div>
   </div>
@@ -219,18 +232,27 @@ cookieconsent.run({
 
 
 
+
 <section id="intro" class="level1">
 <h1>Intro</h1>
 <p>In 2022, the U.S. equity markets - inflated by exorbitant Quantitative Easing and financial stimulation due to the Covid-19 pandemic - suffered as the bubble eventually popped. As expected, the areas that had seen the most rapid increase in prices (in this case, the ‘Growth’ sectors like Tech) also saw the most severe draw-down:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="864"></p>
+<div>
+<figure class="figure">
+<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>However, the start of 2023 marks the beginning of an odd rally in U.S. Equity markets. The top 8 names in the SP500 have rallied <em>significantly</em> since the start of the year, whereas the remaining companies in the SP500 have flat-lined.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="864"></p>
+<div>
+<figure class="figure">
+<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This begs the question: <em>how long can the rally continue, and what does the medium-term future look like for U.S. Equities?</em></p>
@@ -248,19 +270,23 @@ cookieconsent.run({
 <p>Perhaps the most clear argument for a bear case is that valuations are still high. If we perform a simple breakdown of the valuations for the companies in the SP500, we notice that the implied yield is relatively low. Even if we exclude the top 8 companies, the implied yield of 6.5% is low in relation to the current 1-year TBill rate of approximately 5.3%.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/sp500_implied_yield.png" class="img-fluid figure-img"></p>
+<p><a href="images/sp500_implied_yield.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/sp500_implied_yield.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
 </figure>
 </div>
 <p>Therefore, let’s compare the implied yield on Equities to the yields on High Yield Debt and Investment Grade Debt across different hypothetical senarios:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/simple_scenarios.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption"><em>IG Debt</em> refers to 1-Year TBill</figcaption>
+<p><a href="images/simple_scenarios.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4" title="IG Debt refers to 1-Year TBill"><img src="images/simple_scenarios.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="IG Debt refers to 1-Year TBill"></a></p>
+<figcaption><em>IG Debt</em> refers to 1-Year TBill</figcaption>
 </figure>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="864"></p>
+<div>
+<figure class="figure">
+<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>When comparing nominal yields, we notice that High Yield Debt and 1-year TBills appear much more attractive than Equities. Even after adjusting the Yield-to-Worst with hypothetical default rates, High Yield Debt seems to be a suitable alternative to Equities.</p>
@@ -271,12 +297,12 @@ cookieconsent.run({
 </div></div><p>In light of this rebuttal, let’s adjust the implied yield with an artificial <code>Return Yield-Gap Factor</code>:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/return_yield_gap.png" class="img-fluid figure-img"></p>
+<p><a href="images/return_yield_gap.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/return_yield_gap.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/adjusted_scenarios.png" class="img-fluid figure-img"></p>
+<p><a href="images/adjusted_scenarios.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/adjusted_scenarios.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
 </figure>
 </div>
 <p>Even after adjusting for the artificial <code>Return Yield-Gap Factor</code> we notice that Equities only seem attractive in the most optimistic scenario where we use:</p>
@@ -287,13 +313,21 @@ cookieconsent.run({
 <p>For all other scenarios, High Yield Debt and Investment Grade Debt appear to be a more rewarding asset class, especially when considering each asset’s risk profile. The illustration below compares U.S. Equity performance to that of U.S. High Yield Debt - performance has been relatively similar, with less volatility occurring in debt markets:</p>
 <div class="cell" data-hash="Bull_vs_Bear_cache/html/unnamed-chunk-5_23b21c505906f95bcaf3f35acae2fa60">
 <div class="cell-output-display">
-<p><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="864"></p>
+<div>
+<figure class="figure">
+<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Moreover, we note that, historically, value investing has consistently delivered strong returns; as we can see below, investors are typically rewarded for investing when implied earnings yields are high (i.e.&nbsp;at low valuations):</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="864"></p>
+<div>
+<figure class="figure">
+<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>In addition to high valuations, the current earnings environment is not extremely favorable. From the chart below, we can wee that while valuations have increased since the start of 2023, analyst consensus NTM earnings estimates (adjusted for inflation) …</p>
@@ -301,7 +335,7 @@ cookieconsent.run({
 <p>have declined.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/current_environment_snapshot.png" class="img-fluid figure-img"></p>
+<p><a href="images/current_environment_snapshot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="images/current_environment_snapshot.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
 </figure>
 </div>
 <p>If we consider that there are 4 investing environments that can occur:</p>
@@ -314,12 +348,16 @@ cookieconsent.run({
 <p>and investigate how the SP500 behaves in these environments, we can see that…</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/4_environments.png" class="img-fluid figure-img"></p>
+<p><a href="images/4_environments.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="images/4_environments.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
 </figure>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p><br></p>
@@ -332,6 +370,9 @@ cookieconsent.run({
 </div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-4"><em>IG Debt</em> refers to 1-Year TBill</span>
+</div>
 </section>
 </section>
 
@@ -415,10 +456,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -428,8 +468,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -442,6 +491,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -485,6 +653,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -510,6 +679,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -575,12 +770,40 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
 
 
 

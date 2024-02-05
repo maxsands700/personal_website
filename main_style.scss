@@ -1,0 +1,126 @@
+/*-- scss:defaults --*/
+// Custom Theme for Quarto Website
+
+// Color Scheme
+$black: #040404; // Black
+$purple: #7118c1; // Main Purple
+$darker-grey: #5c5c5c; // Darker Grey
+$lighter-grey: #ecebec; // Lighter Grey
+$darker-purple: #7118c1; // Darker Purple
+$lighter-purple: #9357c6; // Lighter Purple
+
+$body-bg: #FFFFFF; // White background
+$body-color: $black; // Black text
+$link-color: $purple; // Purple links
+
+// Override Bootstrap's primary color
+$primary: $black; // Set primary color to Black
+$secondary: $lighter-grey;
+$theme-colors: (
+  "primary": $primary
+);
+
+/*-- scss:rules --*/
+// Navigation
+$navbar-bg: $black; // Black background for navbar
+$navbar-color: $lighter-grey; // Light grey text for navbar
+$navbar-hover-color: $purple; // Purple text on hover
+$navbar-link-color: $lighter-grey; // Light grey link color for navbar
+$navbar-link-hover-color: $purple; // Purple link color on hover for navbar
+
+.navbar {
+  background-color: $navbar-bg;
+  .navbar-brand, .navbar-nav .nav-link {
+    color: $navbar-link-color;
+
+    &:hover {
+      transform: scale(1.2);
+      color: $navbar-link-hover-color;
+    }
+  }
+}
+
+// Sidebar
+$sidebar-bg: $lighter-grey; // Light grey background for sidebar
+$sidebar-fg: $purple; // Purple text for sidebar
+
+// Buttons
+$btn-primary-bg: $black; // Black background for buttons
+$btn-primary-border: $black; // Black border for buttons
+$btn-primary-color: $body-bg; // White text for buttons
+
+.btn-primary {
+  background-color: $btn-primary-bg;
+  border-color: $btn-primary-border;
+  color: $btn-primary-color;
+
+  &:hover {
+    background-color: darken($body-bg, 5%);
+    border-color: darken($purple, 5%);
+    color: $purple;
+  }
+}
+
+// Code Blocks (Optional Customization)
+$code-block-border-left: $purple;
+$code-block-bg: #f8f9fa; // Slightly grey background for code blocks, adjust as needed
+$code-block-color: $black;
+
+// Table of Contents (Optional Customization)
+$toc-color: $black;
+$toc-active-border: $purple;
+$toc-inactive-border: $darker-grey;
+
+// Layout (Optional Customization)
+$content-padding-top: 20px; // Adjust as needed
+
+// Footer (Optional Customization)
+$footer-bg: $black;
+$footer-fg: $lighter-grey;
+
+// Hover effect for listings
+.card {
+    transition: transform 0.3s ease; // Smooth transition for enlarging effect
+  
+    &:hover {
+      transform: scale(1.05); // Slightly enlarges the listing
+      color: $purple; // Change text color to purple
+    }
+  }
+  
+  // Hover effect for categories
+  .category {
+    transition: color 0.3s ease; // Smooth transition for color change
+  
+    &:hover {
+      color: $purple; // Change text color to purple
+      border: $purple;
+    }
+  }
+
+.about-link {
+    transition: transform 0.3s ease; // Smooth transition for enlarging effect
+  
+    &:hover {
+      transform: scale(1.05); // Slightly enlarges the listing
+      color: $purple; // Change text color to purple
+    } 
+}
+
+.nav-link {
+    transition: transform 0.3s ease; // Smooth transition for enlarging effect
+  
+    &:hover {
+      transform: scale(1.05); // Slightly enlarges the listing
+      color: $purple; // Change text color to purple
+    } 
+}
+
+/*-- scss:mixins --*/
+// Add mixins here if needed
+
+/*-- scss:functions --*/
+// Add functions here if needed
+
+/*-- scss:uses --*/
+// Use any external modules here

@@ -9,18 +9,26 @@ h1.title {
     color: #a6a6a6;
 }
 
-th {
+/* Enhanced specificity with !important for table headers */
+.table th, .table thead th {
     text-transform: capitalize;
     font-size: 1rem;
     white-space: nowrap;
+    background-color: #040404 !important; /* Black background */
+    color: white;
 }
 
-.table th,.table td {
+/* Specific style for gt package table headers */
+.gt_table th {
+    color: white !important; /* Overrides gt specific styles */
+}
+
+.table th, .table td {
     padding: 0.3rem; 
 }
 
-.table-sm th,.table-sm td {
-    padding: .375rem
+.table-sm th, .table-sm td {
+    padding: .375rem;
 }
 
 body {
@@ -29,11 +37,11 @@ body {
 }
 
 .blur {
-  filter: blur(5px);
-   -webkit-touch-callout: none;
+    filter: blur(5px);
+    -webkit-touch-callout: none;
     -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

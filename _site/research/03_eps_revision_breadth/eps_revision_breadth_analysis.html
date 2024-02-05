@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,11 +20,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -49,43 +50,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -108,13 +79,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -123,8 +103,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XPQZQZDK95"></script>
@@ -148,6 +130,8 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
 </script> 
@@ -161,7 +145,35 @@ cookieconsent.run({
 <script src="../../site_libs/chromatography-0.1/chromatography.js"></script>
 <script src="../../site_libs/DiagrammeR-binding-1.0.9/DiagrammeR.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="★EPS Revision Breadth Analysis">
@@ -176,50 +188,52 @@ cookieconsent.run({
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../research.html">
- <span class="menu-text">Research</span></a>
+    <a class="nav-link" href="../../research.html"> 
+<span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../instructional_articles.html">
- <span class="menu-text">Instructional Articles</span></a>
+    <a class="nav-link" href="../../instructional_articles.html"> 
+<span class="menu-text">Instructional Articles</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../resume.html">
- <span class="menu-text">Resume</span></a>
+    <a class="nav-link" href="../../resume.html"> 
+<span class="menu-text">Resume</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.instagram.com/max_sands_7/"><i class="bi bi-instagram" role="img">
+    <a class="nav-link" href="https://www.instagram.com/max_sands_7/"> <i class="bi bi-instagram" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Max_Sands_7"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Max_Sands_7"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/max-sands-1798b41a4/"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/max-sands-1798b41a4/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -295,6 +309,7 @@ cookieconsent.run({
 
 
 
+
 <section id="what-is-eps-revision-breadth" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-eps-revision-breadth">What is EPS Revision Breadth?</h2>
 <p>EPS Revision Breadth is a financial metric that measures the number of upward (positive) and downward (negative) revisions to earnings per share (EPS) estimates by analysts. It is calculated as the difference between the number of positive and negative revisions divided by the total number of revisions made.</p>
@@ -309,7 +324,7 @@ cookieconsent.run({
 <section id="data-overview" class="level2">
 <h2 class="anchored" data-anchor-id="data-overview">Data Overview</h2>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>() <span class="sc">%&gt;%</span> </span>
@@ -319,13 +334,12 @@ cookieconsent.run({
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_currency</span>(<span class="at">columns =</span> <span class="dv">3</span>, <span class="at">decimals =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
 <div id="vfwwwmlcvi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#vfwwwmlcvi) .gt_table {
+#vfwwwmlcvi .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -350,7 +364,7 @@ cookieconsent.run({
   border-left-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_heading {
+#vfwwwmlcvi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -362,7 +376,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_title {
+#vfwwwmlcvi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -374,7 +388,7 @@ cookieconsent.run({
   border-bottom-width: 0;
 }
 
-:where(#vfwwwmlcvi) .gt_subtitle {
+#vfwwwmlcvi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -386,13 +400,13 @@ cookieconsent.run({
   border-top-width: 0;
 }
 
-:where(#vfwwwmlcvi) .gt_bottom_border {
+#vfwwwmlcvi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_col_headings {
+#vfwwwmlcvi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -407,7 +421,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_col_heading {
+#vfwwwmlcvi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -427,7 +441,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-:where(#vfwwwmlcvi) .gt_column_spanner_outer {
+#vfwwwmlcvi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -439,15 +453,15 @@ cookieconsent.run({
   padding-right: 4px;
 }
 
-:where(#vfwwwmlcvi) .gt_column_spanner_outer:first-child {
+#vfwwwmlcvi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#vfwwwmlcvi) .gt_column_spanner_outer:last-child {
+#vfwwwmlcvi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#vfwwwmlcvi) .gt_column_spanner {
+#vfwwwmlcvi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -459,7 +473,7 @@ cookieconsent.run({
   width: 100%;
 }
 
-:where(#vfwwwmlcvi) .gt_group_heading {
+#vfwwwmlcvi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -484,7 +498,7 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-:where(#vfwwwmlcvi) .gt_empty_group_heading {
+#vfwwwmlcvi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -499,15 +513,15 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-:where(#vfwwwmlcvi) .gt_from_md > :first-child {
+#vfwwwmlcvi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#vfwwwmlcvi) .gt_from_md > :last-child {
+#vfwwwmlcvi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#vfwwwmlcvi) .gt_row {
+#vfwwwmlcvi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -526,7 +540,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-:where(#vfwwwmlcvi) .gt_stub {
+#vfwwwmlcvi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -539,7 +553,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-:where(#vfwwwmlcvi) .gt_stub_row_group {
+#vfwwwmlcvi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -553,11 +567,11 @@ cookieconsent.run({
   vertical-align: top;
 }
 
-:where(#vfwwwmlcvi) .gt_row_group_first td {
+#vfwwwmlcvi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#vfwwwmlcvi) .gt_summary_row {
+#vfwwwmlcvi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -567,16 +581,16 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-:where(#vfwwwmlcvi) .gt_first_summary_row {
+#vfwwwmlcvi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_first_summary_row.thick {
+#vfwwwmlcvi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#vfwwwmlcvi) .gt_last_summary_row {
+#vfwwwmlcvi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -586,7 +600,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_grand_summary_row {
+#vfwwwmlcvi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -596,7 +610,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-:where(#vfwwwmlcvi) .gt_first_grand_summary_row {
+#vfwwwmlcvi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -606,11 +620,11 @@ cookieconsent.run({
   border-top-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_striped {
+#vfwwwmlcvi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#vfwwwmlcvi) .gt_table_body {
+#vfwwwmlcvi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -619,7 +633,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_footnotes {
+#vfwwwmlcvi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -633,7 +647,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_footnote {
+#vfwwwmlcvi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -642,7 +656,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-:where(#vfwwwmlcvi) .gt_sourcenotes {
+#vfwwwmlcvi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -656,7 +670,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-:where(#vfwwwmlcvi) .gt_sourcenote {
+#vfwwwmlcvi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -664,36 +678,36 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-:where(#vfwwwmlcvi) .gt_left {
+#vfwwwmlcvi .gt_left {
   text-align: left;
 }
 
-:where(#vfwwwmlcvi) .gt_center {
+#vfwwwmlcvi .gt_center {
   text-align: center;
 }
 
-:where(#vfwwwmlcvi) .gt_right {
+#vfwwwmlcvi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#vfwwwmlcvi) .gt_font_normal {
+#vfwwwmlcvi .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#vfwwwmlcvi) .gt_font_bold {
+#vfwwwmlcvi .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#vfwwwmlcvi) .gt_font_italic {
+#vfwwwmlcvi .gt_font_italic {
   font-style: italic;
 }
 
-:where(#vfwwwmlcvi) .gt_super {
+#vfwwwmlcvi .gt_super {
   font-size: 65%;
 }
 
-:where(#vfwwwmlcvi) .gt_two_val_uncert {
+#vfwwwmlcvi .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -702,68 +716,79 @@ cookieconsent.run({
   margin-left: 0.1em;
 }
 
-:where(#vfwwwmlcvi) .gt_footnote_marks {
+#vfwwwmlcvi .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#vfwwwmlcvi) .gt_asterisk {
+#vfwwwmlcvi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#vfwwwmlcvi) .gt_slash_mark {
+#vfwwwmlcvi .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-:where(#vfwwwmlcvi) .gt_fraction_numerator {
+#vfwwwmlcvi .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-:where(#vfwwwmlcvi) .gt_fraction_denominator {
+#vfwwwmlcvi .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">EPS Revision Breadth</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">SP500 Price</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_right gt_stub">2023-01-30</td>
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th"></th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th">EPS Revision Breadth</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th">SP500 Price</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right gt_stub">2023-01-30</td>
 <td class="gt_row gt_right">−15.2%</td>
-<td class="gt_row gt_right">$4,018</td></tr>
-    <tr><td class="gt_row gt_right gt_stub">2023-01-27</td>
+<td class="gt_row gt_right">$4,018</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right gt_stub">2023-01-27</td>
 <td class="gt_row gt_right">−15.7%</td>
-<td class="gt_row gt_right">$4,071</td></tr>
-    <tr><td class="gt_row gt_right gt_stub">2023-01-26</td>
+<td class="gt_row gt_right">$4,071</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right gt_stub">2023-01-26</td>
 <td class="gt_row gt_right">−15.4%</td>
-<td class="gt_row gt_right">$4,060</td></tr>
-    <tr><td class="gt_row gt_right gt_stub">2023-01-25</td>
+<td class="gt_row gt_right">$4,060</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right gt_stub">2023-01-25</td>
 <td class="gt_row gt_right">−15.1%</td>
-<td class="gt_row gt_right">$4,016</td></tr>
-    <tr><td class="gt_row gt_right gt_stub">2023-01-24</td>
+<td class="gt_row gt_right">$4,016</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right gt_stub">2023-01-24</td>
 <td class="gt_row gt_right">−13.8%</td>
-<td class="gt_row gt_right">$4,017</td></tr>
-    <tr><td class="gt_row gt_right gt_stub">2023-01-23</td>
+<td class="gt_row gt_right">$4,017</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right gt_stub">2023-01-23</td>
 <td class="gt_row gt_right">−13.7%</td>
-<td class="gt_row gt_right">$4,020</td></tr>
-  </tbody>
-  
-  
+<td class="gt_row gt_right">$4,020</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -772,7 +797,7 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="eps-revisions-identifying-tops-bottoms">EPS Revisions: Identifying Tops &amp; Bottoms</h2>
 <p>Since this data is cyclical and stationary, we can attempt to identify tops and bottoms, most simply, by partitioning the data into buckets based on its EPS Revision Breadth Value. The following chart demonstrates this by highlighting the top 10% of EPS RB in orange, and the bottom 10% in blue:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_raw_bucketed <span class="ot">&lt;-</span> data_raw <span class="sc">%&gt;%</span> </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">quantile =</span> <span class="fu">ntile</span>(eps_revision_breadth, <span class="at">n =</span> <span class="dv">10</span>)) <span class="sc">%&gt;%</span> </span>
@@ -819,8 +844,8 @@ cookieconsent.run({
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
-<p></p><figcaption class="figure-caption">Major Troughs are shaded in red</figcaption><p></p>
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Major Troughs are shaded in red"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960" alt="Major Troughs are shaded in red"></a></p>
+<figcaption>Major Troughs are shaded in red</figcaption>
 </figure>
 </div>
 </div>
@@ -834,7 +859,7 @@ cookieconsent.run({
 <p>While we won’t dive into predicting when these Major Troughs occur here, I believe that tracking sector-level debt, the velocity &amp; acceleration of that debt, and the speed, ability, and ease in which major players in those sectors can service their debt, is a key ingredient in modelling this out (see <a href="https://www.bridgewater.com/">Bridgewater</a> Research).</p>
 <p>As such a basic decision tree could look as follows:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mermaid</span>(<span class="st">"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">graph TD</span></span>
@@ -860,7 +885,7 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="return-analysis">Return Analysis</h2>
 <p>Lets identify average 1M, 3M, 6M, and 1YR returns, had you invested at points during a peak or trough in EPS RB:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>return_summary_tbl_incl_major <span class="ot">&lt;-</span> data_raw_bucketed <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
@@ -886,12 +911,12 @@ cookieconsent.run({
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">contains</span>(<span class="st">"month"</span>), <span class="at">.fns =</span> <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> T)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Visual</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Table</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>return_summary_tbl_excl_major <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="fu">names</span>(.) <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(., <span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>()) <span class="sc">%&gt;%</span> </span>
@@ -925,17 +950,21 @@ cookieconsent.run({
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Excluding Major Troughs</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Including Major Troughs</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>return_summary_tbl_excl_major <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="fu">names</span>(.) <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(., <span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>()) <span class="sc">%&gt;%</span> </span>
@@ -945,7 +974,6 @@ cookieconsent.run({
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">subtitle =</span> <span class="st">"Excluding Major Troughs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
 <div id="riorwshxcw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -1437,7 +1465,7 @@ cookieconsent.run({
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>return_summary_tbl_incl_major <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="fu">names</span>(.) <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(., <span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>()) <span class="sc">%&gt;%</span> </span>
@@ -1447,7 +1475,6 @@ cookieconsent.run({
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">subtitle =</span> <span class="st">"Including Major Troughs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
 <div id="dbqlypptcq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -1945,7 +1972,7 @@ cookieconsent.run({
 <section id="main-takeaway" class="level3">
 <h3 class="anchored" data-anchor-id="main-takeaway">Main Takeaway</h3>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>qtile_1_epsrb_value <span class="ot">&lt;-</span> data_raw_bucketed <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(quantile <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
@@ -1972,7 +1999,7 @@ cookieconsent.run({
 <p>Let’s utilize our basic heuristics to build an active, long-only portfolio, consisting solely of Equities and Fixed Income, with asset class weights that vary according to EPS Revision Breadth. In other words, the portfolio’s allocation to Equities and Fixed Income is a function of EPS Revision Breadth at certain point in time. Therefore, we need to define a function that under-weights Equities during periods of very low EPS Revision Breadth, and does the converse for periods with moderate to high EPS Revision Breadth.</p>
 <p>A sample function could look as follows:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data_raw_bucketed <span class="sc">%&gt;%</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(quantile) <span class="sc">%&gt;%</span> </span>
@@ -1997,7 +2024,11 @@ cookieconsent.run({
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>, <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>As we can see, our function should be bounded between 0 and 1 on the y-axis, and have a similar shape to our ‘prototype’ above. These are both characteristics of the following function:</p>
@@ -2006,7 +2037,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 \]</span></p>
 <p>If we test out a few constants, we see that the values of C1 = 20, C2 = -7.5%, and C3 = 0, generates a function similar to our sample:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sigmoid <span class="ot">&lt;-</span> <span class="cf">function</span>(x, c1, c2, c3){</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> ((<span class="dv">1</span><span class="sc">-</span>c3) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>c1 <span class="sc">*</span> (x <span class="sc">-</span> c2)))) <span class="sc">+</span> c3</span>
@@ -2032,14 +2063,18 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>, <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-11-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <section id="portfolio-comparison" class="level3">
 <h3 class="anchored" data-anchor-id="portfolio-comparison">Portfolio Comparison</h3>
 <p>Let’s apply our weighting scheme above and compare its performance to a traditional, static 60/40 Portfolio, an SP500-only Portfolio, and a Fixed-Income-only portfolio. We will consider the iShares Core U.S. Aggregate Bond ETF (“The AGG”) as a proxy for Fixed Income.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>price_data <span class="ot">&lt;-</span> <span class="fu">tq_get</span>(<span class="fu">c</span>(<span class="st">"SPY"</span>, <span class="st">"AGG"</span>), <span class="at">from =</span> <span class="st">"2003-09-30"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(symbol, date, adjusted)</span>
@@ -2081,14 +2116,18 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-12-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>As we can see, our portfolio outperforms the traditional 60/40 Portfolio, but under-performs the SP500, on a nominal basis.</p>
 <p>However, when comparing the returns of these 4 portfolios on a <em>risk-adjusted</em> basis, our Active Portfolio fares very well, which means that our portfolio yields the most return per unit of risk.</p>
 <p>For clarification, we consider investment returns as reward, and the standard deviation of returns (volatility) as risk. The Sharpe Ratio divides the average return by the standard deviation of these returns, while the Sortino Ratio divides the average return by the standard deviation of the <em>negative</em> returns only.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>monthly_returns <span class="ot">&lt;-</span> returns_and_index <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(date, name, value) <span class="sc">%&gt;%</span> </span>
@@ -2126,7 +2165,6 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">contains</span>(<span class="st">"Ratio"</span>)), <span class="at">footnote =</span> <span class="st">"Calculation does not include the risk-free rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
 <div id="etxrnhgdnf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -2596,7 +2634,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 </div>
 <p>This occurs because our Active Portfolio is able to identify time periods when it is preferable to hold fixed income rather than equities, and vice versa. As a result, our portfolio has an average allocation of 75/25!</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>start_tbl <span class="sc">%&gt;%</span> </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">port_equity_weight =</span> <span class="fu">sigmoid</span>(eps_revision_breadth, <span class="at">c1 =</span> <span class="dv">20</span>, <span class="at">c2 =</span> <span class="sc">-</span>.<span class="dv">075</span>, <span class="at">c3 =</span> <span class="dv">0</span>),</span>
@@ -2607,13 +2645,12 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_percent</span>(<span class="at">columns =</span> <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
 <div id="ruhfkopevs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#ruhfkopevs) .gt_table {
+#ruhfkopevs .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2638,7 +2675,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-left-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_heading {
+#ruhfkopevs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2650,7 +2687,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-right-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_title {
+#ruhfkopevs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2662,7 +2699,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-bottom-width: 0;
 }
 
-:where(#ruhfkopevs) .gt_subtitle {
+#ruhfkopevs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2674,13 +2711,13 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-top-width: 0;
 }
 
-:where(#ruhfkopevs) .gt_bottom_border {
+#ruhfkopevs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_col_headings {
+#ruhfkopevs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2695,7 +2732,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-right-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_col_heading {
+#ruhfkopevs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2715,7 +2752,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   overflow-x: hidden;
 }
 
-:where(#ruhfkopevs) .gt_column_spanner_outer {
+#ruhfkopevs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2727,15 +2764,15 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 4px;
 }
 
-:where(#ruhfkopevs) .gt_column_spanner_outer:first-child {
+#ruhfkopevs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#ruhfkopevs) .gt_column_spanner_outer:last-child {
+#ruhfkopevs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#ruhfkopevs) .gt_column_spanner {
+#ruhfkopevs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2747,7 +2784,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   width: 100%;
 }
 
-:where(#ruhfkopevs) .gt_group_heading {
+#ruhfkopevs .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2772,7 +2809,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   vertical-align: middle;
 }
 
-:where(#ruhfkopevs) .gt_empty_group_heading {
+#ruhfkopevs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2787,15 +2824,15 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   vertical-align: middle;
 }
 
-:where(#ruhfkopevs) .gt_from_md > :first-child {
+#ruhfkopevs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#ruhfkopevs) .gt_from_md > :last-child {
+#ruhfkopevs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#ruhfkopevs) .gt_row {
+#ruhfkopevs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2814,7 +2851,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   overflow-x: hidden;
 }
 
-:where(#ruhfkopevs) .gt_stub {
+#ruhfkopevs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2827,7 +2864,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#ruhfkopevs) .gt_stub_row_group {
+#ruhfkopevs .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2841,11 +2878,11 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   vertical-align: top;
 }
 
-:where(#ruhfkopevs) .gt_row_group_first td {
+#ruhfkopevs .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#ruhfkopevs) .gt_summary_row {
+#ruhfkopevs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2855,16 +2892,16 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#ruhfkopevs) .gt_first_summary_row {
+#ruhfkopevs .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_first_summary_row.thick {
+#ruhfkopevs .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#ruhfkopevs) .gt_last_summary_row {
+#ruhfkopevs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2874,7 +2911,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-bottom-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_grand_summary_row {
+#ruhfkopevs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2884,7 +2921,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#ruhfkopevs) .gt_first_grand_summary_row {
+#ruhfkopevs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2894,11 +2931,11 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-top-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_striped {
+#ruhfkopevs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#ruhfkopevs) .gt_table_body {
+#ruhfkopevs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2907,7 +2944,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-bottom-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_footnotes {
+#ruhfkopevs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2921,7 +2958,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-right-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_footnote {
+#ruhfkopevs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2930,7 +2967,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#ruhfkopevs) .gt_sourcenotes {
+#ruhfkopevs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2944,7 +2981,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-right-color: #D3D3D3;
 }
 
-:where(#ruhfkopevs) .gt_sourcenote {
+#ruhfkopevs .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2952,36 +2989,36 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#ruhfkopevs) .gt_left {
+#ruhfkopevs .gt_left {
   text-align: left;
 }
 
-:where(#ruhfkopevs) .gt_center {
+#ruhfkopevs .gt_center {
   text-align: center;
 }
 
-:where(#ruhfkopevs) .gt_right {
+#ruhfkopevs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#ruhfkopevs) .gt_font_normal {
+#ruhfkopevs .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#ruhfkopevs) .gt_font_bold {
+#ruhfkopevs .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#ruhfkopevs) .gt_font_italic {
+#ruhfkopevs .gt_font_italic {
   font-style: italic;
 }
 
-:where(#ruhfkopevs) .gt_super {
+#ruhfkopevs .gt_super {
   font-size: 65%;
 }
 
-:where(#ruhfkopevs) .gt_two_val_uncert {
+#ruhfkopevs .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -2990,57 +3027,58 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   margin-left: 0.1em;
 }
 
-:where(#ruhfkopevs) .gt_footnote_marks {
+#ruhfkopevs .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#ruhfkopevs) .gt_asterisk {
+#ruhfkopevs .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#ruhfkopevs) .gt_slash_mark {
+#ruhfkopevs .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-:where(#ruhfkopevs) .gt_fraction_numerator {
+#ruhfkopevs .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-:where(#ruhfkopevs) .gt_fraction_denominator {
+#ruhfkopevs .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Average Equity Allocation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Average Fixed Income Allocation</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_right">74.17%</td>
-<td class="gt_row gt_right">25.83%</td></tr>
-  </tbody>
-  
-  
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th">Average Equity Allocation</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th">Average Fixed Income Allocation</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right">74.17%</td>
+<td class="gt_row gt_right">25.83%</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
 <p>We can plot our portfolio’s allocation to equities over time:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(</span>
@@ -3065,8 +3103,8 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="960"></p>
-<p></p><figcaption class="figure-caption">The red shaded region indicates the start of the Covid-19 Pandemic</figcaption><p></p>
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-15-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6" title="The red shaded region indicates the start of the Covid-19 Pandemic"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="960" alt="The red shaded region indicates the start of the Covid-19 Pandemic"></a></p>
+<figcaption>The red shaded region indicates the start of the Covid-19 Pandemic</figcaption>
 </figure>
 </div>
 </div>
@@ -3078,7 +3116,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <h3 class="anchored" data-anchor-id="course-correcting-w-human-judgement">Course Correcting w/ Human Judgement</h3>
 <p>Let’s assume that we are savvy investors, and that in March of 2022 we increased our allocation to equities to 75% because we understood that the markets were acting irrationally. If we do this while keeping everything else the same, here is how our active portfolio would have performed:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>returns_and_index_mod <span class="ot">&lt;-</span> start_tbl <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">port_equity_weight =</span> <span class="fu">sigmoid</span>(eps_revision_breadth, <span class="at">c1 =</span> <span class="dv">20</span>, <span class="at">c2 =</span> <span class="sc">-</span>.<span class="dv">075</span>, <span class="at">c3 =</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
@@ -3110,16 +3148,20 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-16-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Now, we notice that our active portfolio barely under-performs the market while still mitigating risk:</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Return Summary</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Average Allocation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Equity Allocation over Time</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>monthly_returns_mod <span class="ot">&lt;-</span> returns_and_index_mod <span class="sc">%&gt;%</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(date, name, value) <span class="sc">%&gt;%</span> </span>
@@ -3157,7 +3199,6 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">contains</span>(<span class="st">"Ratio"</span>)), <span class="at">footnote =</span> <span class="st">"Calculation does not include the risk-free rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
 <div id="nviihqccls" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -3628,7 +3669,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>start_tbl <span class="sc">%&gt;%</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">port_equity_weight =</span> <span class="fu">sigmoid</span>(eps_revision_breadth, <span class="at">c1 =</span> <span class="dv">20</span>, <span class="at">c2 =</span> <span class="sc">-</span>.<span class="dv">075</span>, <span class="at">c3 =</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
@@ -3642,13 +3683,12 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_percent</span>(<span class="at">columns =</span> <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
 <div id="zodtiqezgj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#zodtiqezgj) .gt_table {
+#zodtiqezgj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -3673,7 +3713,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-left-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_heading {
+#zodtiqezgj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3685,7 +3725,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-right-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_title {
+#zodtiqezgj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3697,7 +3737,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-bottom-width: 0;
 }
 
-:where(#zodtiqezgj) .gt_subtitle {
+#zodtiqezgj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3709,13 +3749,13 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-top-width: 0;
 }
 
-:where(#zodtiqezgj) .gt_bottom_border {
+#zodtiqezgj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_col_headings {
+#zodtiqezgj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3730,7 +3770,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-right-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_col_heading {
+#zodtiqezgj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3750,7 +3790,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   overflow-x: hidden;
 }
 
-:where(#zodtiqezgj) .gt_column_spanner_outer {
+#zodtiqezgj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3762,15 +3802,15 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 4px;
 }
 
-:where(#zodtiqezgj) .gt_column_spanner_outer:first-child {
+#zodtiqezgj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#zodtiqezgj) .gt_column_spanner_outer:last-child {
+#zodtiqezgj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#zodtiqezgj) .gt_column_spanner {
+#zodtiqezgj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3782,7 +3822,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   width: 100%;
 }
 
-:where(#zodtiqezgj) .gt_group_heading {
+#zodtiqezgj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3807,7 +3847,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   vertical-align: middle;
 }
 
-:where(#zodtiqezgj) .gt_empty_group_heading {
+#zodtiqezgj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3822,15 +3862,15 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   vertical-align: middle;
 }
 
-:where(#zodtiqezgj) .gt_from_md > :first-child {
+#zodtiqezgj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#zodtiqezgj) .gt_from_md > :last-child {
+#zodtiqezgj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#zodtiqezgj) .gt_row {
+#zodtiqezgj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3849,7 +3889,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   overflow-x: hidden;
 }
 
-:where(#zodtiqezgj) .gt_stub {
+#zodtiqezgj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3862,7 +3902,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#zodtiqezgj) .gt_stub_row_group {
+#zodtiqezgj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3876,11 +3916,11 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   vertical-align: top;
 }
 
-:where(#zodtiqezgj) .gt_row_group_first td {
+#zodtiqezgj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#zodtiqezgj) .gt_summary_row {
+#zodtiqezgj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3890,16 +3930,16 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#zodtiqezgj) .gt_first_summary_row {
+#zodtiqezgj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_first_summary_row.thick {
+#zodtiqezgj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#zodtiqezgj) .gt_last_summary_row {
+#zodtiqezgj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3909,7 +3949,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-bottom-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_grand_summary_row {
+#zodtiqezgj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3919,7 +3959,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#zodtiqezgj) .gt_first_grand_summary_row {
+#zodtiqezgj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3929,11 +3969,11 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-top-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_striped {
+#zodtiqezgj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#zodtiqezgj) .gt_table_body {
+#zodtiqezgj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3942,7 +3982,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-bottom-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_footnotes {
+#zodtiqezgj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3956,7 +3996,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-right-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_footnote {
+#zodtiqezgj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -3965,7 +4005,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#zodtiqezgj) .gt_sourcenotes {
+#zodtiqezgj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3979,7 +4019,7 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   border-right-color: #D3D3D3;
 }
 
-:where(#zodtiqezgj) .gt_sourcenote {
+#zodtiqezgj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3987,36 +4027,36 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   padding-right: 5px;
 }
 
-:where(#zodtiqezgj) .gt_left {
+#zodtiqezgj .gt_left {
   text-align: left;
 }
 
-:where(#zodtiqezgj) .gt_center {
+#zodtiqezgj .gt_center {
   text-align: center;
 }
 
-:where(#zodtiqezgj) .gt_right {
+#zodtiqezgj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#zodtiqezgj) .gt_font_normal {
+#zodtiqezgj .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#zodtiqezgj) .gt_font_bold {
+#zodtiqezgj .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#zodtiqezgj) .gt_font_italic {
+#zodtiqezgj .gt_font_italic {
   font-style: italic;
 }
 
-:where(#zodtiqezgj) .gt_super {
+#zodtiqezgj .gt_super {
   font-size: 65%;
 }
 
-:where(#zodtiqezgj) .gt_two_val_uncert {
+#zodtiqezgj .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -4025,58 +4065,59 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
   margin-left: 0.1em;
 }
 
-:where(#zodtiqezgj) .gt_footnote_marks {
+#zodtiqezgj .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#zodtiqezgj) .gt_asterisk {
+#zodtiqezgj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#zodtiqezgj) .gt_slash_mark {
+#zodtiqezgj .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-:where(#zodtiqezgj) .gt_fraction_numerator {
+#zodtiqezgj .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-:where(#zodtiqezgj) .gt_fraction_denominator {
+#zodtiqezgj .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Average Equity Allocation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Average Fixed Income Allocation</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_right">75.44%</td>
-<td class="gt_row gt_right">24.56%</td></tr>
-  </tbody>
-  
-  
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th">Average Equity Allocation</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th">Average Fixed Income Allocation</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right">75.44%</td>
+<td class="gt_row gt_right">24.56%</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(</span>
@@ -4094,7 +4135,11 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -4105,10 +4150,10 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <h3 class="anchored" data-anchor-id="modifying-c1-c2">Modifying C1 &amp; C2</h3>
 <p>During the construction of our portfolio, we arbitrarily used <em>C1 = 20</em> and <em>C2 = -.075</em> as inputs for our allocation function because they replicated our rough, ‘prototype’ weighting scheme. In addition, these inputs seemed sensible for the average investor as they yielded, on average, a 75/25 weighting scheme. However, we can adjust these parameters depending on the risk appetite of the investor.</p>
 <p>The following demonstrates graphically what occurs as you change C1:</p>
-<p><img src="sigmoid.png" class="img-fluid"></p>
+<p><a href="sigmoid.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="sigmoid.png" class="img-fluid"></a></p>
 <p>As we can see, C1 represents our sensitivity to changes in EPS Revision Breadth, C2 represents the EPS Revision Breadth value that corresponds to an equity allocation of 50% (if and only if C3 = 0), and C3 represents a minimum equity allocation. Therefore, we can elect to modify our weighting scheme for different investment styles. The following could represent a sample weighting scheme for an investor that would like to be less sensitive to changes in EPS Revision Breadth with a minimum equity allocation of 40%:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">eps_rb =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span> ,<span class="at">by=</span>.<span class="dv">01</span>),</span>
@@ -4128,7 +4173,11 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>, <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><a href="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-20-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="eps_revision_breadth_analysis_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -4146,6 +4195,10 @@ f(x) = \frac{1-c_3}{1 + e^{-c_1(x - c_2)}} + c_3
 <p><em>The above is intended as an exploration of historical data, and all statements and opinions are expressly my own; neither should be construed as investment advice.</em></p>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Major Troughs are shaded in red</span>
+<span class="glightbox-desc lightbox-desc-6">The red shaded region indicates the start of the Covid-19 Pandemic</span>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -4176,9 +4229,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -4214,10 +4281,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -4227,8 +4293,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -4243,6 +4318,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -4285,9 +4592,43 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
 
 
 

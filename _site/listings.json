@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/instructional_articles.html",
+    "items": [
+      "/instructional_articles/00_r_basics/index.html"
+    ]
+  },
+  {
     "listing": "/research.html",
     "items": [
       "/research/06_Bull_vs_Bear/Bull_vs_Bear.html",
@@ -9,12 +15,6 @@
       "/research/02_weather_and_markets/index.html",
       "/research/01_management_trading_analysis/index.html",
       "/research/00_high_yield_analysis/index.html"
-    ]
-  },
-  {
-    "listing": "/instructional_articles.html",
-    "items": [
-      "/instructional_articles/00_r_basics/index.html"
     ]
   }
 ]

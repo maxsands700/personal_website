@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,7 +20,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -45,13 +45,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -60,8 +69,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XPQZQZDK95"></script>
@@ -85,12 +96,42 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
 </script> 
   
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="★Assessing Financial Bubbles">
@@ -105,50 +146,52 @@ cookieconsent.run({
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../research.html">
- <span class="menu-text">Research</span></a>
+    <a class="nav-link" href="../../research.html"> 
+<span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../instructional_articles.html">
- <span class="menu-text">Instructional Articles</span></a>
+    <a class="nav-link" href="../../instructional_articles.html"> 
+<span class="menu-text">Instructional Articles</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../resume.html">
- <span class="menu-text">Resume</span></a>
+    <a class="nav-link" href="../../resume.html"> 
+<span class="menu-text">Resume</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.instagram.com/max_sands_7/"><i class="bi bi-instagram" role="img">
+    <a class="nav-link" href="https://www.instagram.com/max_sands_7/"> <i class="bi bi-instagram" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Max_Sands_7"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Max_Sands_7"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/max-sands-1798b41a4/"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/max-sands-1798b41a4/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -236,13 +279,14 @@ cookieconsent.run({
 
 
 
+
 <section id="a-framework-for-identifying-bubbles" class="level2">
 <h2 class="anchored" data-anchor-id="a-framework-for-identifying-bubbles">A Framework for Identifying Bubbles</h2>
 <p>Financial markets have experienced several notable financial bubbles in recent history. The Dot-Com bubble in 2001, the Great Financial Crisis in 2008, and the Tech bubble in 2022 are three examples. In each case, the period leading up to, during, and after the bubble’s collapse brought varying degrees of market volatility and returns. Investors who exited before the crash were able to achieve impressive returns, while those who remained in the market experienced significant losses. As such, it is valuable for investors to be able to identify where financial bubbles are forming and their stage of development to avoid potential losses.</p>
 <p>In his book <a href="https://www.bridgewater.com/big-debt-crises/principles-for-navigating-big-debt-crises-by-ray-dalio.pdf"><em>Principles for Navigating Big Debt Crises</em></a>, Ray Dalio posits that markets are cyclical and that financial bubbles form for the same underlying reasons - healthy growth turns to unhealthy growth as entities over-lever which eventually yields the bust of a financial bubble; he outlines the following rough framework for identifying financial bubbles with the associated message:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="financial_framework.png" class="img-fluid figure-img"></p>
+<p><a href="financial_framework.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="financial_framework.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
 </figure>
 </div>
 <blockquote class="blockquote">
@@ -340,18 +384,18 @@ cookieconsent.run({
 <li><p>Economic Data (GDP, Federal Funds Rate, etc.)</p></li>
 </ul>
 <p>Here is a glimpse of each data-set:</p>
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Russell 3000 Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">IPO Data</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-2-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Income Statement</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Balance Sheet</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Cash Flow Statement</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Miscellaneous</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">Classification</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-1-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page">
 <div class="kable-table">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 3%">
 <col style="width: 5%">
@@ -509,7 +553,7 @@ cookieconsent.run({
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page">
 <div class="kable-table">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 2%">
 <col style="width: 3%">
@@ -715,7 +759,7 @@ cookieconsent.run({
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page">
 <div class="kable-table">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 7%">
 <col style="width: 9%">
@@ -813,7 +857,7 @@ cookieconsent.run({
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page">
 <div class="kable-table">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 3%">
 <col style="width: 4%">
@@ -983,7 +1027,7 @@ cookieconsent.run({
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page">
 <div class="kable-table">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 1%">
 <col style="width: 2%">
@@ -1156,7 +1200,7 @@ cookieconsent.run({
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page">
 <div class="kable-table">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 14%">
 <col style="width: 15%">
@@ -1285,27 +1329,39 @@ cookieconsent.run({
 </tr>
 </tbody>
 </table>
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Price-to-Sales</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Price-to-Book</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Price-to-Earnings</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-3-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-8-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-2"><img src="financial_bubbles_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-9-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-3"><img src="financial_bubbles_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-3-3" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-3-3-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-10-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-4"><img src="financial_bubbles_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1323,8 +1379,12 @@ cookieconsent.run({
 </ol>
 <p>By doing this we will have a rough estimation of how elevated prices are for each of these sectors and market cap buckets.</p>
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-11-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-5"><img src="financial_bubbles_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <section id="takeaways" class="level5">
@@ -1395,62 +1455,106 @@ cookieconsent.run({
 <h4 class="anchored" data-anchor-id="digging-deeper">Digging Deeper</h4>
 <p>Now that we have time periods in which certain broad sectors were highly priced, we can repeat the above at a more granular level. This is important since large values can be washed away in averages when aggregating at broader hierarchical sector levels. For instance, we could have a high price metric of +3 for <em>Semiconductors</em> and a low metric of -3 for <em>Software</em>; if these were the only two sub-sectors in the <em>Technology</em> space, then the price metric for <em>Technology</em> would likely lie around 0. This scenario is much different from one wherein both <em>Semiconductors</em> and <em>Software</em> have price metrics of 0, which would also consequently yield a price metric of around 0 for <em>Technology</em>.</p>
 <p>In the following, we consider only <em>Large Cap</em> and <em>Ultra-Large Cap</em> as there are fewer companies in each bucket when aggregating at a more granular sector level:</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Health Care</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Materials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Industrials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false">Consumer Discretionary</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-5" role="tab" aria-controls="tabset-4-5" aria-selected="false">Technology</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-6" role="tab" aria-controls="tabset-4-6" aria-selected="false">Real Estate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-7" role="tab" aria-controls="tabset-4-7" aria-selected="false">Financials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-8" role="tab" aria-controls="tabset-4-8" aria-selected="false">Communications</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-9-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-9" role="tab" aria-controls="tabset-4-9" aria-selected="false">Energy</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-10-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-10" role="tab" aria-controls="tabset-4-10" aria-selected="false">Consumer Staples</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-11-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-11" role="tab" aria-controls="tabset-4-11" aria-selected="false">Utilities</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-3.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-3.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-4.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-4.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-5-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-5.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-5.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-6-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-6.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-6.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-7-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-7.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-7.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-7.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-8-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-8.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-8.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-8.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-9" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-9-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-9.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-9.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-9.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-10" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-10-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-10.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-10.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-10.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-4-11" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-11-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-11.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-12-11.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="financial_bubbles_files/figure-html/unnamed-chunk-12-11.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1469,20 +1573,28 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 \]</span></p>
 <p>The first metric aims to represent leverage at the company level, whereas the second metric aims to represent the significance of that debt in relation to the size of the general economy.</p>
 <p>In the second metric, we consider the <em>average</em> debt level as a ratio to GDP because the number of companies within each sector of the Russell 3000 varies each year. Therefore, simply calculating the sum for each year could overstate debt levels for years in which there are more companies than usual. Instead, we hope to measure this in isolation in the section <em><code>3) New entrants are entering the market</code></em>.</p>
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Metric 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Metric 2</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-5-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-13-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-17"><img src="financial_bubbles_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-5-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-14-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-18"><img src="financial_bubbles_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1501,8 +1613,12 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <div class="no-row-height column-margin column-container"><div class="">
 <p><em>*Metric 1 is more stationary and cyclical; therefore, we are giving it a greater weight as it will be more reliable when measuring absolute debt levels.</em></p>
 </div></div><div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-15-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-19"><img src="financial_bubbles_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <section id="takeaways-1" class="level5">
@@ -1571,62 +1687,106 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <section id="digging-deeper-1" class="level4">
 <h4 class="anchored" data-anchor-id="digging-deeper-1">Digging Deeper</h4>
 <p>Once again, we can take a more granular look at the data:</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Health Care</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Materials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Industrials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false">Consumer Discretionary</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-5" role="tab" aria-controls="tabset-6-5" aria-selected="false">Technology</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-6" role="tab" aria-controls="tabset-6-6" aria-selected="false">Real Estate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-7" role="tab" aria-controls="tabset-6-7" aria-selected="false">Financials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-8" role="tab" aria-controls="tabset-6-8" aria-selected="false">Communications</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-9-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-9" role="tab" aria-controls="tabset-6-9" aria-selected="false">Energy</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-10-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-10" role="tab" aria-controls="tabset-6-10" aria-selected="false">Consumer Staples</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-11-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-11" role="tab" aria-controls="tabset-6-11" aria-selected="false">Utilities</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-3.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-3.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-4.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-4.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-5-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-5.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-5.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-6-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-6.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-6.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-7-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-7.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-7.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-7.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-8-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-8.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-8.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-8.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-9" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-9-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-9.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-9.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-9.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-10" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-10-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-10.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-10.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-10.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-6-11" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-11-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-11.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-16-11.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="financial_bubbles_files/figure-html/unnamed-chunk-16-11.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1641,24 +1801,32 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <li>Counting the # of IPOs each month</li>
 <li>Summing the IPO Offer Size each month</li>
 </ol>
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">IPO Count</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">Sum Offer Size ($)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-3" role="tab" aria-controls="tabset-11-3" aria-selected="false">Avg Offer Size ($)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-4" role="tab" aria-controls="tabset-11-4" aria-selected="false">Median Offer Size ($)</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-11-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-11-1-tab">
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Sector-Level</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="768"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-17-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="financial_bubbles_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="768"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-7-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-18-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-32"><img src="financial_bubbles_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1666,20 +1834,28 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 </div>
 </div>
 <div id="tabset-11-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-11-2-tab">
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Sector-Level</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="768"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="financial_bubbles_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="768"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-8-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-20-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-34"><img src="financial_bubbles_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1687,20 +1863,28 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 </div>
 </div>
 <div id="tabset-11-3" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-11-3-tab">
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Sector-Level</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="768"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-21-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="financial_bubbles_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="768"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-9-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-9-2-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-22-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-36"><img src="financial_bubbles_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1708,20 +1892,28 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 </div>
 </div>
 <div id="tabset-11-4" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-11-4-tab">
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">Sector-Level</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="768"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-23-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37"><img src="financial_bubbles_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="768"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-10-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-24-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-38"><img src="financial_bubbles_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1740,20 +1932,28 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <li>Averaging the standardized distances together to a create a single <code>IPO Metric</code></li>
 </ol>
 <p>By doing this we will have a rough estimation of how ‘hot’ markets are and if the number of entrants is high relative to historical averages:</p>
-<div class="panel-tabset page-columns page-full">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">Aggregate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">Sector-Level</a></li></ul>
 <div class="tab-content page-columns page-full">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="768"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-25-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39"><img src="financial_bubbles_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="768"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-12-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-12-2-tab">
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-26-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-40"><img src="financial_bubbles_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1764,62 +1964,106 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <section id="digging-deeper-2" class="level4">
 <h4 class="anchored" data-anchor-id="digging-deeper-2">Digging Deeper</h4>
 <p>Once again, let’s take a more granular look at the data:</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">Health Care</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false">Materials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-3" role="tab" aria-controls="tabset-13-3" aria-selected="false">Industrials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-4" role="tab" aria-controls="tabset-13-4" aria-selected="false">Consumer Discretionary</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-5" role="tab" aria-controls="tabset-13-5" aria-selected="false">Technology</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-6" role="tab" aria-controls="tabset-13-6" aria-selected="false">Real Estate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-7" role="tab" aria-controls="tabset-13-7" aria-selected="false">Financials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-8" role="tab" aria-controls="tabset-13-8" aria-selected="false">Communications</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-9-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-9" role="tab" aria-controls="tabset-13-9" aria-selected="false">Energy</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-10-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-10" role="tab" aria-controls="tabset-13-10" aria-selected="false">Consumer Staples</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-11-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-11" role="tab" aria-controls="tabset-13-11" aria-selected="false">Utilities</a></li></ul>
 <div class="tab-content">
 <div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-41"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-2.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-42"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-2.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-3-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-3.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-43"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-3.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-4-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-4.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-44"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-4.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-5-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-5.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-45"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-5.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-6-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-6.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-46"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-6.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-7-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-7.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-7.png" class="lightbox" data-gallery="quarto-lightbox-gallery-47"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-7.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-8-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-8.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-8.png" class="lightbox" data-gallery="quarto-lightbox-gallery-48"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-8.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-9" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-9-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-9.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-9.png" class="lightbox" data-gallery="quarto-lightbox-gallery-49"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-9.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-10" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-10-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-10.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-10.png" class="lightbox" data-gallery="quarto-lightbox-gallery-50"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-10.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-13-11" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-11-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-11.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-27-11.png" class="lightbox" data-gallery="quarto-lightbox-gallery-51"><img src="financial_bubbles_files/figure-html/unnamed-chunk-27-11.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1833,8 +2077,12 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <p>Let’s take each of our metrics, scale them to values between 0 and 1, and average them together to create a <code>Grand Financial Bubble Metric</code>. We will then re-scale our resulting metric between 0 and 1.</p>
 <p>It is important to note that our IPO metric can take on extreme values at the sector level - <em>Health Care</em> in 2001 and <em>Financials</em> (w/ the SPAC surge) in 2021. Because these extreme points reduce the relative importance of other time periods, we will water them down and keep this in the back of our minds going forward.</p>
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-29-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-52"><img src="financial_bubbles_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>At this point, I will caution the reader that any inferences taken from our <code>Grand Financial Bubble Metric</code> should be held with reservation. The metric allows for a good basic framing of where sectors are relative to history, but understanding the key dynamics at play within each sector, and the current macroeconomic and political environment is equally as important. In addition, when comparing across history, it is important to have a knowledge of context and qualitative factors that may affect inferential ability. For instance, the Covid-19 Pandemic drastically affected the world economy and markets in 2020-2022, so the reader may decide to skew metrics during those years according to their beliefs and theses.</p>
@@ -1859,60 +2107,97 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 </ol></li>
 </ol>
 <p>Let’s create our <code>Grand Financial Bubble Metric</code> at a more granular level. We are only going to include the sectors that have sufficient data. For those with sufficient Price &amp; Debt data, but insufficient IPO data, we will calculate our <code>Grand Financial Bubble Metric</code> as the average of <code>Price Metric</code> and <code>Debt Metric</code> and exclude the <code>IPO Metric</code>.</p>
-<div class="cell">
-
-</div>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">Communications</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">Industrials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-3" role="tab" aria-controls="tabset-14-3" aria-selected="false">Consumer Discretionary</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-4" role="tab" aria-controls="tabset-14-4" aria-selected="false">Financials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-5" role="tab" aria-controls="tabset-14-5" aria-selected="false">Consumer Staples</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-6" role="tab" aria-controls="tabset-14-6" aria-selected="false">Health Care</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-7" role="tab" aria-controls="tabset-14-7" aria-selected="false">Materials</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-8" role="tab" aria-controls="tabset-14-8" aria-selected="false">Energy</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-9-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-9" role="tab" aria-controls="tabset-14-9" aria-selected="false">Real Estate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-10-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-10" role="tab" aria-controls="tabset-14-10" aria-selected="false">Technology</a></li></ul>
 <div class="tab-content">
 <div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-53"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-2.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-54"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-2.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-3-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-3.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-55"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-3.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-4-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-4.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-56"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-4.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-5-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-5.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-57"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-5.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-6-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-6.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-58"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-6.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-7-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-7.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-7.png" class="lightbox" data-gallery="quarto-lightbox-gallery-59"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-7.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-8-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-8.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-8.png" class="lightbox" data-gallery="quarto-lightbox-gallery-60"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-8.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-9" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-9-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-9.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-9.png" class="lightbox" data-gallery="quarto-lightbox-gallery-61"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-9.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="tabset-14-10" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-10-tab">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-10.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-31-10.png" class="lightbox" data-gallery="quarto-lightbox-gallery-62"><img src="financial_bubbles_files/figure-html/unnamed-chunk-31-10.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1941,14 +2226,22 @@ Metric_2 = \frac{Avg\ Debt_t}{GDP_t} = \frac{(\frac{\sum{LT\ Debt_t + ST\ Debt_t
 <p>With that said, let’s inspect interest rates and the “10-2” Yield spread:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="1152"></p>
+<div>
+<figure class="figure">
+<p><a href="financial_bubbles_files/figure-html/unnamed-chunk-32-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-63"><img src="financial_bubbles_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>As we can see from our plots, real equity returns tend to be negative following yield curve inversions. We can also see that the Fed, when possible, drops interest rates to stimulate the economy. However, we notice that it cannot afford to do so when a) inflation is out of control and/or b) when rates are already at 0%. These scenarios are structurally different and are therefore worth investigating in depth, but we will not discuss that here.</p>
 <p>Let’s overlay the time periods when the yield curve was inverted to our <code>Grand Financial Bubble Metric</code>:</p>
 <div class="cell page-columns page-full">
-<div class="cell-output-display column-page">
-<p><img src="financial_bubbles_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="1152"></p>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><a href="financial_bubbles_files/figure-html/unnamed-chunk-33-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-64"><img src="financial_bubbles_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img column-page" width="1152"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>As we can see, looking at yield curve inversions in conjunction with our <code>Grand Financial Bubble Metric</code> is somewhat helpful in informing the user on the formation of financial bubbles, sector equity performance, and possible asset allocation decisions. I would like to highlight that the above is a <em>rough framework (that can be greatly improved)</em> and that much more analysis should be conducted before making a possible investment decision. While our framework may aid in sector allocation decisions, a savvy investor will then pursue company-specific analysis that either supports or opposes their thesis.</p>
@@ -2017,9 +2310,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -2055,10 +2362,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2068,8 +2374,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2084,6 +2399,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -2126,9 +2673,43 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
 
 
 

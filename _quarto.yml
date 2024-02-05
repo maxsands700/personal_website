@@ -28,9 +28,10 @@ website:
         href: https://www.linkedin.com/in/max-sands-1798b41a4/
 format:
   html:
-    theme: lux
+    theme: 
+      - lux
+      - main_style.scss
     css: styles.css
-
-
+lightbox: true
 editor: visual
 
