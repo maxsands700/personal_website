@@ -87,7 +87,19 @@ $footer-fg: $lighter-grey;
       color: $purple; // Change text color to purple
     }
   }
+
+  .quarto-post {
+    transition: transform 0.3s ease; // Smooth transition for enlarging effect
   
+    &:hover {
+      transform: scale(1.05); // Slightly enlarges the listing
+  
+      a {
+        color: $purple; // Change text color to purple
+      }
+    }
+  }
+
   // Hover effect for categories
   .category {
     transition: color 0.3s ease; // Smooth transition for color change

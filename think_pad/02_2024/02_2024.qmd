@@ -1,0 +1,14 @@
+---
+title: "Sample Title"
+author: "Max Sands"
+date: "2024-02-28"
+description: "Sample Description"
+categories: []
+editor_options: 
+  chunk_output_type: console
+warning: false
+message: false
+echo: false
+fig-align: center
+---
+Some words

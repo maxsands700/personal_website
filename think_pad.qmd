@@ -1,0 +1,16 @@
+---
+title: "My Think Pad"
+description: |
+  Welcome to my Think Pad! The following page is intended as a personal drawing board to organize my thoughts about current events, the economy, politics, financial markets, and their impact on the current and future states of the world.
+  
+  Staying up-to-date with current world proceedings has always been a weakness of mine. As such, this will likely be a useful exercise for me - I hope to release my thoughts each month.
+listing:
+  contents: think_pad
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: true
+  filter-ui: true
+page-layout: full
+title-block-banner: true
+---

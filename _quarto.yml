@@ -13,10 +13,10 @@ website:
     left: 
       - href: index.qmd
         text: Home
+      - href: think_pad.qmd
+        text: Think Pad
       - href: research.qmd
         text: Research
-      - href: instructional_articles.qmd
-        text: Instructional Articles
       - href: resume.qmd
         text: Resume
     right:
@@ -26,6 +26,8 @@ website:
         href: https://twitter.com/Max_Sands_7
       - icon: linkedin
         href: https://www.linkedin.com/in/max-sands-1798b41a4/
+      - icon: github
+        href: https://github.com/maxsands700
 format:
   html:
     theme: 

@@ -14,7 +14,14 @@
       "/research/03_eps_revision_breadth/eps_revision_breadth_analysis.html",
       "/research/02_weather_and_markets/index.html",
       "/research/01_management_trading_analysis/index.html",
-      "/research/00_high_yield_analysis/index.html"
+      "/research/00_high_yield_analysis/index.html",
+      "/research/000_r_basics/index.html"
+    ]
+  },
+  {
+    "listing": "/think_pad.html",
+    "items": [
+      "/think_pad/02_2024/02_2024.html"
     ]
   }
 ]

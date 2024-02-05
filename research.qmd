@@ -1,5 +1,7 @@
 ---
 title: "Research"
+description: |
+  Welcome to my Research! The following papers are mini projects investigating various topics in the field of Financial Analysis as I learn how to code and work with data...
 listing:
   contents: research
   type: grid
