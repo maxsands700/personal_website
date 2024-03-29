@@ -36,23 +36,31 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 
 *Business & Investment Analyst* \| *2022 - Present* \| *Boston, MA*
 
--   Providing general investment research for the Equity and Fixed Income Teams
+-   Spearheaded data migration project into Addepar - a new system/tool for the Wealth Management Group
+
+    -   Consulted with Partners and all Trust Advisors to gather Ownership Structure data for the entire client base
+
+    -   Used Python to sanitize and properly format all data
+
+-   Built Ad-hoc Dashboards & Reports for Management
+
+    -   Used SQL, Python, R, and Quarto to create Business Intelligence Dashboards & Reports
+
+-   Provided general investment research for the Equity and Fixed Income Teams
 
     -   Built automated preliminary Investment Analysis report using R and Quarto
 
         -   By providing a ticker and a list of comps, a report is generated that gathers data from Bloomberg and performs key metric ratio analysis, market share analysis, business segment analysis, etc. to provide a preliminary valuation
 
--   Developing unique solutions and models for the Investment and Operations divisions:
+-   Developed unique solutions and models for the Investment and Operations divisions:
 
     -   Built in-house Monte Carlo Simulation tool for client Retirement Analysis
 
-        -   Includes sensitivity analysis across several key inputs
+        -   Included sensitivity analysis across several key inputs
 
-        -   Includes report generation - both static PDFs and interactive HTML
+        -   Included report generation - both static PDFs and interactive HTML
 
     -   Built automatic Drift Analysis report using R and Quarto that provides insights on accounts that are drifting off model
-
-    -   Cleaned and formatted data for upload to Addepar
 
         <br>
 
@@ -122,7 +130,7 @@ Bachelor of Commerce, Major in Finance, Double Concentration in Accounting & Sta
 
 # Skills & Interests
 
-*Language & Computer Skills:* Fluent French & English, Moderate R & Basic Python
+*Language & Computer Skills:* Fluent French & English, Intermediate Python & R
 
 *Interests:* Financial Analytics/Data Science, Weightlifting, Guitar, Golf, Chess, Poker, Football, Basketball, Math, Creative Writing, Rock Climbing
 
