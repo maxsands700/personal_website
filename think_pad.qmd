@@ -14,3 +14,14 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
+
+# The Plan
+
+| Topic                                                                 | Description                                                                                                                                                                                                                                    |
+|---------------------|---------------------------------------------------|
+| Immigration & Border Control                                          | A case study regarding current U.S. immigration policies and the state of the border, as compared to other notable nations.                                                                                                                    |
+| Healthcare Systems                                                    | A case study regarding the structure of the U.S. healthcare market. Why is it structured the way it is? How is it different from healthcare systems in other countries? What are its pros and cons? How can it be improved?                    |
+| Capitalism: A Demographic and Social Breakdown of Developed Countries | An analysis of capitalism and its pros and cons. Whare developed countries on the economic spectrum today, and where are they likely heading? A data-driven comparison of our democracy, demography, economy, quality of life, and progress... |
+| Energy & the Future                                                   | How do we currently 'generate' energy? How much does this cost? What are the alternatives and their cost?                                                                                                                                      |
+
+## <br>

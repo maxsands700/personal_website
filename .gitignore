@@ -41,3 +41,6 @@ vignettes/*.pdf
 # My Raw Data Folder with csvs
 raw_data
 /.quarto/
+
+# ignore jupyter notebook files in think_pad/immigration directory
+think_pad/immigration/*.ipynb

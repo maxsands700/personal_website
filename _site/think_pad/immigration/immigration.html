@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Max Sands">
-<meta name="dcterms.date" content="2023-06-18">
-<meta name="description" content="Read Time: 15 mins">
+<meta name="dcterms.date" content="2024-02-28">
+<meta name="description" content="A deep dive into the current state of U.S. Immmigration &amp; Border Control policy, and my thoughts for improvements…">
 
-<title>★ A Case for Equities: Bull vs.&nbsp;Bear?</title>
+<title>U.S. Immigration &amp; Border Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,15 +102,18 @@ cookieconsent.run({
 });
 </script> 
   
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="★ A Case for Equities: Bull vs.&nbsp;Bear?">
-<meta property="og:description" content="Read Time: 15 mins">
-<meta property="og:image" content="images/bull_vs_bear_image.jpeg">
-<meta name="twitter:title" content="★ A Case for Equities: Bull vs.&nbsp;Bear?">
-<meta name="twitter:description" content="Read Time: 15 mins">
-<meta name="twitter:image" content="images/bull_vs_bear_image.jpeg">
+<meta property="og:title" content="U.S. Immigration &amp; Border Control">
+<meta property="og:description" content="A deep dive into the current state of U.S. Immmigration &amp; Border Control policy, and my thoughts for improvements…">
+<meta property="og:image" content="preview_image.png">
+<meta name="twitter:title" content="U.S. Immigration &amp; Border Control">
+<meta name="twitter:description" content="A deep dive into the current state of U.S. Immmigration &amp; Border Control policy, and my thoughts for improvements…">
+<meta name="twitter:image" content="preview_image.png">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -175,17 +178,13 @@ cookieconsent.run({
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">★ A Case for Equities: Bull vs.&nbsp;Bear?</h1>
+      <h1 class="title">U.S. Immigration &amp; Border Control</h1>
                   <div>
         <div class="description">
-          Read Time: 15 mins
+          A deep dive into the current state of U.S. Immmigration &amp; Border Control policy, and my thoughts for improvements…
         </div>
       </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">Equities</div>
-                <div class="quarto-category">★</div>
-              </div>
-                  </div>
+                </div>
   </div>
     
   
@@ -201,19 +200,13 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 18, 2023</p>
+        <p class="date">February 28, 2024</p>
       </div>
     </div>
     
       
     </div>
     
-  <div>
-    <div class="abstract">
-      <div class="block-title">Abstract</div>
-      The recent U.S. equity market environment has been a unique one - with a strong narrow rally in the face of macroeconomic uncertainty, and a market drawdown the previous year. The following article investigates reasons to be both bullish and bearish U.S. equities, and delivers a final hypothesis in light of the research presented.
-    </div>
-  </div>
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
@@ -223,162 +216,197 @@ cookieconsent.run({
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
-  <li><a href="#the-bear-case" id="toc-the-bear-case" class="nav-link" data-scroll-target="#the-bear-case">The Bear Case</a>
-  <ul>
-  <li><a href="#relative-valuations-erp" id="toc-relative-valuations-erp" class="nav-link" data-scroll-target="#relative-valuations-erp">Relative Valuations &amp; ERP</a></li>
+  <li><a href="#first-principles" id="toc-first-principles" class="nav-link active" data-scroll-target="#first-principles">First Principles</a>
+  <ul class="collapse">
+  <li><a href="#thought-experiment---building-out-the-analogy" id="toc-thought-experiment---building-out-the-analogy" class="nav-link" data-scroll-target="#thought-experiment---building-out-the-analogy">Thought Experiment - Building out the Analogy</a>
+  <ul class="collapse">
+  <li><a href="#ethos-alignment" id="toc-ethos-alignment" class="nav-link" data-scroll-target="#ethos-alignment">1. Ethos Alignment</a></li>
+  <li><a href="#financial-capacity" id="toc-financial-capacity" class="nav-link" data-scroll-target="#financial-capacity">2. Financial Capacity</a></li>
+  <li><a href="#spatial-capacity" id="toc-spatial-capacity" class="nav-link" data-scroll-target="#spatial-capacity">3. Spatial Capacity</a></li>
+  </ul></li>
+  <li><a href="#basic-decision-map" id="toc-basic-decision-map" class="nav-link" data-scroll-target="#basic-decision-map">Basic Decision Map</a></li>
+  <li><a href="#thought-experiment-notes" id="toc-thought-experiment-notes" class="nav-link" data-scroll-target="#thought-experiment-notes">Thought Experiment Notes</a></li>
+  <li><a href="#the-scorecard" id="toc-the-scorecard" class="nav-link" data-scroll-target="#the-scorecard">The Scorecard</a></li>
+  </ul></li>
+  <li><a href="#assessing-u.s.-immigration-policy" id="toc-assessing-u.s.-immigration-policy" class="nav-link" data-scroll-target="#assessing-u.s.-immigration-policy">Assessing U.S. Immigration Policy</a>
+  <ul class="collapse">
+  <li><a href="#a-controlled-border" id="toc-a-controlled-border" class="nav-link" data-scroll-target="#a-controlled-border">1. A Controlled Border</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
-<section id="intro" class="level1">
-<h1>Intro</h1>
-<p>In 2022, the U.S. equity markets - inflated by exorbitant Quantitative Easing and financial stimulation due to the Covid-19 pandemic - suffered as the bubble eventually popped. As expected, the areas that had seen the most rapid increase in prices (in this case, the ‘Growth’ sectors like Tech) also saw the most severe draw-down:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="864"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>However, the start of 2023 marks the beginning of an odd rally in U.S. Equity markets. The top 8 names in the SP500 have rallied <em>significantly</em> since the start of the year, whereas the remaining companies in the SP500 have flat-lined.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="864"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>This begs the question: <em>how long can the rally continue, and what does the medium-term future look like for U.S. Equities?</em></p>
-</section>
-<section id="the-bear-case" class="level1 page-columns page-full">
-<h1>The Bear Case</h1>
-<p>While there are many reasons that may bolster the argument for a bear case, we will cover the following two in-depth:</p>
+<p>Prior to diving into the facts and statistics around U.S. immigration policy, I will take a first principles approach at outlining what I deem as an effective immigration policy. After this thought experiment, I will delve into the current state of U.S. immigration and immigration policy and compare them to those of other countries.</p>
+<section id="first-principles" class="level1">
+<h1>First Principles</h1>
+<p>Running a government is analogous to running a household, albeit on a much larger scale. As such, let’s imagine how we would want immigration to play out in our household microcosm…</p>
+<p>Let’s imagine we live on a large, gated property, and there is a line of people at the front gates, asking to live on our property. Here are the factors I would consider when deciding if these people can live on our property:</p>
+<section id="admittance-criteria" class="level4">
+<h4 class="anchored" data-anchor-id="admittance-criteria">Admittance Criteria</h4>
 <ol type="1">
-<li><u>Relative Valuations &amp; the Equity Risk Premium:</u> <em>Valuations are still high and the risk-to-reward ratio for Equities is not attractive, especially when compared to other assets…</em></li>
-<li><u>Macroeconomic Uncertainty:</u> <em>The future macroeconomic landscape is hazy; consensus indicates a near-term recession, and relations between U.S. &amp; China are becoming increasingly tenuous…</em></li>
+<li><strong>Ethos Alignment</strong> - does the additional inhabitant’s values and ethos align with those of the broader household?</li>
+<li><strong>Financial Capacity</strong> - can the household financially support the additional inhabitant and what is the inhabitants net benefit to our property?</li>
+<li><strong>Spatial Capacity</strong> - is there enough room for the additional inhabitant?</li>
 </ol>
-<p><br></p>
-<section id="relative-valuations-erp" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="relative-valuations-erp">Relative Valuations &amp; ERP</h2>
-<p>Perhaps the most clear argument for a bear case is that valuations are still high. If we perform a simple breakdown of the valuations for the companies in the SP500, we notice that the implied yield is relatively low. Even if we exclude the top 8 companies, the implied yield of 6.5% is low in relation to the current 1-year TBill rate of approximately 5.3%.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/sp500_implied_yield.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/sp500_implied_yield.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
-</figure>
-</div>
-<p>Therefore, let’s compare the implied yield on Equities to the yields on High Yield Debt and Investment Grade Debt across different hypothetical senarios:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/simple_scenarios.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4" title="IG Debt refers to 1-Year TBill"><img src="images/simple_scenarios.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="IG Debt refers to 1-Year TBill"></a></p>
-<figcaption><em>IG Debt</em> refers to 1-Year TBill</figcaption>
-</figure>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="864"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>When comparing nominal yields, we notice that High Yield Debt and 1-year TBills appear much more attractive than Equities. Even after adjusting the Yield-to-Worst with hypothetical default rates, High Yield Debt seems to be a suitable alternative to Equities.</p>
-<p>However, many individuals would refute the above by claiming that, while, in the long-run, implied yield may equate to long-run equity returns, this one-to-one relationship has not held in recent history**.</p>
-
-<div class="no-row-height column-margin column-container"><div class="">
-<p>**This may be indicative of the current growth tilt in U.S. Equity markets in recent history - especially when considering the <code>Return Yield-Gap Factor</code> increases when looking at the past 30 years only…</p>
-</div></div><p>In light of this rebuttal, let’s adjust the implied yield with an artificial <code>Return Yield-Gap Factor</code>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/return_yield_gap.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/return_yield_gap.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/adjusted_scenarios.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/adjusted_scenarios.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
-</figure>
-</div>
-<p>Even after adjusting for the artificial <code>Return Yield-Gap Factor</code> we notice that Equities only seem attractive in the most optimistic scenario where we use:</p>
+</section>
+<section id="prerequisite-information" class="level4">
+<h4 class="anchored" data-anchor-id="prerequisite-information">Prerequisite Information</h4>
+<p>Given our criteria, in order for us to make an informed admittance decision, we need to be informed of:</p>
 <ol type="1">
-<li>The Implied Yield <em>excluding the top 8 companies</em></li>
-<li>The most generous <code>Return Yield-Gap Factor</code> of 1.69x which implies that we expect a similar growth economy to that of the past 30 years</li>
+<li>Our household’s current spatial and financial situation, as well as our extant ethos.</li>
+<li>The potential inhabitant’s ‘financial situation’ and ethos.</li>
 </ol>
-<p>For all other scenarios, High Yield Debt and Investment Grade Debt appear to be a more rewarding asset class, especially when considering each asset’s risk profile. The illustration below compares U.S. Equity performance to that of U.S. High Yield Debt - performance has been relatively similar, with less volatility occurring in debt markets:</p>
-<div class="cell" data-hash="Bull_vs_Bear_cache/html/unnamed-chunk-5_23b21c505906f95bcaf3f35acae2fa60">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="864"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Moreover, we note that, historically, value investing has consistently delivered strong returns; as we can see below, investors are typically rewarded for investing when implied earnings yields are high (i.e.&nbsp;at low valuations):</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="864"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>In addition to high valuations, the current earnings environment is not extremely favorable. From the chart below, we can wee that while valuations have increased since the start of 2023, analyst consensus NTM earnings estimates (adjusted for inflation) …</p>
-<div class="blur">
-<p>have declined.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/current_environment_snapshot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="images/current_environment_snapshot.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
-</figure>
-</div>
-<p>If we consider that there are 4 investing environments that can occur:</p>
+</section>
+<section id="thought-experiment---building-out-the-analogy" class="level2">
+<h2 class="anchored" data-anchor-id="thought-experiment---building-out-the-analogy">Thought Experiment - Building out the Analogy</h2>
+<section id="ethos-alignment" class="level3">
+<h3 class="anchored" data-anchor-id="ethos-alignment">1. Ethos Alignment</h3>
+<p>Out of self-interest and the well-being of my property and its current inhabitants, I would <strong>only</strong> want to <strong>admit immigrants that embody the household ethos</strong>. Therefore, applicants with a recent history of violence, crime, or any other conduct that violates the household ethos should always be rejected.</p>
+</section>
+<section id="financial-capacity" class="level3">
+<h3 class="anchored" data-anchor-id="financial-capacity">2. Financial Capacity</h3>
+<p>In the <strong><em>majority</em></strong> <strong>of cases, an applicant</strong> should <strong>only be admitted if they provide a net benefit to the household</strong>. Let’s imagine that next in line at our front gates is a farmer. Our perceived value of the farmer depends on the mismatch of supply and demand for farming skills in our household. If our household is short-staffed for farmers, then the marginal benefit of an additional farmer is large. On the other hand, if there is no supply-demand mismatch for farming skills in our household, then the benefit of an additional farmer is negligible.</p>
+<p>Moreover, let’s imagine that, after assessing our current supply-demand gap, we agree that an additional farmer is beneficial for our household. If we then place our farmer in the <em>mechanic’s</em> quarters with no mode of transportation to the crop fields, the value of the additional farmer is rendered null.</p>
+<p>While this is an overly simple analogy, it demonstrates that <strong>an entrant’s benefit to society is dependent on:</strong></p>
 <ol type="1">
-<li>Valuations increase &amp; Real Earnings Estimates increase</li>
-<li>Valuations increase &amp; Real Earnings Estimates decrease</li>
-<li>Valuations decrease &amp; Real Earnings Estimates decrease</li>
-<li>Valuations decrease &amp; Real Earnings Estimates decrease</li>
+<li><strong>The supply-demand mismatch for that entrant’s skills</strong></li>
+<li><strong>The entrant’s environment</strong></li>
 </ol>
-<p>and investigate how the SP500 behaves in these environments, we can see that…</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/4_environments.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="images/4_environments.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
-</figure>
-</div>
-<div class="cell">
+<p>Our analogy also crucially demonstrates that <strong>in order for any immigration policy to be effective, it must be able to allocate human capital efficiently</strong>. As such, the <strong>household must always be aware of the supply-demand mismatch in localized environments</strong>, and <strong>have the ability to transport the entrant</strong> to the environment.</p>
+<p>There are a <strong><em>minority</em></strong> <strong>of cases</strong> where an <strong>applicant should be admitted, even if they do not provide a net benefit</strong> to the household. Applicants seeking <strong>asylum or refuge</strong> from an abusive household should be allowed entry, <strong>granted that</strong> they <strong>adhere to the household’s ethos</strong>, and the <strong>household has sufficient financial capacity to shelter them</strong>. However, it is unlikely that a household could harbor all refugees at any point in time. Therefore, it is likely that a quota would be necessary; the quota should be a function of current and projected profitability of the household.</p>
+</section>
+<section id="spatial-capacity" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-capacity">3. Spatial Capacity</h3>
+<p>Lastly, an applicant can only be admitted if there is enough space for the applicant in his designated environment.</p>
+</section>
+</section>
+<section id="basic-decision-map" class="level2">
+<h2 class="anchored" data-anchor-id="basic-decision-map">Basic Decision Map</h2>
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD;
+    A[Potential Inhabitant applies for entry] --&gt; B(Applicant demonstrates Ethos alignment);
+    B --&gt;|Yes| C(Applicant provides a Net Benefit to society);
+    C --&gt;|Yes| D(The Household's Spatial Capacity allows for admittance);
+    D --&gt;|Yes| Y{Grant Entry};
+    C --&gt;|No| CA(Applicant is a refugee seeking asylum);
+    CA --&gt;|Yes| CB(Household's Financial Capacity allows for admittance);
+    CA --&gt;|No| Z;
+    CB --&gt;|Yes| D;
+    CB --&gt;|No| Z;
+    D --&gt;|No| Z;
+    B --&gt;|No| Z{Deny Entry};
+
+    style B fill:#a875ce,stroke:#333,stroke-width:2px;
+    style C fill:#c9a9e1,stroke:#333,stroke-width:2px;
+    style CB fill:#c9a9e1,stroke:#333,stroke-width:2px;
+    style D fill:#e9ddf3,stroke:#333,stroke-width:2px;
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="thought-experiment-notes" class="level2">
+<h2 class="anchored" data-anchor-id="thought-experiment-notes">Thought Experiment Notes</h2>
+<section id="purpose" class="level4">
+<h4 class="anchored" data-anchor-id="purpose">Purpose</h4>
+<p>The purpose of the Household thought experiment is to establish a basic, universal framework for assessing whether an immigrant should be granted admission into a country. It does not dive into the specifics of how these criteria should be calculated; it does not discuss the merits of possible tenants for a nation’s ethos, nor does it explicitly provide a method for assessing an individual’s benefit to society, etc. Obviously, these topics are more subjective and deserve their own research. However, the specifics of these criteria do not detract from the importance of the core framework.</p>
+</section>
+<section id="assumptions" class="level4">
+<h4 class="anchored" data-anchor-id="assumptions">Assumptions</h4>
+<p>Our thought experiment and framework make two important implicit assumptions.</p>
+<ol type="1">
+<li>Our household has a <strong>controlled</strong> border.
+<ol type="i">
+<li>Without a controlled border, the entire thought experiment and framework is rendered void.</li>
+</ol></li>
+<li>Our household has the ability to transport admittees to their designated environment.</li>
+</ol>
+</section>
+<section id="interesting-tangents" class="level4">
+<h4 class="anchored" data-anchor-id="interesting-tangents">Interesting Tangents</h4>
+<p>In thinking through our analogy, it is clear that the alignment between individual ethos and societal ethos is critical. Therefore, there should exist an institution specifically devoted to the reform of individuals with a misaligned ethos. After a proper and reasonable attempt, if this institution fails in its goal of individual reform, there should be a clear revocation and banishment process for current nationals who violate the societal ethos.</p>
+</section>
+</section>
+<section id="the-scorecard" class="level2">
+<h2 class="anchored" data-anchor-id="the-scorecard">The Scorecard</h2>
+<p>From our thought experiment, we can create a scorecard to determine how strong a country’s immigration policy is, according to our framework:</p>
+<table class="table">
+<colgroup>
+<col style="width: 90%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criteria</th>
+<th style="text-align: center;">Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>The Nation has a <strong>controlled</strong> border</td>
+<td style="text-align: center;"><strong>—</strong></td>
+</tr>
+<tr class="even">
+<td><p>The Nation:</p>
+<ul>
+<li><p>Includes ethos alignment in admittance process</p></li>
+<li><p>Has a clearly defined process for establishing ethos alignment</p></li>
+</ul></td>
+<td style="text-align: center;"><strong>—</strong></td>
+</tr>
+<tr class="odd">
+<td><p>The Nation:</p>
+<ul>
+<li><p>Is aware of localized supply-demand mismatches of human capital</p></li>
+<li><p>Has a clearly defined process for utilizing the above to assess an applicant’s potential benefit to society</p></li>
+</ul></td>
+<td style="text-align: center;"><strong>—</strong></td>
+</tr>
+<tr class="even">
+<td>The Nation is aware of capacity constraints and incorporates this in admittance process</td>
+<td style="text-align: center;"><strong>—</strong></td>
+</tr>
+<tr class="odd">
+<td>The Nation is able to transport the immigrant to a utility-maximizing environment</td>
+<td style="text-align: center;"><strong>—</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="assessing-u.s.-immigration-policy" class="level1">
+<h1>Assessing U.S. Immigration Policy</h1>
+<p>Now that we have a scorecard, we can assess the current state of U.S. immigration policy.</p>
+<section id="a-controlled-border" class="level2 blur">
+<h2 class="anchored" data-anchor-id="a-controlled-border">1. A Controlled Border</h2>
+<p>Let’s investigate the state of the U.S. border.</p>
+<p>The United States’s border has two key sections: the US-Canada &amp; US-Mexico borders:</p>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="Bull_vs_Bear_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="Bull_vs_Bear_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></a></p>
+<p><a href="images/united_states_borders.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/united_states_borders.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
 </figure>
 </div>
+<p>While the US-Canada border is longer, the majority of recorded border encounters by the U.S. Customs and Border Protection (CBP) occurs along the US-Mexico border:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/historical_border_encounters.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/historical_border_encounters.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
+</figure>
 </div>
-</div>
-<p><br></p>
-<section id="macroeconomic-uncertainty" class="level2">
-<h2 class="anchored" data-anchor-id="macroeconomic-uncertainty">Macroeconomic Uncertainty</h2>
 </section>
-<section id="the-bull-case" class="level1">
-<h1>The Bull Case</h1>
-</section>
-</div>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-4"><em>IG Debt</em> refers to 1-Year TBill</span>
-</div>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -783,7 +811,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
