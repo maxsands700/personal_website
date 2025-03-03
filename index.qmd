@@ -43,8 +43,8 @@ IronHold Capital \| *Investment Analyst* \| 2020 - 2021
 
 ## Current Projects
 
-[Replicating Ray Dalio's Work]{.underline}: Ray Dalio is personal idol of mine because he is simultaneously an economist, data scientist, and narrator, but, above all else, he exemplifies the power of 'first-principles' thinking. He is able to synthesize centuries of history and data into logical, measurable, cause-and-effect relationships. I am currently attempting to build a system that forecasts major countries' "Big" and "Debt" Cycles using Machine Learning (see Ray Dalio's *Principles for Dealing with With the Changing World Order* and *Principles for Navigating Big Debt Crises*).
+[Dietitian Application]{.underline}: Part of a dietitian's job is an optimization problem: *given nutritional, budgetary, and health constraints, what is an individual's optimal meal program?* Oddly enough, there is no "industry-standard" tool for private practice dietitians to help them solve this problem. Therefore, I am currently developing a B2B application that attempts to solve this problem.
 
-[Insider Trading - Scraping SEC Form 4 Filings]{.underline}: Wrote code in R that scrapes the SEC Edgar site and all of its Form 4 filings. I am currently developing a trading strategy that incorporates this data.
+[Replicating Ray Dalio's Work]{.underline}: Ray Dalio is personal idol of mine because he is simultaneously an economist, data scientist, and narrator, but, above all else, he exemplifies the power of 'first-principles' thinking. He is able to synthesize centuries of history and data into logical, measurable, cause-and-effect relationships. I am currently attempting to build a system that forecasts major countries' "Big" and "Debt" Cycles using Machine Learning (see Ray Dalio's *Principles for Dealing with With the Changing World Order* and *Principles for Navigating Big Debt Crises*).
 
 *If you are interested about these projects, would like to collaborate, or would like to request data I've gathered, please reach out via LinkedIn - thank you.*
